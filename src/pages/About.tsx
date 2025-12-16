@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, BookOpen, Building, CheckCircle, GraduationCap, Heart, Lightbulb, Target, Users } from "lucide-react";
+import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
 
 const expertise = [
   {
@@ -90,20 +91,12 @@ export default function About() {
 
             {/* Visual */}
             <div className="relative">
-              <div className="aspect-[4/5] rounded-2xl bg-hero-gradient overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <div className="w-40 h-40 rounded-full bg-gold/20 mx-auto mb-6 flex items-center justify-center">
-                      <span className="font-display text-6xl font-bold text-gold">DR</span>
-                    </div>
-                    <h3 className="font-display text-2xl font-semibold text-cream mb-2">
-                      Dr. Deanna Romulus
-                    </h3>
-                    <p className="font-body text-cream/60 text-sm">
-                      MBA | EdD
-                    </p>
-                  </div>
-                </div>
+              <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated">
+                <img 
+                  src={drRomulusPhoto} 
+                  alt="Dr. Deanna Romulus, MBA - Visionary Strategist and Empowerment Architect"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               
               {/* Credentials Card */}
