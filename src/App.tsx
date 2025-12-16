@@ -12,6 +12,8 @@ import Contact from "./pages/Contact";
 import Apply from "./pages/Apply";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import FAQ from "./pages/FAQ";
+import FAQDetail from "./pages/FAQDetail";
 
 // Admin Pages
 import Dashboard from "./pages/admin/Dashboard";
@@ -21,6 +23,7 @@ import Authors from "./pages/admin/Authors";
 import Reviewers from "./pages/admin/Reviewers";
 import Categories from "./pages/admin/Categories";
 import Topics from "./pages/admin/Topics";
+import FAQsAdmin from "./pages/admin/FAQs";
 
 const queryClient = new QueryClient();
 
@@ -40,15 +43,15 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/faq/:slug" element={<FAQDetail />} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<Dashboard />} />
             <Route path="/admin/articles" element={<AdminPlaceholder />} />
             <Route path="/admin/articles/new" element={<AdminPlaceholder />} />
             <Route path="/admin/articles/:id/edit" element={<AdminPlaceholder />} />
-            <Route path="/admin/faqs" element={<AdminPlaceholder />} />
-            <Route path="/admin/faqs/new" element={<AdminPlaceholder />} />
-            <Route path="/admin/faqs/:id/edit" element={<AdminPlaceholder />} />
+            <Route path="/admin/faqs" element={<FAQsAdmin />} />
             <Route path="/admin/topics" element={<Topics />} />
             <Route path="/admin/categories" element={<Categories />} />
             <Route path="/admin/authors" element={<Authors />} />

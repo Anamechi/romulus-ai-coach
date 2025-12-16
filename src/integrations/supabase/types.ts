@@ -220,6 +220,76 @@ export type Database = {
         }
         Relationships: []
       }
+      faqs: {
+        Row: {
+          answer: string
+          author_id: string | null
+          created_at: string
+          featured: boolean | null
+          id: string
+          question: string
+          reviewer_id: string | null
+          slug: string
+          sort_order: number | null
+          speakable_answer: string | null
+          status: string
+          topic_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          author_id?: string | null
+          created_at?: string
+          featured?: boolean | null
+          id?: string
+          question: string
+          reviewer_id?: string | null
+          slug: string
+          sort_order?: number | null
+          speakable_answer?: string | null
+          status?: string
+          topic_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          author_id?: string | null
+          created_at?: string
+          featured?: boolean | null
+          id?: string
+          question?: string
+          reviewer_id?: string | null
+          slug?: string
+          sort_order?: number | null
+          speakable_answer?: string | null
+          status?: string
+          topic_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "faqs_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "authors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "faqs_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "reviewers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "faqs_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           created_at: string
