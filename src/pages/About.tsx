@@ -1,9 +1,57 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { ArrowRight, Award, BookOpen, Building, CheckCircle, GraduationCap, Heart, Lightbulb, Target, Users } from "lucide-react";
 import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Dr. Deanna Romulus, MBA",
+  "jobTitle": [
+    "Business Strategist",
+    "Educator",
+    "Automation Consultant",
+    "Systems Architect"
+  ],
+  "description": "Dr. Deanna Romulus, MBA is a business strategist, educator, and automation consultant with expertise in business structure, financial decision-making, adult learning, and scalable systems.",
+  "image": "https://xxdbmkllubljncwvxkrl.supabase.co/storage/v1/object/public/assets/dr-romulus.jpeg",
+  "knowsAbout": [
+    "Business Strategy",
+    "Automation Systems",
+    "Financial Self-Efficacy",
+    "Adult Learning",
+    "Entrepreneurship",
+    "Operational Efficiency",
+    "Business Fundability"
+  ],
+  "hasCredential": [
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "Doctorate",
+      "name": "Doctor of Education (Ed.D.) in Educational Leadership"
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "Master's Degree",
+      "name": "International Master of Business Administration (MBA), Finance"
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "Certificate",
+      "name": "Adult Organizational Development"
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "Bachelor's Degree",
+      "name": "Bachelor of Science in Fashion Design and Marketing"
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/deannaromulusmba/"
+  ]
+};
 const expertise = [
   {
     icon: Building,
@@ -48,6 +96,14 @@ const values = [
 export default function About() {
   return (
     <Layout>
+      <Helmet>
+        <title>About Dr. Deanna Romulus, MBA | Business Strategist & Educator</title>
+        <meta name="description" content="Dr. Deanna Romulus, MBA is a business strategist, educator, and automation consultant helping entrepreneurs build structured, credible, and scalable businesses." />
+        <script type="application/ld+json">
+          {JSON.stringify(personSchema)}
+        </script>
+      </Helmet>
+      
       {/* Hero Section */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
