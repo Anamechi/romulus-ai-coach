@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Award, BookOpen, Briefcase } from "lucide-react";
 
 const credentials = [
-  { icon: Award, text: "MBA from Harvard Business School" },
-  { icon: Briefcase, text: "Former Fortune 500 Executive" },
-  { icon: BookOpen, text: "Published Author & Speaker" },
+  { icon: Award, text: "Ed.D. in Educational Leadership" },
+  { icon: Briefcase, text: "MBA (Finance)" },
+  { icon: BookOpen, text: "Adult Org Development Certificate" },
 ];
 
 export function AboutPreview() {
