@@ -65,6 +65,45 @@ export type Database = {
         }
         Relationships: []
       }
+      authors: {
+        Row: {
+          bio: string | null
+          created_at: string
+          credentials: string | null
+          full_name: string
+          id: string
+          is_active: boolean | null
+          linkedin_url: string | null
+          photo_url: string | null
+          updated_at: string
+          years_experience: number | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          credentials?: string | null
+          full_name: string
+          id?: string
+          is_active?: boolean | null
+          linkedin_url?: string | null
+          photo_url?: string | null
+          updated_at?: string
+          years_experience?: number | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          credentials?: string | null
+          full_name?: string
+          id?: string
+          is_active?: boolean | null
+          linkedin_url?: string | null
+          photo_url?: string | null
+          updated_at?: string
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author_id: string | null
@@ -103,6 +142,80 @@ export type Database = {
           published_at?: string | null
           slug?: string
           title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          parent_id: string | null
+          slug: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          parent_id?: string | null
+          slug: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          parent_id?: string | null
+          slug?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_settings: {
+        Row: {
+          created_at: string
+          feature_flags: Json | null
+          id: string
+          master_content_prompt: string
+          site_name: string | null
+          tagline: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          feature_flags?: Json | null
+          id?: string
+          master_content_prompt?: string
+          site_name?: string | null
+          tagline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          feature_flags?: Json | null
+          id?: string
+          master_content_prompt?: string
+          site_name?: string | null
+          tagline?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -170,6 +283,86 @@ export type Database = {
         }
         Relationships: []
       }
+      reviewers: {
+        Row: {
+          bio: string | null
+          created_at: string
+          credentials: string | null
+          full_name: string
+          id: string
+          is_active: boolean | null
+          photo_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          credentials?: string | null
+          full_name: string
+          id?: string
+          is_active?: boolean | null
+          photo_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          credentials?: string | null
+          full_name?: string
+          id?: string
+          is_active?: boolean | null
+          photo_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      topics: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          description: string | null
+          funnel_stage: Database["public"]["Enums"]["funnel_stage"] | null
+          id: string
+          is_active: boolean | null
+          name: string
+          slug: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          funnel_stage?: Database["public"]["Enums"]["funnel_stage"] | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          slug: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          funnel_stage?: Database["public"]["Enums"]["funnel_stage"] | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          slug?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "topics_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -206,6 +399,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      funnel_stage: "TOFU" | "MOFU" | "BOFU"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -334,6 +528,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      funnel_stage: ["TOFU", "MOFU", "BOFU"],
     },
   },
 } as const
