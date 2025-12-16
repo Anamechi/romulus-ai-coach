@@ -446,6 +446,45 @@ export type Database = {
           },
         ]
       }
+      internal_links: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean | null
+          link_text: string | null
+          sort_order: number | null
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          link_text?: string | null
+          sort_order?: number | null
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          link_text?: string | null
+          sort_order?: number | null
+          source_id?: string
+          source_type?: string
+          target_id?: string
+          target_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
