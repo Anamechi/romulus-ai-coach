@@ -104,6 +104,45 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_post_citations: {
+        Row: {
+          blog_post_id: string
+          citation_id: string
+          created_at: string
+          id: string
+          sort_order: number | null
+        }
+        Insert: {
+          blog_post_id: string
+          citation_id: string
+          created_at?: string
+          id?: string
+          sort_order?: number | null
+        }
+        Update: {
+          blog_post_id?: string
+          citation_id?: string
+          created_at?: string
+          id?: string
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_citations_blog_post_id_fkey"
+            columns: ["blog_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_citations_citation_id_fkey"
+            columns: ["citation_id"]
+            isOneToOne: false
+            referencedRelation: "citations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_posts: {
         Row: {
           author_id: string | null
@@ -226,6 +265,48 @@ export type Database = {
           },
         ]
       }
+      citations: {
+        Row: {
+          author_name: string | null
+          created_at: string
+          domain_authority: number | null
+          excerpt: string | null
+          id: string
+          is_active: boolean | null
+          published_date: string | null
+          source_name: string | null
+          title: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          author_name?: string | null
+          created_at?: string
+          domain_authority?: number | null
+          excerpt?: string | null
+          id?: string
+          is_active?: boolean | null
+          published_date?: string | null
+          source_name?: string | null
+          title: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          author_name?: string | null
+          created_at?: string
+          domain_authority?: number | null
+          excerpt?: string | null
+          id?: string
+          is_active?: boolean | null
+          published_date?: string | null
+          source_name?: string | null
+          title?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       content_settings: {
         Row: {
           created_at: string
@@ -255,6 +336,45 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      faq_citations: {
+        Row: {
+          citation_id: string
+          created_at: string
+          faq_id: string
+          id: string
+          sort_order: number | null
+        }
+        Insert: {
+          citation_id: string
+          created_at?: string
+          faq_id: string
+          id?: string
+          sort_order?: number | null
+        }
+        Update: {
+          citation_id?: string
+          created_at?: string
+          faq_id?: string
+          id?: string
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "faq_citations_citation_id_fkey"
+            columns: ["citation_id"]
+            isOneToOne: false
+            referencedRelation: "citations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "faq_citations_faq_id_fkey"
+            columns: ["faq_id"]
+            isOneToOne: false
+            referencedRelation: "faqs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       faqs: {
         Row: {
