@@ -2,54 +2,29 @@ import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useDashboardStats } from '@/hooks/useDashboardStats';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   FileText,
   HelpCircle,
   Users,
-  TrendingUp,
   MessageSquare,
   CheckCircle2,
   AlertCircle,
   ArrowRight,
-  Plus,
   Sparkles,
+  Settings,
+  BookOpen,
+  Tag,
 } from 'lucide-react';
 
-const stats = [
-  {
-    title: 'Blog Articles',
-    value: '—',
-    change: 'Coming soon',
-    icon: FileText,
-    href: '/admin/articles',
-  },
-  {
-    title: 'FAQs',
-    value: '—',
-    change: 'Coming soon',
-    icon: HelpCircle,
-    href: '/admin/faqs',
-  },
-  {
-    title: 'Leads',
-    value: '—',
-    change: 'Coming soon',
-    icon: MessageSquare,
-    href: '/admin/leads',
-  },
-  {
-    title: 'Applications',
-    value: '—',
-    change: 'Coming soon',
-    icon: Users,
-    href: '/admin/applications',
-  },
-];
-
 const quickActions = [
-  { label: 'New Article', href: '/admin/articles/new', icon: FileText },
-  { label: 'New FAQ', href: '/admin/faqs/new', icon: HelpCircle },
-  { label: 'AI Generator', href: '/admin/cluster-generator', icon: Sparkles },
+  { label: 'New Article', href: '/admin/articles', icon: FileText, description: 'Create blog post' },
+  { label: 'New FAQ', href: '/admin/faqs', icon: HelpCircle, description: 'Add FAQ entry' },
+  { label: 'AI Generator', href: '/admin/cluster-generator', icon: Sparkles, description: 'Generate content' },
+  { label: 'Manage Topics', href: '/admin/topics', icon: Tag, description: 'Organize content' },
+  { label: 'Manage Authors', href: '/admin/authors', icon: BookOpen, description: 'Author profiles' },
+  { label: 'Settings', href: '/admin/settings', icon: Settings, description: 'Site configuration' },
 ];
 
 const systemStatus = [
@@ -60,6 +35,39 @@ const systemStatus = [
 ];
 
 export default function Dashboard() {
+  const { data: stats, isLoading } = useDashboardStats();
+
+  const statCards = [
+    {
+      title: 'Blog Articles',
+      value: stats?.blogPosts.total ?? 0,
+      subtitle: `${stats?.blogPosts.published ?? 0} published`,
+      icon: FileText,
+      href: '/admin/articles',
+    },
+    {
+      title: 'FAQs',
+      value: stats?.faqs.total ?? 0,
+      subtitle: `${stats?.faqs.published ?? 0} published`,
+      icon: HelpCircle,
+      href: '/admin/faqs',
+    },
+    {
+      title: 'Leads',
+      value: stats?.leads.total ?? 0,
+      subtitle: `${stats?.leads.new ?? 0} new`,
+      icon: MessageSquare,
+      href: '/admin/leads',
+    },
+    {
+      title: 'Applications',
+      value: stats?.applications.total ?? 0,
+      subtitle: `${stats?.applications.pending ?? 0} pending`,
+      icon: Users,
+      href: '/admin/applications',
+    },
+  ];
+
   return (
     <AdminLayout>
       <div className="space-y-8">
@@ -73,7 +81,7 @@ export default function Dashboard() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((stat) => (
+          {statCards.map((stat) => (
             <Link key={stat.title} to={stat.href}>
               <Card className="hover:shadow-md transition-shadow cursor-pointer group">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -83,9 +91,13 @@ export default function Dashboard() {
                   <stat.icon className="h-4 w-4 text-muted-foreground group-hover:text-accent transition-colors" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stat.value}</div>
+                  {isLoading ? (
+                    <Skeleton className="h-8 w-16" />
+                  ) : (
+                    <div className="text-2xl font-bold">{stat.value}</div>
+                  )}
                   <p className="text-xs text-muted-foreground mt-1">
-                    {stat.change}
+                    {isLoading ? <Skeleton className="h-3 w-20" /> : stat.subtitle}
                   </p>
                 </CardContent>
               </Card>
@@ -104,7 +116,7 @@ export default function Dashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {quickActions.map((action) => (
                   <Link key={action.label} to={action.href}>
                     <Button
@@ -117,7 +129,7 @@ export default function Dashboard() {
                       <div className="text-left">
                         <div className="font-medium">{action.label}</div>
                         <div className="text-xs text-muted-foreground">
-                          Create new
+                          {action.description}
                         </div>
                       </div>
                     </Button>
@@ -179,10 +191,10 @@ export default function Dashboard() {
             <div className="space-y-4">
               {[
                 { phase: 'Phase 1', title: 'Foundation + Premium UI', status: 'complete', progress: 100 },
-                { phase: 'Phase 2', title: 'Core Data Models', status: 'next', progress: 0 },
-                { phase: 'Phase 3', title: 'FAQ System', status: 'upcoming', progress: 0 },
-                { phase: 'Phase 4', title: 'Blog System', status: 'upcoming', progress: 0 },
-                { phase: 'Phase 5', title: 'Dashboard Control Layer', status: 'upcoming', progress: 0 },
+                { phase: 'Phase 2', title: 'Core Data Models', status: 'complete', progress: 100 },
+                { phase: 'Phase 3', title: 'FAQ System', status: 'complete', progress: 100 },
+                { phase: 'Phase 4', title: 'Blog System', status: 'complete', progress: 100 },
+                { phase: 'Phase 5', title: 'Dashboard Control Layer', status: 'complete', progress: 100 },
               ].map((phase) => (
                 <div key={phase.phase} className="space-y-2">
                   <div className="flex items-center justify-between">
