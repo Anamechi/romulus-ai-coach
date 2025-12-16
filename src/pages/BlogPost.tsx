@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Clock, User, CheckCircle, Calendar } from 'lucide-react';
 import { useBlogPostBySlug, useBlogPosts } from '@/hooks/useBlogPosts';
+import { LinkedContent } from '@/components/content/LinkedContent';
 import { format } from 'date-fns';
 
 export default function BlogPost() {
@@ -212,10 +213,13 @@ export default function BlogPost() {
               </div>
             )}
 
-            {/* Related Posts */}
+            {/* Linked Content from Internal Links */}
+            <LinkedContent sourceType="blog_post" sourceId={post.id} title="You May Also Like" />
+
+            {/* Related Posts from Same Topic */}
             {relatedPosts.length > 0 && (
               <section className="mb-12">
-                <h2 className="text-2xl font-display font-semibold mb-6">Related Articles</h2>
+                <h2 className="text-2xl font-display font-semibold mb-6">More on This Topic</h2>
                 <div className="grid gap-4">
                   {relatedPosts.map((relatedPost: any) => (
                     <Link key={relatedPost.id} to={`/blog/${relatedPost.slug}`}>

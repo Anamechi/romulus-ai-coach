@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, User, CheckCircle } from 'lucide-react';
 import { useFaqBySlug, useFaqs } from '@/hooks/useFaqs';
+import { LinkedContent } from '@/components/content/LinkedContent';
 
 export default function FAQDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -141,7 +142,10 @@ export default function FAQDetail() {
             )}
           </article>
 
-          {/* Related FAQs */}
+          {/* Linked Content from Internal Links */}
+          <LinkedContent sourceType="faq" sourceId={faq.id} title="Related Resources" />
+
+          {/* Related FAQs from Same Topic */}
           {relatedFaqs.length > 0 && (
             <section className="mt-12 pt-12 border-t">
               <h2 className="text-2xl font-display font-semibold mb-6">Related Questions</h2>
