@@ -26,6 +26,7 @@ import Categories from "./pages/admin/Categories";
 import Topics from "./pages/admin/Topics";
 import FAQsAdmin from "./pages/admin/FAQs";
 import ArticlesAdmin from "./pages/admin/Articles";
+import Citations from "./pages/admin/Citations";
 
 const queryClient = new QueryClient();
 
@@ -59,7 +60,7 @@ const App = () => (
             <Route path="/admin/reviewers" element={<Reviewers />} />
             <Route path="/admin/leads" element={<AdminPlaceholder />} />
             <Route path="/admin/applications" element={<AdminPlaceholder />} />
-            <Route path="/admin/citations" element={<AdminPlaceholder />} />
+            <Route path="/admin/citations" element={<Citations />} />
             <Route path="/admin/system-check" element={<AdminPlaceholder />} />
             <Route path="/admin/settings" element={<Settings />} />
             <Route path="/admin/cluster-generator" element={<AdminPlaceholder />} />
