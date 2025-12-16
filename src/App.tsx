@@ -16,6 +16,11 @@ import NotFound from "./pages/NotFound";
 // Admin Pages
 import Dashboard from "./pages/admin/Dashboard";
 import AdminPlaceholder from "./pages/admin/AdminPlaceholder";
+import Settings from "./pages/admin/Settings";
+import Authors from "./pages/admin/Authors";
+import Reviewers from "./pages/admin/Reviewers";
+import Categories from "./pages/admin/Categories";
+import Topics from "./pages/admin/Topics";
 
 const queryClient = new QueryClient();
 
@@ -44,13 +49,15 @@ const App = () => (
             <Route path="/admin/faqs" element={<AdminPlaceholder />} />
             <Route path="/admin/faqs/new" element={<AdminPlaceholder />} />
             <Route path="/admin/faqs/:id/edit" element={<AdminPlaceholder />} />
-            <Route path="/admin/topics" element={<AdminPlaceholder />} />
-            <Route path="/admin/authors" element={<AdminPlaceholder />} />
+            <Route path="/admin/topics" element={<Topics />} />
+            <Route path="/admin/categories" element={<Categories />} />
+            <Route path="/admin/authors" element={<Authors />} />
+            <Route path="/admin/reviewers" element={<Reviewers />} />
             <Route path="/admin/leads" element={<AdminPlaceholder />} />
             <Route path="/admin/applications" element={<AdminPlaceholder />} />
             <Route path="/admin/citations" element={<AdminPlaceholder />} />
             <Route path="/admin/system-check" element={<AdminPlaceholder />} />
-            <Route path="/admin/settings" element={<AdminPlaceholder />} />
+            <Route path="/admin/settings" element={<Settings />} />
             <Route path="/admin/cluster-generator" element={<AdminPlaceholder />} />
             
             {/* Catch-all */}

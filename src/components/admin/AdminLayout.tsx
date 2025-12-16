@@ -42,10 +42,12 @@ const mainNavItems = [
   { title: 'Blog Articles', url: '/admin/articles', icon: FileText },
   { title: 'FAQs', url: '/admin/faqs', icon: HelpCircle },
   { title: 'Topics', url: '/admin/topics', icon: FolderOpen },
+  { title: 'Categories', url: '/admin/categories', icon: FolderOpen },
 ];
 
 const managementNavItems = [
   { title: 'Authors', url: '/admin/authors', icon: Users },
+  { title: 'Reviewers', url: '/admin/reviewers', icon: Users },
   { title: 'Leads', url: '/admin/leads', icon: MessageSquare },
   { title: 'Applications', url: '/admin/applications', icon: FileText },
 ];
