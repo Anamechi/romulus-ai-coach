@@ -7,7 +7,8 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Programs from "./pages/Programs";
-import Blog from "./pages/Blog";
+import BlogIndex from "./pages/BlogIndex";
+import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
 import Apply from "./pages/Apply";
 import Auth from "./pages/Auth";
@@ -24,6 +25,7 @@ import Reviewers from "./pages/admin/Reviewers";
 import Categories from "./pages/admin/Categories";
 import Topics from "./pages/admin/Topics";
 import FAQsAdmin from "./pages/admin/FAQs";
+import ArticlesAdmin from "./pages/admin/Articles";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +41,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/programs" element={<Programs />} />
-            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog" element={<BlogIndex />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/auth" element={<Auth />} />
@@ -48,9 +51,7 @@ const App = () => (
             
             {/* Admin Routes */}
             <Route path="/admin" element={<Dashboard />} />
-            <Route path="/admin/articles" element={<AdminPlaceholder />} />
-            <Route path="/admin/articles/new" element={<AdminPlaceholder />} />
-            <Route path="/admin/articles/:id/edit" element={<AdminPlaceholder />} />
+            <Route path="/admin/articles" element={<ArticlesAdmin />} />
             <Route path="/admin/faqs" element={<FAQsAdmin />} />
             <Route path="/admin/topics" element={<Topics />} />
             <Route path="/admin/categories" element={<Categories />} />

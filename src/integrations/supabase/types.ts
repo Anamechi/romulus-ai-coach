@@ -111,11 +111,18 @@ export type Database = {
           cover_image_url: string | null
           created_at: string
           excerpt: string | null
+          featured: boolean | null
           id: string
+          meta_description: string | null
+          meta_title: string | null
           published: boolean | null
           published_at: string | null
+          reading_time_minutes: number | null
+          reviewer_id: string | null
           slug: string
+          speakable_summary: string | null
           title: string
+          topic_id: string | null
           updated_at: string
         }
         Insert: {
@@ -124,11 +131,18 @@ export type Database = {
           cover_image_url?: string | null
           created_at?: string
           excerpt?: string | null
+          featured?: boolean | null
           id?: string
+          meta_description?: string | null
+          meta_title?: string | null
           published?: boolean | null
           published_at?: string | null
+          reading_time_minutes?: number | null
+          reviewer_id?: string | null
           slug: string
+          speakable_summary?: string | null
           title: string
+          topic_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -137,14 +151,36 @@ export type Database = {
           cover_image_url?: string | null
           created_at?: string
           excerpt?: string | null
+          featured?: boolean | null
           id?: string
+          meta_description?: string | null
+          meta_title?: string | null
           published?: boolean | null
           published_at?: string | null
+          reading_time_minutes?: number | null
+          reviewer_id?: string | null
           slug?: string
+          speakable_summary?: string | null
           title?: string
+          topic_id?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "reviewers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_posts_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       categories: {
         Row: {
