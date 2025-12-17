@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -235,7 +236,7 @@ export default function ClusterGenerator() {
                   <div className="border border-dashed rounded-md p-4 text-center">
                     <p className="text-sm text-muted-foreground mb-2">No topics available</p>
                     <Button variant="outline" size="sm" asChild>
-                      <a href="/admin/topics">Create Topics First</a>
+                      <Link to="/admin/topics">Create Topics First</Link>
                     </Button>
                   </div>
                 )}
