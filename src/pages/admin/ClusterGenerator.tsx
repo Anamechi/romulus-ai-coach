@@ -208,23 +208,37 @@ export default function ClusterGenerator() {
 
               <div className="space-y-2">
                 <Label>Topic</Label>
-                <Select value={selectedTopic} onValueChange={setSelectedTopic}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a topic" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {topics?.map((topic: any) => (
-                      <SelectItem key={topic.id} value={topic.id}>
-                        <div className="flex items-center gap-2">
-                          <span>{topic.name}</span>
-                          <Badge variant="outline" className="text-xs">
-                            {topic.funnel_stage}
-                          </Badge>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                {topicsLoading ? (
+                  <div className="flex items-center gap-2 h-10 px-3 border rounded-md text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm">Loading topics...</span>
+                  </div>
+                ) : topics && topics.length > 0 ? (
+                  <Select value={selectedTopic} onValueChange={setSelectedTopic}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a topic" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {topics.map((topic) => (
+                        <SelectItem key={topic.id} value={topic.id}>
+                          <div className="flex items-center gap-2">
+                            <span>{topic.name}</span>
+                            <Badge variant="outline" className="text-xs">
+                              {topic.funnel_stage}
+                            </Badge>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                ) : (
+                  <div className="border border-dashed rounded-md p-4 text-center">
+                    <p className="text-sm text-muted-foreground mb-2">No topics available</p>
+                    <Button variant="outline" size="sm" asChild>
+                      <a href="/admin/topics">Create Topics First</a>
+                    </Button>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-3">
