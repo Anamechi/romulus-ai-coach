@@ -10,7 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Loader2, Sparkles, FileText, HelpCircle, Check, X, Save } from 'lucide-react';
+import { Loader2, Sparkles, FileText, HelpCircle, Check, X, Save, Image } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useTopics } from '@/hooks/useTopics';
@@ -32,6 +32,8 @@ interface GeneratedBlog {
   meta_description: string;
   speakable_summary: string;
   reading_time_minutes: number;
+  cover_image_url?: string;
+  isGeneratingImage?: boolean;
   selected?: boolean;
 }
 
@@ -48,6 +50,31 @@ export default function ClusterGenerator() {
 
   const [generatedFaqs, setGeneratedFaqs] = useState<GeneratedFaq[]>([]);
   const [generatedBlogs, setGeneratedBlogs] = useState<GeneratedBlog[]>([]);
+
+  const generateImageForBlog = async (blog: GeneratedBlog, index: number, topicName: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-blog-image', {
+        body: { 
+          title: blog.title, 
+          topic: topicName,
+          description: blog.excerpt 
+        },
+      });
+
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setGeneratedBlogs(prev => prev.map((b, i) => 
+        i === index ? { ...b, cover_image_url: data.imageUrl, isGeneratingImage: false } : b
+      ));
+    } catch (error: any) {
+      console.error('Image generation error:', error);
+      setGeneratedBlogs(prev => prev.map((b, i) => 
+        i === index ? { ...b, isGeneratingImage: false } : b
+      ));
+      toast.error(`Failed to generate image for "${blog.title}"`);
+    }
+  };
 
   const handleGenerate = async () => {
     if (!selectedTopic) {
@@ -70,7 +97,19 @@ export default function ClusterGenerator() {
       if (contentType === 'faq') {
         setGeneratedFaqs(data.items.map((item: GeneratedFaq) => ({ ...item, selected: true })));
       } else {
-        setGeneratedBlogs(data.items.map((item: GeneratedBlog) => ({ ...item, selected: true })));
+        // Set blogs with image generation pending
+        const blogsWithImageState = data.items.map((item: GeneratedBlog) => ({ 
+          ...item, 
+          selected: true,
+          isGeneratingImage: true 
+        }));
+        setGeneratedBlogs(blogsWithImageState);
+        
+        // Generate images for each blog post
+        const topicName = topics?.find(t => t.id === selectedTopic)?.name || 'Business coaching';
+        blogsWithImageState.forEach((blog: GeneratedBlog, index: number) => {
+          generateImageForBlog(blog, index, topicName);
+        });
       }
 
       toast.success(`Generated ${data.items.length} ${contentType === 'faq' ? 'FAQs' : 'blog posts'}`);
@@ -139,7 +178,7 @@ export default function ClusterGenerator() {
             topic_id: selectedTopic,
             published: false,
             featured: false,
-            cover_image_url: null,
+            cover_image_url: blog.cover_image_url || null,
             published_at: null,
             author_id: null,
             reviewer_id: null,
@@ -360,6 +399,29 @@ export default function ClusterGenerator() {
                       </div>
                       <AccordionContent className="pb-4">
                         <div className="space-y-4 pl-10">
+                          {/* Cover Image */}
+                          <div>
+                            <Label className="text-xs text-muted-foreground">Cover Image</Label>
+                            <div className="mt-1">
+                              {blog.isGeneratingImage ? (
+                                <div className="flex items-center gap-2 text-muted-foreground bg-muted/50 p-4 rounded-lg">
+                                  <Loader2 className="h-4 w-4 animate-spin" />
+                                  <span className="text-sm">Generating image...</span>
+                                </div>
+                              ) : blog.cover_image_url ? (
+                                <img 
+                                  src={blog.cover_image_url} 
+                                  alt={`Cover for ${blog.title}`}
+                                  className="w-full max-w-md h-40 object-cover rounded-lg border"
+                                />
+                              ) : (
+                                <div className="flex items-center gap-2 text-muted-foreground bg-muted/50 p-4 rounded-lg">
+                                  <Image className="h-4 w-4" />
+                                  <span className="text-sm">No image generated</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
                           <div>
                             <Label className="text-xs text-muted-foreground">Excerpt</Label>
                             <p className="text-sm">{blog.excerpt}</p>
