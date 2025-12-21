@@ -110,6 +110,7 @@ Format: [{"title": "...", "excerpt": "...", "content": "...", "meta_title": "...
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
+        max_tokens: 16000,
       }),
     });
 
@@ -138,18 +139,42 @@ Format: [{"title": "...", "excerpt": "...", "content": "...", "meta_title": "...
       throw new Error("No content generated");
     }
 
+    console.log("Raw AI response length:", content.length);
+
     // Parse JSON from response (handle markdown code blocks)
     let parsed;
     try {
-      const jsonMatch = content.match(/\[[\s\S]*\]/);
-      if (jsonMatch) {
-        parsed = JSON.parse(jsonMatch[0]);
+      // Remove markdown code blocks if present
+      let cleanContent = content.trim();
+      if (cleanContent.startsWith("```json")) {
+        cleanContent = cleanContent.slice(7);
+      } else if (cleanContent.startsWith("```")) {
+        cleanContent = cleanContent.slice(3);
+      }
+      if (cleanContent.endsWith("```")) {
+        cleanContent = cleanContent.slice(0, -3);
+      }
+      cleanContent = cleanContent.trim();
+      
+      // Try direct parse first
+      if (cleanContent.startsWith("[")) {
+        parsed = JSON.parse(cleanContent);
       } else {
-        throw new Error("No JSON array found in response");
+        // Find the JSON array in the content
+        const startIndex = cleanContent.indexOf("[");
+        const endIndex = cleanContent.lastIndexOf("]");
+        if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
+          const jsonStr = cleanContent.slice(startIndex, endIndex + 1);
+          parsed = JSON.parse(jsonStr);
+        } else {
+          throw new Error("No JSON array found in response");
+        }
       }
     } catch (parseError) {
-      console.error("Parse error:", parseError, "Content:", content);
-      throw new Error("Failed to parse AI response");
+      console.error("Parse error:", parseError);
+      console.error("Content preview:", content.substring(0, 500) + "...");
+      console.error("Content end:", content.substring(content.length - 500));
+      throw new Error("Failed to parse AI response. The content may have been truncated.");
     }
 
     return new Response(JSON.stringify({ 
