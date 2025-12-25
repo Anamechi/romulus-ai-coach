@@ -1,5 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -167,10 +169,10 @@ export default function BlogPost() {
             )}
 
             {/* Content */}
-            <div className="prose prose-lg max-w-none mb-12">
-              <div className="whitespace-pre-wrap text-foreground leading-relaxed">
-                {post.content}
-              </div>
+            <div className="prose prose-lg max-w-none mb-12 prose-headings:font-display prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary hover:prose-a:text-primary/80 prose-ul:text-foreground prose-ol:text-foreground prose-li:text-foreground prose-blockquote:text-muted-foreground prose-blockquote:border-primary/50">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {post.content || ''}
+              </ReactMarkdown>
             </div>
 
             {/* Author/Reviewer Attribution */}
