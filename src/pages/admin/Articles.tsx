@@ -48,6 +48,7 @@ export default function ArticlesAdmin() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [isRegeneratingImage, setIsRegeneratingImage] = useState(false);
+  const [customImagePrompt, setCustomImagePrompt] = useState('');
 
   const [formData, setFormData] = useState<BlogPostInsert>({
     slug: '',
@@ -142,8 +143,8 @@ export default function ArticlesAdmin() {
   };
 
   const regenerateImage = async () => {
-    if (!formData.title) {
-      toast.error('Please enter a title first');
+    if (!formData.title && !customImagePrompt) {
+      toast.error('Please enter a title or custom image description');
       return;
     }
 
@@ -154,7 +155,8 @@ export default function ArticlesAdmin() {
         body: { 
           title: formData.title,
           topic: topic?.name || 'Business',
-          description: formData.excerpt || formData.meta_description || ''
+          description: formData.excerpt || formData.meta_description || '',
+          customPrompt: customImagePrompt || null
         }
       });
 
@@ -268,6 +270,19 @@ export default function ArticlesAdmin() {
                           )}
                           <span className="ml-2">{formData.cover_image_url ? 'Regenerate' : 'Generate'}</span>
                         </Button>
+                      </div>
+                      <div className="mt-2">
+                        <Label htmlFor="customImagePrompt" className="text-sm text-muted-foreground">
+                          Custom Image Description (optional)
+                        </Label>
+                        <Textarea
+                          id="customImagePrompt"
+                          value={customImagePrompt}
+                          onChange={(e) => setCustomImagePrompt(e.target.value)}
+                          placeholder="Describe the exact image you want, e.g., 'A professional businessman standing on a mountain peak at sunrise, looking over a vast city, symbolizing leadership and vision'"
+                          rows={3}
+                          className="mt-1"
+                        />
                       </div>
                       {formData.cover_image_url && (
                         <div className="mt-2">

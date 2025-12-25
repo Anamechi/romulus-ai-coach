@@ -21,25 +21,47 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { title, topic, description } = await req.json();
+    const { title, topic, description, customPrompt } = await req.json();
 
-    if (!title) {
-      throw new Error("Title is required for image generation");
+    if (!title && !customPrompt) {
+      throw new Error("Title or custom prompt is required for image generation");
     }
 
-    console.log("Generating image for:", title);
+    console.log("Generating image for:", title || "Custom prompt");
+    console.log("Custom prompt provided:", !!customPrompt);
 
-    // Create a prompt for the image
-    const imagePrompt = `Create a professional, modern blog header image for an article titled "${title}". 
+    // Build the image prompt - use custom prompt if provided, otherwise auto-generate
+    let imagePrompt: string;
+    
+    if (customPrompt && customPrompt.trim()) {
+      // Use the custom prompt but enhance it for blog header quality
+      imagePrompt = `Create a professional, high-quality blog header image (16:9 aspect ratio) based on this description: ${customPrompt.trim()}
+
+Style requirements:
+- Ultra high resolution, photorealistic or high-quality illustration style
+- Clean composition suitable for a professional blog header
+- No text, watermarks, or logos in the image
+- Rich colors and professional lighting
+- Modern, polished aesthetic`;
+    } else {
+      // Auto-generate prompt from title and topic
+      imagePrompt = `Create a professional, high-quality blog header image for an article titled "${title}".
 Topic: ${topic || "Business coaching and strategy"}
-${description ? `Description: ${description}` : ""}
+${description ? `Article context: ${description}` : ""}
 
-Style: Clean, professional, minimalist corporate design with warm amber/gold accent colors on a dark slate background. 
-Abstract geometric shapes or subtle patterns. No text in the image. 
-Suitable for a business coaching and consulting website. 
-16:9 aspect ratio, high quality, modern design.`;
+Style requirements:
+- Ultra high resolution, photorealistic or high-quality illustration style  
+- 16:9 aspect ratio suitable for blog header
+- Clean, modern corporate design with sophisticated color palette
+- No text, watermarks, or logos in the image
+- Conceptual imagery that represents the article's theme
+- Professional lighting and composition
+- Suitable for a business coaching and consulting website`;
+    }
 
-    // Generate image using Lovable AI
+    console.log("Using prompt:", imagePrompt.substring(0, 200) + "...");
+
+    // Generate image using Lovable AI with gemini-2.5-flash-image model
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -105,8 +127,10 @@ Suitable for a business coaching and consulting website.
 
     // Generate a unique filename
     const timestamp = Date.now();
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').substring(0, 50);
-    const filename = `${slug}-${timestamp}.${imageType}`;
+    const slugBase = title 
+      ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').substring(0, 50)
+      : 'custom-image';
+    const filename = `${slugBase}-${timestamp}.${imageType}`;
 
     // Upload to storage
     const { data: uploadData, error: uploadError } = await supabase.storage
