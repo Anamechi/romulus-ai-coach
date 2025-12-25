@@ -29,6 +29,8 @@ import ArticlesAdmin from "./pages/admin/Articles";
 import Citations from "./pages/admin/Citations";
 import InternalLinks from "./pages/admin/InternalLinks";
 import ClusterGenerator from "./pages/admin/ClusterGenerator";
+import Leads from "./pages/admin/Leads";
+import Applications from "./pages/admin/Applications";
 
 const queryClient = new QueryClient();
 
@@ -60,8 +62,8 @@ const App = () => (
             <Route path="/admin/categories" element={<Categories />} />
             <Route path="/admin/authors" element={<Authors />} />
             <Route path="/admin/reviewers" element={<Reviewers />} />
-            <Route path="/admin/leads" element={<AdminPlaceholder />} />
-            <Route path="/admin/applications" element={<AdminPlaceholder />} />
+            <Route path="/admin/leads" element={<Leads />} />
+            <Route path="/admin/applications" element={<Applications />} />
             <Route path="/admin/citations" element={<Citations />} />
             <Route path="/admin/internal-links" element={<InternalLinks />} />
             <Route path="/admin/system-check" element={<AdminPlaceholder />} />

@@ -2,7 +2,8 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle, ArrowRight, ArrowLeft } from "lucide-react";
+import { CheckCircle, ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const steps = [
   { id: 1, title: "About You" },
@@ -14,6 +15,7 @@ const steps = [
 export default function Apply() {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     // Step 1
     name: "",
@@ -47,12 +49,60 @@ export default function Apply() {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Application Submitted!",
-      description: "We'll review your application and reach out within 48 hours.",
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from("applications").insert({
+        full_name: formData.name,
+        email: formData.email,
+        phone: formData.phone || null,
+        business_name: formData.businessName,
+        business_stage: `${formData.industry} | ${formData.yearsInBusiness} | Team: ${formData.teamSize}`,
+        revenue_range: formData.annualRevenue,
+        challenges: formData.biggestChallenge,
+        goals: `${formData.goals}\n\nTimeline: ${formData.timeline}\nInvestment Ready: ${formData.investmentReady}`,
+        how_found_us: formData.howHeard,
+        notes: formData.additionalNotes || null,
+        status: "pending",
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Application Submitted!",
+        description: "We'll review your application and reach out within 48 hours.",
+      });
+      
+      // Reset form
+      setCurrentStep(1);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        businessName: "",
+        industry: "",
+        yearsInBusiness: "",
+        annualRevenue: "",
+        teamSize: "",
+        biggestChallenge: "",
+        goals: "",
+        timeline: "",
+        investmentReady: "",
+        howHeard: "",
+        additionalNotes: "",
+      });
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -410,9 +460,18 @@ export default function Apply() {
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                 ) : (
-                  <Button type="submit" variant="gold">
-                    Submit Application
-                    <ArrowRight className="w-4 h-4" />
+                  <Button type="submit" variant="gold" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        Submit Application
+                        <ArrowRight className="w-4 h-4" />
+                      </>
+                    )}
                   </Button>
                 )}
               </div>
