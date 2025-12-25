@@ -195,6 +195,11 @@ export default function Dashboard() {
                 { phase: 'Phase 3', title: 'FAQ System', status: 'complete', progress: 100 },
                 { phase: 'Phase 4', title: 'Blog System', status: 'complete', progress: 100 },
                 { phase: 'Phase 5', title: 'Dashboard Control Layer', status: 'complete', progress: 100 },
+                { phase: 'Phase 6', title: 'Citation Engine', status: 'complete', progress: 100 },
+                { phase: 'Phase 7', title: 'Internal Linking', status: 'complete', progress: 100 },
+                { phase: 'Phase 8', title: 'AI Cluster Generator', status: 'complete', progress: 100 },
+                { phase: 'Phase 9', title: 'Lead Capture + Intake', status: 'complete', progress: 100 },
+                { phase: 'Phase 10', title: 'SEO/Sitemap Hardening', status: 'next', progress: 0 },
               ].map((phase) => (
                 <div key={phase.phase} className="space-y-2">
                   <div className="flex items-center justify-between">
