@@ -11,7 +11,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Pencil, Trash2, Eye, ExternalLink } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, EyeOff, ExternalLink, RefreshCw, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import { useBlogPosts, useCreateBlogPost, useUpdateBlogPost, useDeleteBlogPost, BlogPost, BlogPostInsert } from '@/hooks/useBlogPosts';
 import { useAuthors } from '@/hooks/useAuthors';
 import { useReviewers } from '@/hooks/useReviewers';
@@ -43,6 +45,7 @@ export default function ArticlesAdmin() {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [isRegeneratingImage, setIsRegeneratingImage] = useState(false);
 
   const [formData, setFormData] = useState<BlogPostInsert>({
     slug: '',
@@ -136,6 +139,36 @@ export default function ArticlesAdmin() {
     });
   };
 
+  const regenerateImage = async () => {
+    if (!formData.title) {
+      toast.error('Please enter a title first');
+      return;
+    }
+
+    setIsRegeneratingImage(true);
+    try {
+      const topic = topics?.find(t => t.id === formData.topic_id);
+      const { data, error } = await supabase.functions.invoke('generate-blog-image', {
+        body: { 
+          title: formData.title,
+          topic: topic?.name || 'Business',
+          description: formData.excerpt || formData.meta_description || ''
+        }
+      });
+
+      if (error) throw error;
+      if (data?.imageUrl) {
+        setFormData({ ...formData, cover_image_url: data.imageUrl });
+        toast.success('Cover image generated successfully');
+      }
+    } catch (error: any) {
+      console.error('Image generation error:', error);
+      toast.error('Failed to generate image: ' + (error.message || 'Unknown error'));
+    } finally {
+      setIsRegeneratingImage(false);
+    }
+  };
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -211,13 +244,38 @@ export default function ArticlesAdmin() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="cover_image_url">Cover Image URL</Label>
-                      <Input
-                        id="cover_image_url"
-                        value={formData.cover_image_url || ''}
-                        onChange={(e) => setFormData({ ...formData, cover_image_url: e.target.value || null })}
-                        placeholder="https://..."
-                      />
+                      <Label htmlFor="cover_image_url">Cover Image</Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id="cover_image_url"
+                          value={formData.cover_image_url || ''}
+                          onChange={(e) => setFormData({ ...formData, cover_image_url: e.target.value || null })}
+                          placeholder="https://..."
+                          className="flex-1"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={regenerateImage}
+                          disabled={isRegeneratingImage}
+                        >
+                          {isRegeneratingImage ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <RefreshCw className="h-4 w-4" />
+                          )}
+                          <span className="ml-2">{formData.cover_image_url ? 'Regenerate' : 'Generate'}</span>
+                        </Button>
+                      </div>
+                      {formData.cover_image_url && (
+                        <div className="mt-2">
+                          <img
+                            src={formData.cover_image_url}
+                            alt="Cover preview"
+                            className="max-h-32 rounded-md object-cover"
+                          />
+                        </div>
+                      )}
                     </div>
                   </TabsContent>
 
@@ -383,14 +441,24 @@ export default function ArticlesAdmin() {
                         }
                       </TableCell>
                       <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
+                        <div className="flex justify-end gap-1">
                           <Button
-                            variant="ghost"
-                            size="icon"
+                            variant={post.published ? "default" : "outline"}
+                            size="sm"
                             onClick={() => togglePublished(post)}
-                            title={post.published ? 'Unpublish' : 'Publish'}
+                            className={post.published ? "bg-green-600 hover:bg-green-700" : ""}
                           >
-                            <Eye className="h-4 w-4" />
+                            {post.published ? (
+                              <>
+                                <EyeOff className="h-3 w-3 mr-1" />
+                                Unpublish
+                              </>
+                            ) : (
+                              <>
+                                <Eye className="h-3 w-3 mr-1" />
+                                Publish
+                              </>
+                            )}
                           </Button>
                           {post.published && (
                             <Button
