@@ -1,6 +1,7 @@
+import { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,6 +16,101 @@ export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const { data: post, isLoading, error } = useBlogPostBySlug(slug || '');
   const { data: allPosts } = useBlogPosts(true);
+
+  const markdownComponents: Components = useMemo(() => {
+    const components: Components = {
+      p: ({ children }) => {
+        // Many of the generated articles use "**Section Title**" on its own line.
+        // Render that pattern as a heading for consistent spacing on mobile (no :has() dependency).
+        const childArray = Array.isArray(children) ? children : [children];
+        const only = childArray.length === 1 ? childArray[0] : null;
+
+        // If the paragraph is only a single strong element, promote it to an H2.
+        if (
+          only &&
+          typeof only === 'object' &&
+          (only as any)?.type === 'strong' &&
+          Array.isArray((only as any)?.props?.children)
+        ) {
+          const strongText = (only as any).props.children
+            .filter((c: any) => typeof c === 'string')
+            .join('')
+            .trim();
+
+          if (strongText.length > 0) {
+            return (
+              <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mt-10 mb-4">
+                {(only as any).props.children}
+              </h2>
+            );
+          }
+        }
+
+        return <p className="text-foreground leading-[1.8] mb-6">{children}</p>;
+      },
+      h2: ({ children }) => (
+        <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mt-10 mb-4">{children}</h2>
+      ),
+      h3: ({ children }) => (
+        <h3 className="font-display text-lg md:text-xl font-semibold text-foreground mt-8 mb-3">{children}</h3>
+      ),
+      ul: ({ children }) => <ul className="my-6 pl-6 space-y-2 text-foreground">{children}</ul>,
+      ol: ({ children }) => <ol className="my-6 pl-6 space-y-2 text-foreground">{children}</ol>,
+      li: ({ children }) => <li className="leading-relaxed mb-1 text-foreground">{children}</li>,
+      blockquote: ({ children }) => (
+        <blockquote className="my-8 border-l-2 border-primary/50 pl-4 italic text-muted-foreground">{children}</blockquote>
+      ),
+      a: ({ href, children }) => (
+        <a href={href} className="text-primary underline underline-offset-2 hover:text-primary/80">
+          {children}
+        </a>
+      ),
+      hr: () => <hr className="my-10 border-border" />,
+      img: ({ alt, ...props }) => (
+        // eslint-disable-next-line jsx-a11y/alt-text
+        <img {...props} alt={alt || ''} loading="lazy" className="my-8 rounded-xl" />
+      ),
+    };
+
+    return components;
+  }, []);
+
+  const normalizeMarkdownSpacing = (raw: string) => {
+    const content = (raw || '').replace(/\r\n/g, '\n');
+    const lines = content.split('\n');
+
+    const isSpecialLine = (line: string) => {
+      const t = line.trim();
+      return (
+        t.startsWith('#') ||
+        t.startsWith('>') ||
+        /^[-*+]\s+/.test(t) ||
+        /^\d+\.\s+/.test(t) ||
+        t.startsWith('```')
+      );
+    };
+
+    // If content already has paragraph breaks, don't over-process it.
+    const hasParagraphBreaks = content.includes('\n\n');
+    if (hasParagraphBreaks) return content;
+
+    const out: string[] = [];
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i] ?? '';
+      const next = lines[i + 1] ?? '';
+      out.push(line);
+
+      if (line.trim() === '' || next.trim() === '') continue;
+      if (isSpecialLine(line) || isSpecialLine(next)) continue;
+
+      // Force an empty line so Markdown renders separate paragraphs on mobile.
+      out.push('');
+    }
+
+    return out.join('\n');
+  };
+
+  const markdownContent = useMemo(() => normalizeMarkdownSpacing(post?.content || ''), [post?.content]);
 
   // Get related posts from same topic
   const relatedPosts = allPosts?.filter((p: any) => 
@@ -169,24 +265,9 @@ export default function BlogPost() {
             )}
 
             {/* Content */}
-            <div className="prose prose-base md:prose-lg max-w-none mb-12 
-              prose-headings:font-display prose-headings:text-foreground prose-headings:mt-10 prose-headings:mb-5
-              prose-h2:text-xl prose-h2:md:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-4
-              prose-h3:text-lg prose-h3:md:text-xl prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-3
-              prose-p:text-foreground prose-p:leading-[1.8] prose-p:mb-6 prose-p:text-base prose-p:md:text-lg
-              prose-strong:text-foreground prose-strong:font-bold
-              prose-a:text-primary hover:prose-a:text-primary/80 prose-a:underline prose-a:underline-offset-2
-              prose-ul:text-foreground prose-ul:my-6 prose-ul:pl-6 prose-ul:space-y-2
-              prose-ol:text-foreground prose-ol:my-6 prose-ol:pl-6 prose-ol:space-y-2
-              prose-li:text-foreground prose-li:mb-3 prose-li:leading-relaxed
-              prose-blockquote:text-muted-foreground prose-blockquote:border-primary/50 prose-blockquote:my-8 prose-blockquote:pl-4 prose-blockquote:italic
-              prose-hr:my-10 prose-hr:border-border
-              prose-img:rounded-xl prose-img:my-8
-              [&>*:first-child]:mt-0
-              [&_p:has(strong:first-child)]:mt-10
-              [&_p>strong:first-child]:block [&_p>strong:first-child]:text-lg [&_p>strong:first-child]:md:text-xl [&_p>strong:first-child]:font-display [&_p>strong:first-child]:mb-3">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {post.content || ''}
+            <div className="prose max-w-none mb-12">
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                {markdownContent}
               </ReactMarkdown>
             </div>
 
