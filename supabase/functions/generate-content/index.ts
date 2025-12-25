@@ -76,8 +76,33 @@ Format: [{"question": "...", "answer": "...", "speakable_answer": "..."}]`;
       systemPrompt = `You are an expert content strategist for ${siteName}.
 ${masterPrompt}
 
-Generate blog post outlines that demonstrate E-E-A-T and are SEO-optimized.
-Each post should be educational, actionable, and aligned with business coaching expertise.`;
+Generate blog post content that demonstrates E-E-A-T and is SEO-optimized.
+Each post should be educational, actionable, and aligned with business coaching expertise.
+
+CRITICAL FORMATTING REQUIREMENTS - FOLLOW EXACTLY:
+1. Use proper Markdown headings: ## for main sections, ### for subsections
+2. ALWAYS add a blank line between EVERY paragraph (this is essential for mobile readability)
+3. ALWAYS add a blank line before and after headings
+4. Keep paragraphs to 3-5 sentences maximum
+5. Use bullet points or numbered lists where appropriate
+6. Never use **bold text** as section headers - use proper ## or ### headings instead
+
+Example of CORRECT formatting:
+## Introduction
+
+First paragraph here with 3-5 sentences. This explains the topic clearly.
+
+Second paragraph here. Notice the blank line between paragraphs.
+
+## Main Section Title
+
+Content for this section. Keep it readable and scannable.
+
+Another paragraph in this section with proper spacing.
+
+### Subsection If Needed
+
+More detailed content here.`;
 
       userPrompt = `Generate ${count} blog post ideas for the topic: "${topic.name}"
 Topic Description: ${topic.description || "N/A"}
@@ -87,13 +112,15 @@ Category: ${(topic.category as any)?.name || "General"}
 Return a JSON array with objects containing:
 - title: SEO-optimized title (50-60 chars)
 - excerpt: Meta description (150-160 chars)
-- content: Full blog post content (800-1200 words, with headers marked as ## H2)
+- content: Full blog post content (800-1200 words). MUST use proper ## headings (NOT **bold**) and MUST have blank lines between every paragraph for mobile readability.
 - meta_title: SEO title tag
 - meta_description: SEO meta description
 - speakable_summary: 2-3 sentence summary for voice assistants
 - reading_time_minutes: Estimated reading time
 
-Format: [{"title": "...", "excerpt": "...", "content": "...", "meta_title": "...", "meta_description": "...", "speakable_summary": "...", "reading_time_minutes": 5}]`;
+IMPORTANT: The "content" field MUST have blank lines (\\n\\n) between paragraphs and around headings. Do NOT use **bold** for section titles.
+
+Format: [{"title": "...", "excerpt": "...", "content": "## Introduction\\n\\nFirst paragraph...\\n\\nSecond paragraph...\\n\\n## Next Section\\n\\n...", "meta_title": "...", "meta_description": "...", "speakable_summary": "...", "reading_time_minutes": 5}]`;
     } else {
       throw new Error("Invalid content type. Use 'faq' or 'blog'");
     }
