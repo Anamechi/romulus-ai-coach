@@ -55,7 +55,8 @@ const managementNavItems = [
 const systemNavItems = [
   { title: 'Citations', url: '/admin/citations', icon: LinkIcon },
   { title: 'Internal Links', url: '/admin/internal-links', icon: LinkIcon },
-  { title: 'System Check', url: '/admin/system-check', icon: ShieldCheck },
+  { title: 'Authority Sources', url: '/admin/authority-sources', icon: ShieldCheck },
+  { title: 'Linking Engine', url: '/admin/linking-engine', icon: Zap },
   { title: 'Settings', url: '/admin/settings', icon: Settings },
 ];
 
