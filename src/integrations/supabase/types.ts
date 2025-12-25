@@ -564,6 +564,128 @@ export type Database = {
         }
         Relationships: []
       }
+      linking_scan_items: {
+        Row: {
+          applied: boolean | null
+          applied_at: string | null
+          content_id: string
+          content_title: string | null
+          content_type: string
+          created_at: string
+          external_citations: Json | null
+          external_links_added: number | null
+          faq_suggestion: Json | null
+          id: string
+          internal_links_added: number | null
+          links_after: number | null
+          links_before: number | null
+          pillar_page_suggestion: Json | null
+          related_post_suggestion: Json | null
+          scan_run_id: string
+          status: Database["public"]["Enums"]["linking_scan_status"]
+          updated_at: string
+          warnings: Json | null
+        }
+        Insert: {
+          applied?: boolean | null
+          applied_at?: string | null
+          content_id: string
+          content_title?: string | null
+          content_type: string
+          created_at?: string
+          external_citations?: Json | null
+          external_links_added?: number | null
+          faq_suggestion?: Json | null
+          id?: string
+          internal_links_added?: number | null
+          links_after?: number | null
+          links_before?: number | null
+          pillar_page_suggestion?: Json | null
+          related_post_suggestion?: Json | null
+          scan_run_id: string
+          status?: Database["public"]["Enums"]["linking_scan_status"]
+          updated_at?: string
+          warnings?: Json | null
+        }
+        Update: {
+          applied?: boolean | null
+          applied_at?: string | null
+          content_id?: string
+          content_title?: string | null
+          content_type?: string
+          created_at?: string
+          external_citations?: Json | null
+          external_links_added?: number | null
+          faq_suggestion?: Json | null
+          id?: string
+          internal_links_added?: number | null
+          links_after?: number | null
+          links_before?: number | null
+          pillar_page_suggestion?: Json | null
+          related_post_suggestion?: Json | null
+          scan_run_id?: string
+          status?: Database["public"]["Enums"]["linking_scan_status"]
+          updated_at?: string
+          warnings?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "linking_scan_items_scan_run_id_fkey"
+            columns: ["scan_run_id"]
+            isOneToOne: false
+            referencedRelation: "linking_scan_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      linking_scan_runs: {
+        Row: {
+          completed_at: string | null
+          content_types: string[]
+          created_at: string
+          error_message: string | null
+          id: string
+          max_external_links: number
+          mode: Database["public"]["Enums"]["linking_scan_mode"]
+          processed_items: number | null
+          run_by: string | null
+          started_at: string
+          status: Database["public"]["Enums"]["linking_scan_status"]
+          topic_filter: string | null
+          total_items: number | null
+        }
+        Insert: {
+          completed_at?: string | null
+          content_types?: string[]
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          max_external_links?: number
+          mode?: Database["public"]["Enums"]["linking_scan_mode"]
+          processed_items?: number | null
+          run_by?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["linking_scan_status"]
+          topic_filter?: string | null
+          total_items?: number | null
+        }
+        Update: {
+          completed_at?: string | null
+          content_types?: string[]
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          max_external_links?: number
+          mode?: Database["public"]["Enums"]["linking_scan_mode"]
+          processed_items?: number | null
+          run_by?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["linking_scan_status"]
+          topic_filter?: string | null
+          total_items?: number | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -715,6 +837,8 @@ export type Database = {
         | "Tech_Security"
         | "Explainers"
       funnel_stage: "TOFU" | "MOFU" | "BOFU"
+      linking_scan_mode: "report_only" | "auto_apply"
+      linking_scan_status: "pending" | "running" | "completed" | "failed"
       trust_level: "Primary" | "Secondary"
     }
     CompositeTypes: {
@@ -853,6 +977,8 @@ export const Constants = {
         "Explainers",
       ],
       funnel_stage: ["TOFU", "MOFU", "BOFU"],
+      linking_scan_mode: ["report_only", "auto_apply"],
+      linking_scan_status: ["pending", "running", "completed", "failed"],
       trust_level: ["Primary", "Secondary"],
     },
   },

@@ -31,6 +31,8 @@ import InternalLinks from "./pages/admin/InternalLinks";
 import ClusterGenerator from "./pages/admin/ClusterGenerator";
 import Leads from "./pages/admin/Leads";
 import Applications from "./pages/admin/Applications";
+import AuthoritySources from "./pages/admin/AuthoritySources";
+import LinkingEngine from "./pages/admin/LinkingEngine";
 
 const queryClient = new QueryClient();
 
@@ -66,7 +68,8 @@ const App = () => (
             <Route path="/admin/applications" element={<Applications />} />
             <Route path="/admin/citations" element={<Citations />} />
             <Route path="/admin/internal-links" element={<InternalLinks />} />
-            <Route path="/admin/system-check" element={<AdminPlaceholder />} />
+            <Route path="/admin/authority-sources" element={<AuthoritySources />} />
+            <Route path="/admin/linking-engine" element={<LinkingEngine />} />
             <Route path="/admin/settings" element={<Settings />} />
             <Route path="/admin/cluster-generator" element={<ClusterGenerator />} />
             
