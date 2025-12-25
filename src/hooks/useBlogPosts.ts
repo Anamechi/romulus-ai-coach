@@ -25,9 +25,9 @@ export interface BlogPost {
 
 export type BlogPostInsert = Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>;
 
-export function useBlogPosts(publishedOnly = false) {
+export function useBlogPosts(publishedOnly = false, authCacheKey?: string | null) {
   return useQuery({
-    queryKey: ['blog_posts', publishedOnly],
+    queryKey: ['blog_posts', publishedOnly, authCacheKey ?? null],
     queryFn: async () => {
       let query = supabase
         .from('blog_posts')

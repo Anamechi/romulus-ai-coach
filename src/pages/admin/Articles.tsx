@@ -18,6 +18,7 @@ import { useBlogPosts, useCreateBlogPost, useUpdateBlogPost, useDeleteBlogPost, 
 import { useAuthors } from '@/hooks/useAuthors';
 import { useReviewers } from '@/hooks/useReviewers';
 import { useTopics } from '@/hooks/useTopics';
+import { useAuth } from '@/hooks/useAuth';
 import { format } from 'date-fns';
 
 const generateSlug = (text: string) => {
@@ -35,7 +36,8 @@ const calculateReadingTime = (content: string) => {
 };
 
 export default function ArticlesAdmin() {
-  const { data: posts, isLoading } = useBlogPosts();
+  const { user } = useAuth();
+  const { data: posts, isLoading } = useBlogPosts(false, user?.id);
   const { data: authors } = useAuthors();
   const { data: reviewers } = useReviewers();
   const { data: topics } = useTopics();

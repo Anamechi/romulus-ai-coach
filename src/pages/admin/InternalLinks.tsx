@@ -11,20 +11,22 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Pencil, Trash2, Link as LinkIcon, FileText, HelpCircle, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
-import { 
-  useInternalLinks, 
-  useCreateInternalLink, 
-  useUpdateInternalLink, 
+import {
+  useInternalLinks,
+  useCreateInternalLink,
+  useUpdateInternalLink,
   useDeleteInternalLink,
   InternalLink,
-  InternalLinkInsert 
+  InternalLinkInsert
 } from '@/hooks/useInternalLinks';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import { useFaqs } from '@/hooks/useFaqs';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function InternalLinks() {
+  const { user } = useAuth();
   const { data: links, isLoading } = useInternalLinks();
-  const { data: blogPosts } = useBlogPosts();
+  const { data: blogPosts } = useBlogPosts(false, user?.id);
   const { data: faqs } = useFaqs();
   const createLink = useCreateInternalLink();
   const updateLink = useUpdateInternalLink();
