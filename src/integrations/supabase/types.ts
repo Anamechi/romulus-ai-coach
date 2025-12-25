@@ -65,6 +65,42 @@ export type Database = {
         }
         Relationships: []
       }
+      authority_sources: {
+        Row: {
+          category: Database["public"]["Enums"]["authority_source_category"]
+          created_at: string
+          domain: string
+          id: string
+          is_active: boolean
+          name: string
+          notes: string | null
+          trust_level: Database["public"]["Enums"]["trust_level"]
+          updated_at: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["authority_source_category"]
+          created_at?: string
+          domain: string
+          id?: string
+          is_active?: boolean
+          name: string
+          notes?: string | null
+          trust_level?: Database["public"]["Enums"]["trust_level"]
+          updated_at?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["authority_source_category"]
+          created_at?: string
+          domain?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          notes?: string | null
+          trust_level?: Database["public"]["Enums"]["trust_level"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       authors: {
         Row: {
           bio: string | null
@@ -671,7 +707,15 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      authority_source_category:
+        | "SEO_AEO"
+        | "AI_Automation"
+        | "Business_Leadership"
+        | "Data_Research"
+        | "Tech_Security"
+        | "Explainers"
       funnel_stage: "TOFU" | "MOFU" | "BOFU"
+      trust_level: "Primary" | "Secondary"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -800,7 +844,16 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      authority_source_category: [
+        "SEO_AEO",
+        "AI_Automation",
+        "Business_Leadership",
+        "Data_Research",
+        "Tech_Security",
+        "Explainers",
+      ],
       funnel_stage: ["TOFU", "MOFU", "BOFU"],
+      trust_level: ["Primary", "Secondary"],
     },
   },
 } as const
