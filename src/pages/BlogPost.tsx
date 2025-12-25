@@ -170,17 +170,21 @@ export default function BlogPost() {
 
             {/* Content */}
             <div className="prose prose-base md:prose-lg max-w-none mb-12 
-              prose-headings:font-display prose-headings:text-foreground prose-headings:mt-8 prose-headings:mb-4
-              prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-6
-              prose-strong:text-foreground 
+              prose-headings:font-display prose-headings:text-foreground prose-headings:mt-10 prose-headings:mb-5
+              prose-h2:text-xl prose-h2:md:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-4
+              prose-h3:text-lg prose-h3:md:text-xl prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-3
+              prose-p:text-foreground prose-p:leading-[1.8] prose-p:mb-6 prose-p:text-base prose-p:md:text-lg
+              prose-strong:text-foreground prose-strong:font-bold
               prose-a:text-primary hover:prose-a:text-primary/80 prose-a:underline prose-a:underline-offset-2
-              prose-ul:text-foreground prose-ul:my-6 prose-ul:pl-6
-              prose-ol:text-foreground prose-ol:my-6 prose-ol:pl-6
-              prose-li:text-foreground prose-li:mb-2
-              prose-blockquote:text-muted-foreground prose-blockquote:border-primary/50 prose-blockquote:my-6 prose-blockquote:pl-4 prose-blockquote:italic
-              prose-hr:my-8 prose-hr:border-border
+              prose-ul:text-foreground prose-ul:my-6 prose-ul:pl-6 prose-ul:space-y-2
+              prose-ol:text-foreground prose-ol:my-6 prose-ol:pl-6 prose-ol:space-y-2
+              prose-li:text-foreground prose-li:mb-3 prose-li:leading-relaxed
+              prose-blockquote:text-muted-foreground prose-blockquote:border-primary/50 prose-blockquote:my-8 prose-blockquote:pl-4 prose-blockquote:italic
+              prose-hr:my-10 prose-hr:border-border
               prose-img:rounded-xl prose-img:my-8
-              [&>*:first-child]:mt-0">
+              [&>*:first-child]:mt-0
+              [&_p:has(strong:first-child)]:mt-10
+              [&_p>strong:first-child]:block [&_p>strong:first-child]:text-lg [&_p>strong:first-child]:md:text-xl [&_p>strong:first-child]:font-display [&_p>strong:first-child]:mb-3">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {post.content || ''}
               </ReactMarkdown>
