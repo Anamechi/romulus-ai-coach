@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Pencil, Trash2, Eye, Code } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, EyeOff, Code, ExternalLink } from 'lucide-react';
 import { useFaqs, useCreateFaq, useUpdateFaq, useDeleteFaq, FAQ, FAQInsert } from '@/hooks/useFaqs';
 import { useAuthors } from '@/hooks/useAuthors';
 import { useReviewers } from '@/hooks/useReviewers';
@@ -315,15 +315,36 @@ export default function FAQsAdmin() {
                       <TableCell>{getStatusBadge(faq.status)}</TableCell>
                       <TableCell>{faq.featured ? '⭐' : '-'}</TableCell>
                       <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
+                        <div className="flex justify-end gap-1">
                           <Button
-                            variant="ghost"
-                            size="icon"
+                            variant={faq.status === 'published' ? "default" : "outline"}
+                            size="sm"
                             onClick={() => toggleStatus(faq)}
-                            title={faq.status === 'published' ? 'Unpublish' : 'Publish'}
+                            className={faq.status === 'published' ? "bg-green-600 hover:bg-green-700" : ""}
                           >
-                            <Eye className="h-4 w-4" />
+                            {faq.status === 'published' ? (
+                              <>
+                                <EyeOff className="h-3 w-3 mr-1" />
+                                Unpublish
+                              </>
+                            ) : (
+                              <>
+                                <Eye className="h-3 w-3 mr-1" />
+                                Publish
+                              </>
+                            )}
                           </Button>
+                          {faq.status === 'published' && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              asChild
+                            >
+                              <a href={`/faq/${faq.slug}`} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="h-4 w-4" />
+                              </a>
+                            </Button>
+                          )}
                           <Button
                             variant="ghost"
                             size="icon"
