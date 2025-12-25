@@ -169,7 +169,18 @@ export default function BlogPost() {
             )}
 
             {/* Content */}
-            <div className="prose prose-lg max-w-none mb-12 prose-headings:font-display prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary hover:prose-a:text-primary/80 prose-ul:text-foreground prose-ol:text-foreground prose-li:text-foreground prose-blockquote:text-muted-foreground prose-blockquote:border-primary/50">
+            <div className="prose prose-base md:prose-lg max-w-none mb-12 
+              prose-headings:font-display prose-headings:text-foreground prose-headings:mt-8 prose-headings:mb-4
+              prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-6
+              prose-strong:text-foreground 
+              prose-a:text-primary hover:prose-a:text-primary/80 prose-a:underline prose-a:underline-offset-2
+              prose-ul:text-foreground prose-ul:my-6 prose-ul:pl-6
+              prose-ol:text-foreground prose-ol:my-6 prose-ol:pl-6
+              prose-li:text-foreground prose-li:mb-2
+              prose-blockquote:text-muted-foreground prose-blockquote:border-primary/50 prose-blockquote:my-6 prose-blockquote:pl-4 prose-blockquote:italic
+              prose-hr:my-8 prose-hr:border-border
+              prose-img:rounded-xl prose-img:my-8
+              [&>*:first-child]:mt-0">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {post.content || ''}
               </ReactMarkdown>
