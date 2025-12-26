@@ -1,0 +1,201 @@
+import { useParams, Link } from "react-router-dom";
+import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
+import { BreadcrumbSchema } from "@/components/seo/StructuredData";
+import { useQAPage } from "@/hooks/useQAPages";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, User, CheckCircle } from "lucide-react";
+import { Helmet } from "react-helmet-async";
+
+export default function QADetail() {
+  const { slug } = useParams<{ slug: string }>();
+  const { data: qa, isLoading, error } = useQAPage(slug || "");
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-3xl mx-auto">
+            <Skeleton className="h-8 w-64 mb-4" />
+            <Skeleton className="h-12 w-full mb-8" />
+            <Skeleton className="h-64 w-full" />
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error || !qa) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-2xl font-bold mb-4">Q&A Not Found</h1>
+            <p className="text-muted-foreground mb-8">
+              The Q&A page you're looking for doesn't exist or has been removed.
+            </p>
+            <Link
+              to="/qa"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Q&A
+            </Link>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  const breadcrumbItems = [
+    { name: "Home", url: "/" },
+    { name: "Q&A", url: "/qa" },
+    { name: qa.question.substring(0, 50), url: `/qa/${qa.slug}` },
+  ];
+
+  // QAPage JSON-LD Schema
+  const qaSchema = {
+    "@context": "https://schema.org",
+    "@type": "QAPage",
+    mainEntity: {
+      "@type": "Question",
+      name: qa.question,
+      text: qa.question,
+      answerCount: 1,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: qa.answer,
+        ...(qa.author && {
+          author: {
+            "@type": "Person",
+            name: qa.author.full_name,
+            ...(qa.author.credentials && { jobTitle: qa.author.credentials }),
+          },
+        }),
+      },
+    },
+  };
+
+  // Speakable schema if speakable_answer exists
+  const speakableSchema = qa.speakable_answer
+    ? {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["#speakable-answer"],
+        },
+      }
+    : null;
+
+  return (
+    <Layout>
+      <SEOHead
+        title={qa.meta_title || `${qa.question} | Dr. Romulus MBA`}
+        description={
+          qa.meta_description || qa.answer.substring(0, 160)
+        }
+        canonicalUrl={`/qa/${qa.slug}`}
+      />
+      <BreadcrumbSchema items={breadcrumbItems} />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(qaSchema)}</script>
+        {speakableSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(speakableSchema)}
+          </script>
+        )}
+      </Helmet>
+
+      <article className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto">
+          {/* Back link */}
+          <Link
+            to="/qa"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Q&A
+          </Link>
+
+          {/* Topic badge */}
+          {qa.topic && (
+            <Badge variant="secondary" className="mb-4">
+              {qa.topic.name}
+            </Badge>
+          )}
+
+          {/* Question */}
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-8">
+            {qa.question}
+          </h1>
+
+          {/* Speakable Answer Block */}
+          {qa.speakable_answer && (
+            <div
+              id="speakable-answer"
+              className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8"
+            >
+              <p className="text-lg font-medium text-foreground">
+                {qa.speakable_answer}
+              </p>
+            </div>
+          )}
+
+          {/* Full Answer */}
+          <div className="prose prose-lg max-w-none mb-12">
+            <p className="text-foreground whitespace-pre-wrap">{qa.answer}</p>
+          </div>
+
+          {/* Author/Reviewer Attribution */}
+          <div className="border-t border-border pt-8">
+            <div className="flex flex-wrap gap-6">
+              {qa.author && (
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-full">
+                    <User className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">
+                      Answered by
+                    </p>
+                    <p className="font-medium text-foreground">
+                      {qa.author.full_name}
+                    </p>
+                    {qa.author.credentials && (
+                      <p className="text-sm text-muted-foreground">
+                        {qa.author.credentials}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {qa.reviewer && (
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-accent/10 rounded-full">
+                    <CheckCircle className="h-5 w-5 text-accent" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">
+                      Reviewed by
+                    </p>
+                    <p className="font-medium text-foreground">
+                      {qa.reviewer.full_name}
+                    </p>
+                    {qa.reviewer.credentials && (
+                      <p className="text-sm text-muted-foreground">
+                        {qa.reviewer.credentials}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </article>
+    </Layout>
+  );
+}
