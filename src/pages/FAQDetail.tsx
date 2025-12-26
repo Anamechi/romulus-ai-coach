@@ -1,11 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, User, CheckCircle } from 'lucide-react';
 import { useFaqBySlug, useFaqs } from '@/hooks/useFaqs';
 import { LinkedContent } from '@/components/content/LinkedContent';
+import { SEOHead } from '@/components/seo/SEOHead';
+import { SingleFAQSchema, BreadcrumbSchema } from '@/components/seo/StructuredData';
 
 export default function FAQDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -42,44 +43,25 @@ export default function FAQDetail() {
     );
   }
 
-  // JSON-LD Schema for individual FAQ page
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }]
-  };
-
-  // Speakable schema if speakable_answer exists
-  const speakableSchema = faq.speakable_answer ? {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "speakable": {
-      "@type": "SpeakableSpecification",
-      "cssSelector": [".speakable-answer"]
-    }
-  } : null;
-
   return (
     <Layout>
-      <Helmet>
-        <title>{faq.question} | FAQ | Dr. Romulus MBA</title>
-        <meta name="description" content={faq.answer.slice(0, 160)} />
-        <script type="application/ld+json">
-          {JSON.stringify(faqSchema)}
-        </script>
-        {speakableSchema && (
-          <script type="application/ld+json">
-            {JSON.stringify(speakableSchema)}
-          </script>
-        )}
-      </Helmet>
+      <SEOHead
+        title={`${faq.question} | FAQ`}
+        description={faq.answer.slice(0, 160)}
+        canonicalUrl={`/faq/${faq.slug}`}
+        ogType="website"
+      />
+      <SingleFAQSchema
+        question={faq.question}
+        answer={faq.answer}
+        slug={faq.slug}
+        speakableAnswer={faq.speakable_answer || undefined}
+      />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "/" },
+        { name: "FAQ", url: "/faq" },
+        { name: faq.question, url: `/faq/${faq.slug}` }
+      ]} />
 
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-3xl mx-auto">

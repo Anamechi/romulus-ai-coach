@@ -1,9 +1,10 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { ArrowRight, Award, BookOpen, Building, CheckCircle, GraduationCap, Heart, Lightbulb, Target, Users } from "lucide-react";
 import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
+import { SEOHead } from "@/components/seo/SEOHead";
+import { PersonSchema, BreadcrumbSchema } from "@/components/seo/StructuredData";
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -96,13 +97,18 @@ const values = [
 export default function About() {
   return (
     <Layout>
-      <Helmet>
-        <title>About Dr. Deanna Romulus, MBA | Business Strategist & Educator</title>
-        <meta name="description" content="Dr. Deanna Romulus, MBA is a business strategist, educator, and automation consultant helping entrepreneurs build structured, credible, and scalable businesses." />
-        <script type="application/ld+json">
-          {JSON.stringify(personSchema)}
-        </script>
-      </Helmet>
+      <SEOHead
+        title="About Dr. Deanna Romulus, MBA | Business Strategist & Educator"
+        description="Dr. Deanna Romulus, MBA is a business strategist, educator, and automation consultant helping entrepreneurs build structured, credible, and scalable businesses."
+        canonicalUrl="/about"
+        ogType="website"
+        author="Dr. Deanna Romulus"
+      />
+      <PersonSchema />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "/" },
+        { name: "About", url: "/about" }
+      ]} />
       
       {/* Hero Section */}
       <section className="py-24 bg-muted/30">

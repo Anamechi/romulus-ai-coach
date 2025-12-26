@@ -1,10 +1,11 @@
 import { Layout } from "@/components/layout/Layout";
-import { Helmet } from "react-helmet-async";
 import { HeroSection } from "@/components/home/HeroSection";
 import { ProgramsPreview } from "@/components/home/ProgramsPreview";
 import { AboutPreview } from "@/components/home/AboutPreview";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { CTASection } from "@/components/home/CTASection";
+import { SEOHead } from "@/components/seo/SEOHead";
+import { OrganizationSchema, WebSiteSchema, PersonSchema } from "@/components/seo/StructuredData";
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -56,13 +57,14 @@ const personSchema = {
 const Index = () => {
   return (
     <Layout>
-      <Helmet>
-        <title>Dr. Romulus MBA | Business Strategy, Automation & Coaching</title>
-        <meta name="description" content="Dr. Deanna Romulus helps entrepreneurs build businesses that are structured, credible, and scalable. Expert coaching in business strategy, fundability, and automation." />
-        <script type="application/ld+json">
-          {JSON.stringify(personSchema)}
-        </script>
-      </Helmet>
+      <SEOHead
+        title="Dr. Romulus MBA | Business Strategy, Automation & Coaching"
+        description="Dr. Deanna Romulus helps entrepreneurs build businesses that are structured, credible, and scalable. Expert coaching in business strategy, fundability, and automation."
+        canonicalUrl="/"
+        ogType="website"
+      />
+      <OrganizationSchema />
+      <WebSiteSchema />
       <HeroSection />
       <ProgramsPreview />
       <AboutPreview />

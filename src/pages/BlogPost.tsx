@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import ReactMarkdown, { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Layout } from '@/components/layout/Layout';
@@ -11,6 +10,8 @@ import { ChevronLeft, Clock, User, CheckCircle, Calendar } from 'lucide-react';
 import { useBlogPostBySlug, useBlogPosts } from '@/hooks/useBlogPosts';
 import { LinkedContent } from '@/components/content/LinkedContent';
 import { format } from 'date-fns';
+import { SEOHead } from '@/components/seo/SEOHead';
+import { ArticleSchema, BreadcrumbSchema } from '@/components/seo/StructuredData';
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -142,66 +143,40 @@ export default function BlogPost() {
     );
   }
 
-  // Article JSON-LD Schema
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": post.title,
-    "description": post.meta_description || post.excerpt,
-    "image": post.cover_image_url,
-    "datePublished": post.published_at,
-    "dateModified": post.updated_at,
-    "author": post.author ? {
-      "@type": "Person",
-      "name": (post.author as any).full_name,
-      "jobTitle": (post.author as any).credentials,
-      "description": (post.author as any).bio
-    } : {
-      "@type": "Person",
-      "name": "Dr. Deanna Romulus"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Dr. Romulus MBA",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${window.location.origin}/logo.png`
-      }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${window.location.origin}/blog/${post.slug}`
-    }
-  };
-
-  // Speakable schema if speakable_summary exists
-  const speakableSchema = post.speakable_summary ? {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "speakable": {
-      "@type": "SpeakableSpecification",
-      "cssSelector": [".speakable-content"]
-    }
-  } : null;
+  const authorData = post.author ? {
+    name: (post.author as any).full_name,
+    credentials: (post.author as any).credentials,
+    bio: (post.author as any).bio
+  } : undefined;
 
   return (
     <Layout>
-      <Helmet>
-        <title>{post.meta_title || post.title} | Dr. Romulus MBA</title>
-        <meta name="description" content={post.meta_description || post.excerpt || ''} />
-        <meta property="og:title" content={post.meta_title || post.title} />
-        <meta property="og:description" content={post.meta_description || post.excerpt || ''} />
-        {post.cover_image_url && <meta property="og:image" content={post.cover_image_url} />}
-        <meta property="og:type" content="article" />
-        <script type="application/ld+json">
-          {JSON.stringify(articleSchema)}
-        </script>
-        {speakableSchema && (
-          <script type="application/ld+json">
-            {JSON.stringify(speakableSchema)}
-          </script>
-        )}
-      </Helmet>
+      <SEOHead
+        title={post.meta_title || post.title}
+        description={post.meta_description || post.excerpt || ''}
+        canonicalUrl={`/blog/${post.slug}`}
+        ogType="article"
+        ogImage={post.cover_image_url || undefined}
+        ogImageAlt={post.title}
+        publishedTime={post.published_at || undefined}
+        modifiedTime={post.updated_at}
+        author={authorData?.name}
+      />
+      <ArticleSchema
+        title={post.title}
+        description={post.meta_description || post.excerpt || ''}
+        slug={post.slug}
+        imageUrl={post.cover_image_url || undefined}
+        publishedAt={post.published_at || undefined}
+        updatedAt={post.updated_at}
+        author={authorData}
+        speakableSummary={post.speakable_summary || undefined}
+      />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "/" },
+        { name: "Blog", url: "/blog" },
+        { name: post.title, url: `/blog/${post.slug}` }
+      ]} />
 
       <article className="py-16">
         <div className="container mx-auto px-4">
