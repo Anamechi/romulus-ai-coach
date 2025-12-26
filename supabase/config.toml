@@ -14,3 +14,9 @@ verify_jwt = false
 
 [functions.sitemap]
 verify_jwt = false
+
+[functions.chatbot-respond]
+verify_jwt = false
+
+[functions.check-citation-health]
+verify_jwt = false
