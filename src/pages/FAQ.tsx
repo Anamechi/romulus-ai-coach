@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { ChevronRight } from 'lucide-react';
 import { useFaqs } from '@/hooks/useFaqs';
+import { SEOHead } from '@/components/seo/SEOHead';
+import { FAQSchema, BreadcrumbSchema } from '@/components/seo/StructuredData';
 
 export default function FAQ() {
   const { data: faqs, isLoading } = useFaqs(true);
@@ -22,29 +22,25 @@ export default function FAQ() {
     return acc;
   }, {});
 
-  // Generate FAQPage schema for all FAQs
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs?.map((faq: any) => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    })) || []
-  };
+  // Prepare FAQ items for schema
+  const faqItems = faqs?.map((faq: any) => ({
+    question: faq.question,
+    answer: faq.answer
+  })) || [];
 
   return (
     <Layout>
-      <Helmet>
-        <title>Frequently Asked Questions | Dr. Romulus MBA</title>
-        <meta name="description" content="Find answers to common questions about business coaching, MBA programs, and automation strategies with Dr. Romulus." />
-        <script type="application/ld+json">
-          {JSON.stringify(faqSchema)}
-        </script>
-      </Helmet>
+      <SEOHead
+        title="Frequently Asked Questions"
+        description="Find answers to common questions about business coaching, MBA programs, and automation strategies with Dr. Romulus."
+        canonicalUrl="/faq"
+        ogType="website"
+      />
+      <FAQSchema faqs={faqItems} />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "/" },
+        { name: "FAQ", url: "/faq" }
+      ]} />
 
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
