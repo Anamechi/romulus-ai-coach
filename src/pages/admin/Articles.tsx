@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Pencil, Trash2, Eye, EyeOff, ExternalLink, RefreshCw, Loader2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, EyeOff, ExternalLink, RefreshCw, Loader2, History, AlertTriangle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useBlogPosts, useCreateBlogPost, useUpdateBlogPost, useDeleteBlogPost, BlogPost, BlogPostInsert } from '@/hooks/useBlogPosts';
@@ -19,6 +19,11 @@ import { useAuthors } from '@/hooks/useAuthors';
 import { useReviewers } from '@/hooks/useReviewers';
 import { useTopics } from '@/hooks/useTopics';
 import { useAuth } from '@/hooks/useAuth';
+import { useSaveRevision } from '@/hooks/useContentRevisions';
+import { useLogAudit } from '@/hooks/useAuditLog';
+import { validateBlogPostForPublish, ValidationResult } from '@/lib/validateContentForPublish';
+import { RevisionHistory } from '@/components/admin/RevisionHistory';
+import { ValidationDisplay } from '@/components/admin/ValidationDisplay';
 import { format } from 'date-fns';
 
 const generateSlug = (text: string) => {
@@ -44,11 +49,15 @@ export default function ArticlesAdmin() {
   const createPost = useCreateBlogPost();
   const updatePost = useUpdateBlogPost();
   const deletePost = useDeleteBlogPost();
+  const saveRevision = useSaveRevision();
+  const logAudit = useLogAudit();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [isRegeneratingImage, setIsRegeneratingImage] = useState(false);
   const [customImagePrompt, setCustomImagePrompt] = useState('');
+  const [validation, setValidation] = useState<ValidationResult | null>(null);
+  const [forcePublish, setForcePublish] = useState(false);
 
   const [formData, setFormData] = useState<BlogPostInsert>({
     slug: '',
@@ -87,19 +96,65 @@ export default function ArticlesAdmin() {
       speakable_summary: null,
     });
     setEditingPost(null);
+    setValidation(null);
+    setForcePublish(false);
+  };
+
+  const runValidation = () => {
+    const result = validateBlogPostForPublish(formData);
+    setValidation(result);
+    return result;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Run validation if trying to publish
+    if (formData.published && !forcePublish) {
+      const result = runValidation();
+      if (!result.isValid) {
+        toast.error('Please fix validation errors before publishing');
+        return;
+      }
+    }
+
     const dataToSubmit = {
       ...formData,
       reading_time_minutes: formData.content ? calculateReadingTime(formData.content) : null,
     };
     
     if (editingPost) {
+      // Save revision before updating
+      await saveRevision.mutateAsync({
+        entity_type: 'blog_post',
+        entity_id: editingPost.id,
+        content_snapshot: {
+          title: editingPost.title,
+          content: editingPost.content,
+          excerpt: editingPost.excerpt,
+          meta_title: editingPost.meta_title,
+          meta_description: editingPost.meta_description,
+          speakable_summary: editingPost.speakable_summary,
+        },
+        change_summary: `Updated from "${editingPost.title}"`,
+      });
+
       await updatePost.mutateAsync({ id: editingPost.id, ...dataToSubmit });
+      
+      logAudit.mutate({
+        action: 'update',
+        entity_type: 'blog_post',
+        entity_id: editingPost.id,
+        entity_title: dataToSubmit.title,
+        changes: { before: editingPost.title, after: dataToSubmit.title },
+      });
     } else {
-      await createPost.mutateAsync(dataToSubmit);
+      const result = await createPost.mutateAsync(dataToSubmit);
+      logAudit.mutate({
+        action: 'create',
+        entity_type: 'blog_post',
+        entity_title: dataToSubmit.title,
+      });
     }
     setIsDialogOpen(false);
     resetForm();
@@ -124,21 +179,73 @@ export default function ArticlesAdmin() {
       reading_time_minutes: post.reading_time_minutes,
       speakable_summary: post.speakable_summary,
     });
+    setValidation(null);
     setIsDialogOpen(true);
   };
 
   const handleDelete = async (id: string) => {
+    const post = posts?.find(p => p.id === id);
     if (confirm('Are you sure you want to delete this article?')) {
       await deletePost.mutateAsync(id);
+      logAudit.mutate({
+        action: 'delete',
+        entity_type: 'blog_post',
+        entity_id: id,
+        entity_title: post?.title,
+      });
     }
   };
 
   const togglePublished = async (post: BlogPost) => {
     const newPublished = !post.published;
+    
+    // Validate before publishing
+    if (newPublished) {
+      const result = validateBlogPostForPublish({
+        title: post.title,
+        content: post.content || undefined,
+        excerpt: post.excerpt || undefined,
+        author_id: post.author_id,
+        reviewer_id: post.reviewer_id,
+        topic_id: post.topic_id,
+        meta_title: post.meta_title,
+        meta_description: post.meta_description,
+        speakable_summary: post.speakable_summary,
+        cover_image_url: post.cover_image_url,
+      });
+      if (!result.isValid) {
+        toast.error('Cannot publish: ' + result.errors.map(e => e.message).join(', '));
+        return;
+      }
+      if (result.warnings.length > 0) {
+        toast.warning('Published with warnings: ' + result.warnings.map(w => w.message).join(', '));
+      }
+    }
+
     await updatePost.mutateAsync({ 
       id: post.id, 
       published: newPublished,
       published_at: newPublished && !post.published_at ? new Date().toISOString() : post.published_at
+    });
+
+    logAudit.mutate({
+      action: newPublished ? 'publish' : 'unpublish',
+      entity_type: 'blog_post',
+      entity_id: post.id,
+      entity_title: post.title,
+    });
+  };
+
+  const handleRestoreRevision = async (snapshot: Record<string, any>) => {
+    if (!editingPost) return;
+    setFormData({
+      ...formData,
+      title: snapshot.title || formData.title,
+      content: snapshot.content || formData.content,
+      excerpt: snapshot.excerpt || formData.excerpt,
+      meta_title: snapshot.meta_title || formData.meta_title,
+      meta_description: snapshot.meta_description || formData.meta_description,
+      speakable_summary: snapshot.speakable_summary || formData.speakable_summary,
     });
   };
 
@@ -191,10 +298,16 @@ export default function ArticlesAdmin() {
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <Tabs defaultValue="content" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3">
+                  <TabsList className="grid w-full grid-cols-4">
                     <TabsTrigger value="content">Content</TabsTrigger>
                     <TabsTrigger value="meta">SEO & Meta</TabsTrigger>
                     <TabsTrigger value="settings">Settings</TabsTrigger>
+                    {editingPost && (
+                      <TabsTrigger value="history">
+                        <History className="h-4 w-4 mr-1" />
+                        History
+                      </TabsTrigger>
+                    )}
                   </TabsList>
 
                   <TabsContent value="content" className="space-y-4 mt-4">
@@ -279,8 +392,8 @@ export default function ArticlesAdmin() {
                           id="customImagePrompt"
                           value={customImagePrompt}
                           onChange={(e) => setCustomImagePrompt(e.target.value)}
-                          placeholder="Describe the exact image you want, e.g., 'A professional businessman standing on a mountain peak at sunrise, looking over a vast city, symbolizing leadership and vision'"
-                          rows={3}
+                          placeholder="Describe the exact image you want"
+                          rows={2}
                           className="mt-1"
                         />
                       </div>
@@ -329,7 +442,7 @@ export default function ArticlesAdmin() {
                         value={formData.speakable_summary || ''}
                         onChange={(e) => setFormData({ ...formData, speakable_summary: e.target.value || null })}
                         rows={3}
-                        placeholder="A concise, voice-friendly summary"
+                        placeholder="A concise, voice-friendly summary (40-60 words)"
                       />
                     </div>
                   </TabsContent>
@@ -387,11 +500,14 @@ export default function ArticlesAdmin() {
                         <Switch
                           id="published"
                           checked={formData.published}
-                          onCheckedChange={(checked) => setFormData({ 
-                            ...formData, 
-                            published: checked,
-                            published_at: checked && !formData.published_at ? new Date().toISOString() : formData.published_at
-                          })}
+                          onCheckedChange={(checked) => {
+                            setFormData({ 
+                              ...formData, 
+                              published: checked,
+                              published_at: checked && !formData.published_at ? new Date().toISOString() : formData.published_at
+                            });
+                            if (checked) runValidation();
+                          }}
                         />
                         <Label htmlFor="published">Published</Label>
                       </div>
@@ -405,7 +521,35 @@ export default function ArticlesAdmin() {
                         <Label htmlFor="featured">Featured</Label>
                       </div>
                     </div>
+
+                    {formData.published && (
+                      <div className="pt-4 space-y-4">
+                        <Button type="button" variant="outline" onClick={runValidation}>
+                          <AlertTriangle className="h-4 w-4 mr-2" />
+                          Validate for Publishing
+                        </Button>
+                        <ValidationDisplay validation={validation} />
+                        {validation && !validation.isValid && (
+                          <div className="flex items-center gap-2">
+                            <Switch id="force" checked={forcePublish} onCheckedChange={setForcePublish} />
+                            <Label htmlFor="force" className="text-sm text-muted-foreground">
+                              Force publish anyway (not recommended)
+                            </Label>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </TabsContent>
+
+                  {editingPost && (
+                    <TabsContent value="history" className="mt-4">
+                      <RevisionHistory
+                        entityType="blog_post"
+                        entityId={editingPost.id}
+                        onRestore={handleRestoreRevision}
+                      />
+                    </TabsContent>
+                  )}
                 </Tabs>
 
                 <Button type="submit" className="w-full">
