@@ -2,15 +2,24 @@ import { useParams, Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { BreadcrumbSchema } from "@/components/seo/StructuredData";
-import { useQAPage } from "@/hooks/useQAPages";
+import { useQAPage, usePublishedQAPages } from "@/hooks/useQAPages";
+import { LinkedContent } from "@/components/content/LinkedContent";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { ArrowLeft, User, CheckCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 export default function QADetail() {
   const { slug } = useParams<{ slug: string }>();
   const { data: qa, isLoading, error } = useQAPage(slug || "");
+  const { data: allQAs } = usePublishedQAPages();
+
+  // Get related Q&As from same topic
+  const relatedQAs = allQAs?.filter((q: any) => 
+    q.topic_id === qa?.topic_id && q.id !== qa?.id
+  ).slice(0, 3) || [];
 
   if (isLoading) {
     return (
@@ -194,6 +203,38 @@ export default function QADetail() {
               )}
             </div>
           </div>
+
+          {/* Linked Content */}
+          <LinkedContent sourceType="faq" sourceId={qa.id} title="Related Resources" />
+
+          {/* Related Q&As from Same Topic */}
+          {relatedQAs.length > 0 && (
+            <section className="mt-12 pt-12 border-t border-border">
+              <h2 className="text-2xl font-display font-semibold mb-6">Related Questions</h2>
+              <div className="space-y-4">
+                {relatedQAs.map((relatedQA: any) => (
+                  <Link key={relatedQA.id} to={`/qa/${relatedQA.slug}`}>
+                    <Card className="hover:border-primary/50 transition-colors">
+                      <CardContent className="p-4">
+                        <h3 className="font-medium">{relatedQA.question}</h3>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* CTA */}
+          <section className="mt-12 pt-12 border-t border-border text-center">
+            <h2 className="text-xl font-display font-semibold mb-4">Still have questions?</h2>
+            <p className="text-muted-foreground mb-6">
+              Can't find what you're looking for? Get in touch and we'll help you out.
+            </p>
+            <Link to="/contact">
+              <Button size="lg">Contact Us</Button>
+            </Link>
+          </section>
         </div>
       </article>
     </Layout>
