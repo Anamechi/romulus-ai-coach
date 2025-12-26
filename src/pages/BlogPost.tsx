@@ -12,6 +12,7 @@ import { LinkedContent } from '@/components/content/LinkedContent';
 import { format } from 'date-fns';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { ArticleSchema, BreadcrumbSchema } from '@/components/seo/StructuredData';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -223,13 +224,13 @@ export default function BlogPost() {
 
             {/* Cover Image */}
             {post.cover_image_url && (
-              <div className="aspect-video rounded-2xl overflow-hidden mb-8">
-                <img 
-                  src={post.cover_image_url} 
-                  alt={post.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <OptimizedImage 
+                src={post.cover_image_url} 
+                alt={post.title}
+                containerClassName="aspect-video rounded-2xl mb-8"
+                className="w-full h-full"
+                priority
+              />
             )}
 
             {/* Speakable Summary (for voice assistants) */}
@@ -251,12 +252,13 @@ export default function BlogPost() {
               <div className="border-t border-b py-8 mb-12">
                 {post.author && (
                   <div className="flex items-start gap-4 mb-6">
-                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 overflow-hidden">
                       {(post.author as any).photo_url ? (
-                        <img 
+                        <OptimizedImage 
                           src={(post.author as any).photo_url} 
                           alt={(post.author as any).full_name}
-                          className="w-full h-full rounded-full object-cover"
+                          containerClassName="w-full h-full rounded-full"
+                          className="w-full h-full rounded-full"
                         />
                       ) : (
                         <User className="h-8 w-8 text-primary" />
@@ -299,13 +301,12 @@ export default function BlogPost() {
                       <Card className="hover:border-primary/50 transition-colors">
                         <CardContent className="p-4 flex items-center gap-4">
                           {relatedPost.cover_image_url && (
-                            <div className="w-20 h-14 rounded overflow-hidden flex-shrink-0">
-                              <img 
-                                src={relatedPost.cover_image_url} 
-                                alt={relatedPost.title}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
+                            <OptimizedImage 
+                              src={relatedPost.cover_image_url} 
+                              alt={relatedPost.title}
+                              containerClassName="w-20 h-14 rounded flex-shrink-0"
+                              className="w-full h-full"
+                            />
                           )}
                           <div>
                             <h3 className="font-medium">{relatedPost.title}</h3>
