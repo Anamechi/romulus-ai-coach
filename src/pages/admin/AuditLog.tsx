@@ -40,12 +40,12 @@ export default function AuditLog() {
 
         {/* Filters */}
         <div className="flex gap-4 flex-wrap">
-          <Select value={entityType} onValueChange={setEntityType}>
+          <Select value={entityType} onValueChange={(v) => setEntityType(v === "all" ? "" : v)}>
             <SelectTrigger className="w-48">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Types</SelectItem>
+              <SelectItem value="all">All Types</SelectItem>
               <SelectItem value="blog_post">Blog Posts</SelectItem>
               <SelectItem value="faq">FAQs</SelectItem>
               <SelectItem value="qa_page">Q&A Pages</SelectItem>
@@ -55,12 +55,12 @@ export default function AuditLog() {
             </SelectContent>
           </Select>
 
-          <Select value={action} onValueChange={setAction}>
+          <Select value={action} onValueChange={(v) => setAction(v === "all" ? "" : v)}>
             <SelectTrigger className="w-48">
               <SelectValue placeholder="Filter by action" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Actions</SelectItem>
+              <SelectItem value="all">All Actions</SelectItem>
               <SelectItem value="create">Create</SelectItem>
               <SelectItem value="update">Update</SelectItem>
               <SelectItem value="delete">Delete</SelectItem>
