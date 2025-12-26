@@ -15,12 +15,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Pencil, Trash2, Eye, EyeOff, AlertTriangle, History } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, AlertTriangle, History, Upload } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { validateQAPageForPublish, ValidationResult } from "@/lib/validateContentForPublish";
 import { ValidationDisplay } from "@/components/admin/ValidationDisplay";
 import { RevisionHistory } from "@/components/admin/RevisionHistory";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function QAPages() {
   const { data: qaPages, isLoading } = useQAPages();
@@ -32,12 +33,19 @@ export default function QAPages() {
   const deleteQA = useDeleteQAPage();
   const logAudit = useLogAudit();
   const saveRevision = useSaveRevision();
+  const queryClient = useQueryClient();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isBulkOpen, setIsBulkOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("edit");
   const [editingQA, setEditingQA] = useState<any>(null);
   const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [forcePublish, setForcePublish] = useState(false);
+  const [bulkInput, setBulkInput] = useState("");
+  const [bulkTopicId, setBulkTopicId] = useState("");
+  const [bulkAuthorId, setBulkAuthorId] = useState("");
+  const [bulkReviewerId, setBulkReviewerId] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
   const [form, setForm] = useState({
     question: "", answer: "", slug: "", speakable_answer: "",
     status: "draft", topic_id: "", author_id: "", reviewer_id: "",
@@ -49,6 +57,89 @@ export default function QAPages() {
     setEditingQA(null);
     setValidation(null);
     setForcePublish(false);
+  };
+
+  const generateSlug = (question: string) => {
+    return question
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .slice(0, 60);
+  };
+
+  const handleBulkCreate = async () => {
+    if (!bulkInput.trim()) {
+      toast.error("Please enter Q&A pairs");
+      return;
+    }
+
+    setIsProcessing(true);
+    let items: { question: string; answer: string }[] = [];
+
+    // Try parsing as JSON first
+    try {
+      const parsed = JSON.parse(bulkInput);
+      if (Array.isArray(parsed)) {
+        items = parsed.filter(item => item.question && item.answer);
+      }
+    } catch {
+      // Parse as line-separated format: Q: question / A: answer or question||answer
+      const lines = bulkInput.split('\n').filter(l => l.trim());
+      let currentQ = '';
+      
+      for (const line of lines) {
+        if (line.includes('||')) {
+          const [q, a] = line.split('||').map(s => s.trim());
+          if (q && a) items.push({ question: q, answer: a });
+        } else if (line.toLowerCase().startsWith('q:')) {
+          currentQ = line.slice(2).trim();
+        } else if (line.toLowerCase().startsWith('a:') && currentQ) {
+          items.push({ question: currentQ, answer: line.slice(2).trim() });
+          currentQ = '';
+        }
+      }
+    }
+
+    if (items.length === 0) {
+      toast.error("No valid Q&A pairs found. Use JSON format or Q:/A: or question||answer format");
+      setIsProcessing(false);
+      return;
+    }
+
+    let created = 0;
+    let failed = 0;
+
+    for (const item of items) {
+      try {
+        await createQA.mutateAsync({
+          question: item.question,
+          answer: item.answer,
+          slug: generateSlug(item.question),
+          status: 'draft',
+          topic_id: bulkTopicId || null,
+          author_id: bulkAuthorId || null,
+          reviewer_id: bulkReviewerId || null,
+        });
+        created++;
+      } catch (error) {
+        failed++;
+        console.error('Failed to create Q&A:', item.question, error);
+      }
+    }
+
+    queryClient.invalidateQueries({ queryKey: ['qa-pages'] });
+    setIsProcessing(false);
+    setIsBulkOpen(false);
+    setBulkInput("");
+    setBulkTopicId("");
+    setBulkAuthorId("");
+    setBulkReviewerId("");
+    
+    if (failed > 0) {
+      toast.warning(`Created ${created} Q&A pages, ${failed} failed`);
+    } else {
+      toast.success(`Created ${created} Q&A pages successfully`);
+    }
   };
 
   const runValidation = () => {
@@ -176,10 +267,76 @@ export default function QAPages() {
             <h1 className="text-3xl font-bold">Q&A Pages</h1>
             <p className="text-muted-foreground">Manage short question and answer pages for AEO.</p>
           </div>
-          <Dialog open={isOpen} onOpenChange={(o) => { setIsOpen(o); if (!o) { resetForm(); setActiveTab('edit'); } }}>
-            <DialogTrigger asChild>
-              <Button><Plus className="h-4 w-4 mr-2" />Add Q&A</Button>
-            </DialogTrigger>
+          <div className="flex gap-2">
+            <Dialog open={isBulkOpen} onOpenChange={setIsBulkOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline"><Upload className="h-4 w-4 mr-2" />Bulk Create</Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader><DialogTitle>Bulk Create Q&A Pages</DialogTitle></DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <Label>Q&A Pairs</Label>
+                    <Textarea 
+                      rows={10} 
+                      value={bulkInput} 
+                      onChange={(e) => setBulkInput(e.target.value)}
+                      placeholder={`Enter Q&A pairs in one of these formats:
+
+JSON format:
+[{"question": "What is X?", "answer": "X is..."}, ...]
+
+Line format (Q:/A:):
+Q: What is X?
+A: X is...
+
+Or pipe format:
+What is X?||X is...
+What is Y?||Y is...`}
+                    />
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <Label>Topic (optional)</Label>
+                      <Select value={bulkTopicId} onValueChange={setBulkTopicId}>
+                        <SelectTrigger><SelectValue placeholder="Select topic" /></SelectTrigger>
+                        <SelectContent>
+                          {topics?.map((t) => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Author (optional)</Label>
+                      <Select value={bulkAuthorId} onValueChange={setBulkAuthorId}>
+                        <SelectTrigger><SelectValue placeholder="Select author" /></SelectTrigger>
+                        <SelectContent>
+                          {authors?.map((a) => <SelectItem key={a.id} value={a.id}>{a.full_name}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Reviewer (optional)</Label>
+                      <Select value={bulkReviewerId} onValueChange={setBulkReviewerId}>
+                        <SelectTrigger><SelectValue placeholder="Select reviewer" /></SelectTrigger>
+                        <SelectContent>
+                          {reviewers?.map((r) => <SelectItem key={r.id} value={r.id}>{r.full_name}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    All Q&A pages will be created as drafts. Slugs will be auto-generated from questions.
+                  </p>
+                  <Button onClick={handleBulkCreate} disabled={isProcessing || !bulkInput.trim()} className="w-full">
+                    {isProcessing ? "Creating..." : "Create Q&A Pages"}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+            <Dialog open={isOpen} onOpenChange={(o) => { setIsOpen(o); if (!o) { resetForm(); setActiveTab('edit'); } }}>
+              <DialogTrigger asChild>
+                <Button><Plus className="h-4 w-4 mr-2" />Add Q&A</Button>
+              </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader><DialogTitle>{editingQA ? "Edit" : "Create"} Q&A Page</DialogTitle></DialogHeader>
               
@@ -352,6 +509,7 @@ export default function QAPages() {
               )}
             </DialogContent>
           </Dialog>
+          </div>
         </div>
         <Table>
           <TableHeader>
