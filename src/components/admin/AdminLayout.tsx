@@ -31,6 +31,9 @@ import {
   Link as LinkIcon,
   ShieldCheck,
   Zap,
+  History,
+  HeartPulse,
+  Bot,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -51,13 +54,17 @@ const managementNavItems = [
   { title: 'Reviewers', url: '/admin/reviewers', icon: Users },
   { title: 'Leads', url: '/admin/leads', icon: MessageSquare },
   { title: 'Applications', url: '/admin/applications', icon: FileText },
+  { title: 'Chatbot', url: '/admin/chatbot-conversations', icon: Bot },
 ];
 
 const systemNavItems = [
+  { title: 'System Check', url: '/admin/system-check', icon: ShieldCheck },
+  { title: 'Citation Health', url: '/admin/citation-health', icon: HeartPulse },
   { title: 'Citations', url: '/admin/citations', icon: LinkIcon },
   { title: 'Internal Links', url: '/admin/internal-links', icon: LinkIcon },
   { title: 'Authority Sources', url: '/admin/authority-sources', icon: ShieldCheck },
   { title: 'Linking Engine', url: '/admin/linking-engine', icon: Zap },
+  { title: 'Audit Log', url: '/admin/audit-log', icon: History },
   { title: 'Settings', url: '/admin/settings', icon: Settings },
 ];
 

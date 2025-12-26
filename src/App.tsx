@@ -43,6 +43,10 @@ const Applications = lazy(() => import("./pages/admin/Applications"));
 const AuthoritySources = lazy(() => import("./pages/admin/AuthoritySources"));
 const LinkingEngine = lazy(() => import("./pages/admin/LinkingEngine"));
 const QAPagesAdmin = lazy(() => import("./pages/admin/QAPages"));
+const SystemCheck = lazy(() => import("./pages/admin/SystemCheck"));
+const AuditLog = lazy(() => import("./pages/admin/AuditLog"));
+const ChatbotConversations = lazy(() => import("./pages/admin/ChatbotConversations"));
+const CitationHealth = lazy(() => import("./pages/admin/CitationHealth"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -97,6 +101,10 @@ const App = () => (
               <Route path="/admin/settings" element={<Settings />} />
               <Route path="/admin/cluster-generator" element={<ClusterGenerator />} />
               <Route path="/admin/qa-pages" element={<QAPagesAdmin />} />
+              <Route path="/admin/system-check" element={<SystemCheck />} />
+              <Route path="/admin/audit-log" element={<AuditLog />} />
+              <Route path="/admin/chatbot-conversations" element={<ChatbotConversations />} />
+              <Route path="/admin/citation-health" element={<CitationHealth />} />
               
               {/* Catch-all */}
               <Route path="*" element={<NotFound />} />
