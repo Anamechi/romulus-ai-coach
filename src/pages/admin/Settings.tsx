@@ -5,8 +5,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Save, Settings as SettingsIcon } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Loader2, Save, Settings as SettingsIcon, Flag } from 'lucide-react';
 import { useContentSettings, useUpdateContentSettings } from '@/hooks/useContentSettings';
+
+interface FeatureFlags {
+  chatbot_enabled?: boolean;
+  ai_content_generation?: boolean;
+  citation_health_checks?: boolean;
+  internal_linking_engine?: boolean;
+}
 
 export default function Settings() {
   const { data: settings, isLoading } = useContentSettings();
@@ -15,12 +23,26 @@ export default function Settings() {
   const [masterPrompt, setMasterPrompt] = useState('');
   const [siteName, setSiteName] = useState('');
   const [tagline, setTagline] = useState('');
+  const [featureFlags, setFeatureFlags] = useState<FeatureFlags>({
+    chatbot_enabled: true,
+    ai_content_generation: true,
+    citation_health_checks: true,
+    internal_linking_engine: true,
+  });
 
   useEffect(() => {
     if (settings) {
       setMasterPrompt(settings.master_content_prompt || '');
       setSiteName(settings.site_name || '');
       setTagline(settings.tagline || '');
+      if (settings.feature_flags) {
+        setFeatureFlags({
+          chatbot_enabled: (settings.feature_flags as FeatureFlags).chatbot_enabled ?? true,
+          ai_content_generation: (settings.feature_flags as FeatureFlags).ai_content_generation ?? true,
+          citation_health_checks: (settings.feature_flags as FeatureFlags).citation_health_checks ?? true,
+          internal_linking_engine: (settings.feature_flags as FeatureFlags).internal_linking_engine ?? true,
+        });
+      }
     }
   }, [settings]);
 
@@ -29,7 +51,15 @@ export default function Settings() {
       master_content_prompt: masterPrompt,
       site_name: siteName,
       tagline: tagline,
+      feature_flags: featureFlags as Record<string, boolean>,
     });
+  };
+
+  const toggleFlag = (flag: keyof FeatureFlags) => {
+    setFeatureFlags(prev => ({
+      ...prev,
+      [flag]: !prev[flag],
+    }));
   };
 
   if (isLoading) {
@@ -77,6 +107,63 @@ export default function Settings() {
                   value={tagline}
                   onChange={(e) => setTagline(e.target.value)}
                   placeholder="Business Coaching & Automation Authority"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Feature Flags */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Flag className="h-5 w-5" />
+                Feature Flags
+              </CardTitle>
+              <CardDescription>Enable or disable features across the platform</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label htmlFor="chatbot">Chatbot Widget</Label>
+                  <p className="text-sm text-muted-foreground">Show AI chatbot on public pages</p>
+                </div>
+                <Switch
+                  id="chatbot"
+                  checked={featureFlags.chatbot_enabled}
+                  onCheckedChange={() => toggleFlag('chatbot_enabled')}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label htmlFor="ai-gen">AI Content Generation</Label>
+                  <p className="text-sm text-muted-foreground">Enable cluster generator for AI-powered content</p>
+                </div>
+                <Switch
+                  id="ai-gen"
+                  checked={featureFlags.ai_content_generation}
+                  onCheckedChange={() => toggleFlag('ai_content_generation')}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label htmlFor="citation-health">Citation Health Checks</Label>
+                  <p className="text-sm text-muted-foreground">Run periodic link validation on citations</p>
+                </div>
+                <Switch
+                  id="citation-health"
+                  checked={featureFlags.citation_health_checks}
+                  onCheckedChange={() => toggleFlag('citation_health_checks')}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label htmlFor="linking-engine">Internal Linking Engine</Label>
+                  <p className="text-sm text-muted-foreground">AI-powered internal link suggestions</p>
+                </div>
+                <Switch
+                  id="linking-engine"
+                  checked={featureFlags.internal_linking_engine}
+                  onCheckedChange={() => toggleFlag('internal_linking_engine')}
                 />
               </div>
             </CardContent>
