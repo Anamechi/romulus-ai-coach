@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Clock, User, ArrowRight } from 'lucide-react';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { ArticleCardSkeleton } from '@/components/ui/PageLoader';
 
 export default function BlogIndex() {
   const { data: posts, isLoading } = useBlogPosts(true);
@@ -55,7 +57,11 @@ export default function BlogIndex() {
           </header>
 
           {isLoading ? (
-            <div className="text-center py-12">Loading...</div>
+            <div className="grid md:grid-cols-2 gap-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <ArticleCardSkeleton key={i} />
+              ))}
+            </div>
           ) : (
             <div className="space-y-12">
               {/* Featured Posts */}
@@ -69,13 +75,12 @@ export default function BlogIndex() {
                       <Link key={post.id} to={`/blog/${post.slug}`}>
                         <Card className="h-full hover:border-primary/50 transition-all duration-300 overflow-hidden group">
                           {post.cover_image_url && (
-                            <div className="aspect-video overflow-hidden">
-                              <img 
-                                src={post.cover_image_url} 
-                                alt={post.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              />
-                            </div>
+                            <OptimizedImage 
+                              src={post.cover_image_url} 
+                              alt={post.title}
+                              containerClassName="aspect-video"
+                              className="w-full h-full group-hover:scale-105 transition-transform duration-300"
+                            />
                           )}
                           <CardContent className="p-6">
                             {post.topic && (
@@ -121,13 +126,12 @@ export default function BlogIndex() {
                         <Card className="hover:border-primary/50 transition-all duration-300 group">
                           <CardContent className="p-6 flex gap-6">
                             {post.cover_image_url && (
-                              <div className="w-48 h-32 flex-shrink-0 rounded-lg overflow-hidden hidden md:block">
-                                <img 
-                                  src={post.cover_image_url} 
-                                  alt={post.title}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                />
-                              </div>
+                              <OptimizedImage 
+                                src={post.cover_image_url} 
+                                alt={post.title}
+                                containerClassName="w-48 h-32 flex-shrink-0 rounded-lg hidden md:block"
+                                className="w-full h-full group-hover:scale-105 transition-transform duration-300"
+                              />
                             )}
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
