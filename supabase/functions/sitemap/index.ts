@@ -35,6 +35,20 @@ serve(async (req) => {
       .eq("status", "published")
       .order("updated_at", { ascending: false });
 
+    // Fetch published Q&A pages
+    const { data: qaPages } = await supabase
+      .from("qa_pages")
+      .select("slug, updated_at")
+      .eq("status", "published")
+      .order("updated_at", { ascending: false });
+
+    // Fetch active topics
+    const { data: topics } = await supabase
+      .from("topics")
+      .select("slug, updated_at")
+      .eq("is_active", true)
+      .order("updated_at", { ascending: false });
+
     // Static pages with their priorities and change frequencies
     const staticPages = [
       { path: "/", priority: "1.0", changefreq: "weekly" },
@@ -42,6 +56,8 @@ serve(async (req) => {
       { path: "/programs", priority: "0.9", changefreq: "monthly" },
       { path: "/blog", priority: "0.9", changefreq: "daily" },
       { path: "/faq", priority: "0.7", changefreq: "weekly" },
+      { path: "/qa", priority: "0.7", changefreq: "weekly" },
+      { path: "/topics", priority: "0.7", changefreq: "weekly" },
       { path: "/contact", priority: "0.6", changefreq: "monthly" },
       { path: "/apply", priority: "0.8", changefreq: "monthly" },
     ];
@@ -91,6 +107,38 @@ serve(async (req) => {
     <loc>${baseUrl}/faq/${faq.slug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+`;
+      }
+    }
+
+    // Add Q&A pages
+    if (qaPages) {
+      for (const qa of qaPages) {
+        const lastmod = qa.updated_at
+          ? new Date(qa.updated_at).toISOString().split("T")[0]
+          : today;
+        sitemap += `  <url>
+    <loc>${baseUrl}/qa/${qa.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+`;
+      }
+    }
+
+    // Add Topic pages
+    if (topics) {
+      for (const topic of topics) {
+        const lastmod = topic.updated_at
+          ? new Date(topic.updated_at).toISOString().split("T")[0]
+          : today;
+        sitemap += `  <url>
+    <loc>${baseUrl}/topics/${topic.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
 `;
