@@ -72,6 +72,39 @@ Return a JSON array with objects containing:
 
 Format: [{"question": "...", "answer": "...", "speakable_answer": "..."}]`;
 
+    } else if (type === "qa_page") {
+      systemPrompt = `You are an expert content strategist for ${siteName}. 
+${masterPrompt}
+
+Generate Q&A page content optimized for Answer Engine Optimization (AEO).
+Each Q&A should be:
+- A standalone question that users would ask search engines or voice assistants
+- Directly answerable with authoritative, factual content
+- Formatted for featured snippets and AI answers
+- 200-400 words for the full answer
+- Include a speakable version (40-60 words) for voice search`;
+
+      userPrompt = `Generate ${count} Q&A pages for the topic: "${topic.name}"
+Topic Description: ${topic.description || "N/A"}
+Funnel Stage: ${topic.funnel_stage || "TOFU"}
+Category: ${(topic.category as any)?.name || "General"}
+
+Create questions that:
+1. Start with "What", "How", "Why", "When", "Can", "Should", "Is" etc.
+2. Are specific and searchable
+3. Match real user search intent
+4. Can be definitively answered
+
+Return a JSON array with objects containing:
+- question: The question (natural language, searchable)
+- slug: URL-friendly slug (lowercase, hyphens, max 60 chars)
+- answer: Comprehensive answer (200-400 words, use markdown for formatting)
+- speakable_answer: Concise voice-friendly version (40-60 words)
+- meta_title: SEO title (max 60 chars)
+- meta_description: SEO description (max 160 chars)
+
+Format: [{"question": "...", "slug": "...", "answer": "...", "speakable_answer": "...", "meta_title": "...", "meta_description": "..."}]`;
+
     } else if (type === "blog") {
       systemPrompt = `You are an expert content strategist for ${siteName}.
 ${masterPrompt}
@@ -122,7 +155,7 @@ IMPORTANT: The "content" field MUST have blank lines (\\n\\n) between paragraphs
 
 Format: [{"title": "...", "excerpt": "...", "content": "## Introduction\\n\\nFirst paragraph...\\n\\nSecond paragraph...\\n\\n## Next Section\\n\\n...", "meta_title": "...", "meta_description": "...", "speakable_summary": "...", "reading_time_minutes": 5}]`;
     } else {
-      throw new Error("Invalid content type. Use 'faq' or 'blog'");
+      throw new Error("Invalid content type. Use 'faq', 'qa_page', or 'blog'");
     }
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
