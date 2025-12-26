@@ -41,6 +41,7 @@ const mainNavItems = [
   { title: 'Dashboard', url: '/admin', icon: LayoutDashboard },
   { title: 'Blog Articles', url: '/admin/articles', icon: FileText },
   { title: 'FAQs', url: '/admin/faqs', icon: HelpCircle },
+  { title: 'Q&A Pages', url: '/admin/qa-pages', icon: MessageSquare },
   { title: 'Topics', url: '/admin/topics', icon: FolderOpen },
   { title: 'Categories', url: '/admin/categories', icon: FolderOpen },
 ];

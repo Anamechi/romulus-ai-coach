@@ -308,6 +308,94 @@ export type Database = {
           },
         ]
       }
+      chatbot_conversations: {
+        Row: {
+          converted_to: string | null
+          created_at: string
+          id: string
+          lead_id: string | null
+          messages: Json
+          status: string
+          updated_at: string
+          visitor_id: string
+        }
+        Insert: {
+          converted_to?: string | null
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          messages?: Json
+          status?: string
+          updated_at?: string
+          visitor_id: string
+        }
+        Update: {
+          converted_to?: string | null
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          messages?: Json
+          status?: string
+          updated_at?: string
+          visitor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chatbot_conversations_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      citation_health_checks: {
+        Row: {
+          citation_id: string
+          created_at: string
+          error_message: string | null
+          http_status: number | null
+          id: string
+          last_checked_at: string | null
+          redirect_url: string | null
+          response_time_ms: number | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          citation_id: string
+          created_at?: string
+          error_message?: string | null
+          http_status?: number | null
+          id?: string
+          last_checked_at?: string | null
+          redirect_url?: string | null
+          response_time_ms?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          citation_id?: string
+          created_at?: string
+          error_message?: string | null
+          http_status?: number | null
+          id?: string
+          last_checked_at?: string | null
+          redirect_url?: string | null
+          response_time_ms?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "citation_health_checks_citation_id_fkey"
+            columns: ["citation_id"]
+            isOneToOne: true
+            referencedRelation: "citations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       citations: {
         Row: {
           author_name: string | null
@@ -350,6 +438,39 @@ export type Database = {
         }
         Relationships: []
       }
+      content_revisions: {
+        Row: {
+          change_summary: string | null
+          content_snapshot: Json
+          created_at: string
+          created_by: string | null
+          entity_id: string
+          entity_type: string
+          id: string
+          revision_number: number
+        }
+        Insert: {
+          change_summary?: string | null
+          content_snapshot: Json
+          created_at?: string
+          created_by?: string | null
+          entity_id: string
+          entity_type: string
+          id?: string
+          revision_number: number
+        }
+        Update: {
+          change_summary?: string | null
+          content_snapshot?: Json
+          created_at?: string
+          created_by?: string | null
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          revision_number?: number
+        }
+        Relationships: []
+      }
       content_settings: {
         Row: {
           created_at: string
@@ -377,6 +498,42 @@ export type Database = {
           site_name?: string | null
           tagline?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      discovered_domains: {
+        Row: {
+          created_at: string
+          domain: string
+          first_seen_at: string
+          id: string
+          is_approved: boolean | null
+          is_blocked: boolean | null
+          notes: string | null
+          updated_at: string
+          usage_count: number | null
+        }
+        Insert: {
+          created_at?: string
+          domain: string
+          first_seen_at?: string
+          id?: string
+          is_approved?: boolean | null
+          is_blocked?: boolean | null
+          notes?: string | null
+          updated_at?: string
+          usage_count?: number | null
+        }
+        Update: {
+          created_at?: string
+          domain?: string
+          first_seen_at?: string
+          id?: string
+          is_approved?: boolean | null
+          is_blocked?: boolean | null
+          notes?: string | null
+          updated_at?: string
+          usage_count?: number | null
         }
         Relationships: []
       }
@@ -713,6 +870,82 @@ export type Database = {
         }
         Relationships: []
       }
+      qa_pages: {
+        Row: {
+          answer: string
+          author_id: string | null
+          created_at: string
+          featured: boolean | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          question: string
+          reviewer_id: string | null
+          slug: string
+          sort_order: number | null
+          speakable_answer: string | null
+          status: string
+          topic_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          author_id?: string | null
+          created_at?: string
+          featured?: boolean | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          question: string
+          reviewer_id?: string | null
+          slug: string
+          sort_order?: number | null
+          speakable_answer?: string | null
+          status?: string
+          topic_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          author_id?: string | null
+          created_at?: string
+          featured?: boolean | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          question?: string
+          reviewer_id?: string | null
+          slug?: string
+          sort_order?: number | null
+          speakable_answer?: string | null
+          status?: string
+          topic_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qa_pages_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "authors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qa_pages_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "reviewers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qa_pages_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reviewers: {
         Row: {
           bio: string | null
@@ -743,6 +976,45 @@ export type Database = {
           is_active?: boolean | null
           photo_url?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      system_audit_logs: {
+        Row: {
+          action: string
+          changes: Json | null
+          created_at: string
+          entity_id: string | null
+          entity_title: string | null
+          entity_type: string
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          changes?: Json | null
+          created_at?: string
+          entity_id?: string | null
+          entity_title?: string | null
+          entity_type: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          changes?: Json | null
+          created_at?: string
+          entity_id?: string | null
+          entity_title?: string | null
+          entity_type?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
