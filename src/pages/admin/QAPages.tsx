@@ -15,13 +15,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Pencil, Trash2, Eye, EyeOff, AlertTriangle, History, Upload } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, AlertTriangle, History, Upload, Sparkles, Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { validateQAPageForPublish, ValidationResult } from "@/lib/validateContentForPublish";
 import { ValidationDisplay } from "@/components/admin/ValidationDisplay";
 import { RevisionHistory } from "@/components/admin/RevisionHistory";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function QAPages() {
   const { data: qaPages, isLoading } = useQAPages();
@@ -37,6 +38,7 @@ export default function QAPages() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isBulkOpen, setIsBulkOpen] = useState(false);
+  const [isAIOpen, setIsAIOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("edit");
   const [editingQA, setEditingQA] = useState<any>(null);
   const [validation, setValidation] = useState<ValidationResult | null>(null);
@@ -46,6 +48,11 @@ export default function QAPages() {
   const [bulkAuthorId, setBulkAuthorId] = useState("");
   const [bulkReviewerId, setBulkReviewerId] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [aiTopicId, setAiTopicId] = useState("");
+  const [aiAuthorId, setAiAuthorId] = useState("");
+  const [aiReviewerId, setAiReviewerId] = useState("");
+  const [aiCount, setAiCount] = useState("5");
+  const [isGenerating, setIsGenerating] = useState(false);
   const [form, setForm] = useState({
     question: "", answer: "", slug: "", speakable_answer: "",
     status: "draft", topic_id: "", author_id: "", reviewer_id: "",
@@ -139,6 +146,76 @@ export default function QAPages() {
       toast.warning(`Created ${created} Q&A pages, ${failed} failed`);
     } else {
       toast.success(`Created ${created} Q&A pages successfully`);
+    }
+  };
+
+  const handleAIGenerate = async () => {
+    if (!aiTopicId) {
+      toast.error("Please select a topic");
+      return;
+    }
+
+    setIsGenerating(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-content', {
+        body: { 
+          type: 'qa_page', 
+          topicId: aiTopicId, 
+          count: parseInt(aiCount) 
+        }
+      });
+
+      if (error) throw error;
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      if (!data.items || data.items.length === 0) {
+        throw new Error("No Q&A pages generated");
+      }
+
+      let created = 0;
+      let failed = 0;
+
+      for (const item of data.items) {
+        try {
+          await createQA.mutateAsync({
+            question: item.question,
+            answer: item.answer,
+            slug: item.slug,
+            speakable_answer: item.speakable_answer || null,
+            meta_title: item.meta_title || null,
+            meta_description: item.meta_description || null,
+            status: 'draft',
+            topic_id: aiTopicId,
+            author_id: aiAuthorId || null,
+            reviewer_id: aiReviewerId || null,
+          });
+          created++;
+        } catch (err) {
+          failed++;
+          console.error('Failed to create Q&A:', item.question, err);
+        }
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['qa-pages'] });
+      setIsAIOpen(false);
+      setAiTopicId("");
+      setAiAuthorId("");
+      setAiReviewerId("");
+      
+      if (failed > 0) {
+        toast.warning(`Created ${created} Q&A pages, ${failed} failed`);
+      } else {
+        toast.success(`Generated and created ${created} Q&A pages for "${data.topic}"`);
+      }
+    } catch (error: any) {
+      console.error('AI generation error:', error);
+      toast.error(error.message || "Failed to generate Q&A pages");
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -329,6 +406,72 @@ What is Y?||Y is...`}
                   </p>
                   <Button onClick={handleBulkCreate} disabled={isProcessing || !bulkInput.trim()} className="w-full">
                     {isProcessing ? "Creating..." : "Create Q&A Pages"}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+            <Dialog open={isAIOpen} onOpenChange={setIsAIOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline"><Sparkles className="h-4 w-4 mr-2" />AI Generate</Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-md">
+                <DialogHeader><DialogTitle>AI Generate Q&A Pages</DialogTitle></DialogHeader>
+                <div className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Select a topic and the AI will generate Q&A pages based on your content settings and master prompt.
+                  </p>
+                  <div>
+                    <Label>Topic *</Label>
+                    <Select value={aiTopicId} onValueChange={setAiTopicId}>
+                      <SelectTrigger><SelectValue placeholder="Select a topic" /></SelectTrigger>
+                      <SelectContent>
+                        {topics?.map((t) => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label>Number of Q&As</Label>
+                    <Select value={aiCount} onValueChange={setAiCount}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="3">3 Q&A pages</SelectItem>
+                        <SelectItem value="5">5 Q&A pages</SelectItem>
+                        <SelectItem value="10">10 Q&A pages</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Author (optional)</Label>
+                      <Select value={aiAuthorId} onValueChange={setAiAuthorId}>
+                        <SelectTrigger><SelectValue placeholder="Select author" /></SelectTrigger>
+                        <SelectContent>
+                          {authors?.map((a) => <SelectItem key={a.id} value={a.id}>{a.full_name}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Reviewer (optional)</Label>
+                      <Select value={aiReviewerId} onValueChange={setAiReviewerId}>
+                        <SelectTrigger><SelectValue placeholder="Select reviewer" /></SelectTrigger>
+                        <SelectContent>
+                          {reviewers?.map((r) => <SelectItem key={r.id} value={r.id}>{r.full_name}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <Button onClick={handleAIGenerate} disabled={isGenerating || !aiTopicId} className="w-full">
+                    {isGenerating ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4 mr-2" />
+                        Generate Q&A Pages
+                      </>
+                    )}
                   </Button>
                 </div>
               </DialogContent>
