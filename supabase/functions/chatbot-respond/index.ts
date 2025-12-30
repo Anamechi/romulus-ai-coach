@@ -12,97 +12,158 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, conversation_id } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    const { messages, conversation_id, thread_id } = await req.json();
+    const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
+    const OPENAI_ASSISTANT_ID = Deno.env.get("OPENAI_ASSISTANT_ID");
 
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    if (!OPENAI_API_KEY) {
+      throw new Error("OPENAI_API_KEY is not configured");
     }
 
-    // Get master prompt from database
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    if (!OPENAI_ASSISTANT_ID) {
+      throw new Error("OPENAI_ASSISTANT_ID is not configured");
+    }
 
-    const { data: settings } = await supabase
-      .from("content_settings")
-      .select("master_content_prompt, site_name")
-      .limit(1)
-      .single();
+    // Get or create a thread
+    let currentThreadId = thread_id;
+    
+    if (!currentThreadId) {
+      // Create a new thread
+      const threadResponse = await fetch("https://api.openai.com/v1/threads", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+          "OpenAI-Beta": "assistants=v2",
+        },
+        body: JSON.stringify({}),
+      });
 
-    const masterPrompt = settings?.master_content_prompt || "";
-    const siteName = settings?.site_name || "Dr. Romulus MBA";
+      if (!threadResponse.ok) {
+        const errorText = await threadResponse.text();
+        console.error("Failed to create thread:", errorText);
+        throw new Error("Failed to create thread");
+      }
 
-    // Fetch relevant FAQs for context
-    const { data: faqs } = await supabase
-      .from("faqs")
-      .select("question, answer")
-      .eq("status", "published")
-      .limit(10);
+      const threadData = await threadResponse.json();
+      currentThreadId = threadData.id;
+    }
 
-    const faqContext = faqs?.map((f: any) => `Q: ${f.question}\nA: ${f.answer}`).join("\n\n") || "";
+    // Get the latest user message
+    const latestMessage = messages[messages.length - 1];
+    if (!latestMessage || latestMessage.role !== "user") {
+      throw new Error("No user message found");
+    }
 
-    const systemPrompt = `You are a helpful AI assistant for ${siteName}, a business coaching and consulting service.
-
-${masterPrompt}
-
-Your role is to:
-1. Answer questions about business coaching and consulting
-2. Help visitors understand our programs and services
-3. Guide them to the right resources (coaching application, contact, etc.)
-4. Be professional, warm, and helpful
-
-Key CTAs to recommend when appropriate:
-- Apply for coaching: /apply
-- Contact us: /contact
-- Learn about programs: /programs
-- Read our FAQ: /faq
-- Read our blog: /blog
-
-Here are some frequently asked questions for context:
-${faqContext}
-
-Keep responses concise and helpful. If someone seems interested in coaching, encourage them to apply.`;
-
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    // Add the message to the thread
+    const messageResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
+        "OpenAI-Beta": "assistants=v2",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...messages.map((m: any) => ({ role: m.role, content: m.content })),
-        ],
+        role: "user",
+        content: latestMessage.content,
       }),
     });
 
-    if (!response.ok) {
-      if (response.status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again later." }), {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "Service temporarily unavailable." }), {
-          status: 402,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-      const errorText = await response.text();
-      console.error("AI gateway error:", response.status, errorText);
-      throw new Error("AI gateway error");
+    if (!messageResponse.ok) {
+      const errorText = await messageResponse.text();
+      console.error("Failed to add message:", errorText);
+      throw new Error("Failed to add message to thread");
     }
 
-    const data = await response.json();
-    const assistantResponse = data.choices?.[0]?.message?.content || "I apologize, but I couldn't generate a response. Please try again.";
+    // Run the assistant
+    const runResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/runs`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+        "OpenAI-Beta": "assistants=v2",
+      },
+      body: JSON.stringify({
+        assistant_id: OPENAI_ASSISTANT_ID,
+      }),
+    });
+
+    if (!runResponse.ok) {
+      const errorText = await runResponse.text();
+      console.error("Failed to run assistant:", errorText);
+      throw new Error("Failed to run assistant");
+    }
+
+    const runData = await runResponse.json();
+    const runId = runData.id;
+
+    // Poll for completion
+    let runStatus = runData.status;
+    let attempts = 0;
+    const maxAttempts = 60; // 60 seconds max wait
+
+    while (runStatus !== "completed" && runStatus !== "failed" && runStatus !== "cancelled" && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const statusResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/runs/${runId}`, {
+        headers: {
+          "Authorization": `Bearer ${OPENAI_API_KEY}`,
+          "OpenAI-Beta": "assistants=v2",
+        },
+      });
+
+      if (!statusResponse.ok) {
+        const errorText = await statusResponse.text();
+        console.error("Failed to get run status:", errorText);
+        throw new Error("Failed to get run status");
+      }
+
+      const statusData = await statusResponse.json();
+      runStatus = statusData.status;
+      attempts++;
+
+      if (runStatus === "failed") {
+        console.error("Run failed:", statusData.last_error);
+        throw new Error(statusData.last_error?.message || "Assistant run failed");
+      }
+    }
+
+    if (runStatus !== "completed") {
+      throw new Error("Assistant response timed out");
+    }
+
+    // Get the assistant's response
+    const messagesResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages?limit=1&order=desc`, {
+      headers: {
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
+        "OpenAI-Beta": "assistants=v2",
+      },
+    });
+
+    if (!messagesResponse.ok) {
+      const errorText = await messagesResponse.text();
+      console.error("Failed to get messages:", errorText);
+      throw new Error("Failed to get assistant response");
+    }
+
+    const messagesData = await messagesResponse.json();
+    const assistantMessage = messagesData.data[0];
+    
+    let responseText = "I apologize, but I couldn't generate a response. Please try again.";
+    
+    if (assistantMessage && assistantMessage.role === "assistant" && assistantMessage.content.length > 0) {
+      const textContent = assistantMessage.content.find((c: any) => c.type === "text");
+      if (textContent) {
+        responseText = textContent.text.value;
+      }
+    }
 
     console.log(`Chatbot response generated for conversation: ${conversation_id}`);
 
-    return new Response(JSON.stringify({ response: assistantResponse }), {
+    return new Response(JSON.stringify({ 
+      response: responseText,
+      thread_id: currentThreadId 
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {

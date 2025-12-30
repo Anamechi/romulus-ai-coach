@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface ChatMessage {
@@ -43,6 +43,7 @@ export function useChatConversations() {
 
 export function useChatWidget() {
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [threadId, setThreadId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -65,6 +66,11 @@ export function useChatWidget() {
     if (existing && existing.length > 0) {
       setConversationId(existing[0].id);
       setMessages((existing[0].messages as unknown as ChatMessage[]) || []);
+      // Try to get stored thread_id from conversation metadata
+      const storedThreadId = (existing[0] as any).thread_id;
+      if (storedThreadId) {
+        setThreadId(storedThreadId);
+      }
       return existing[0].id;
     }
 
@@ -78,6 +84,7 @@ export function useChatWidget() {
     if (error) throw error;
     setConversationId(newConv.id);
     setMessages([]);
+    setThreadId(null);
     return newConv.id;
   };
 
@@ -104,12 +111,21 @@ export function useChatWidget() {
         .update({ messages: updatedMessages } as any)
         .eq('id', convId);
 
-      // Call chatbot edge function
+      // Call chatbot edge function with thread_id
       const { data, error } = await supabase.functions.invoke('chatbot-respond', {
-        body: { messages: updatedMessages, conversation_id: convId },
+        body: { 
+          messages: updatedMessages, 
+          conversation_id: convId,
+          thread_id: threadId 
+        },
       });
 
       if (error) throw error;
+
+      // Store the thread_id for future messages
+      if (data.thread_id && data.thread_id !== threadId) {
+        setThreadId(data.thread_id);
+      }
 
       const assistantMessage: ChatMessage = {
         role: 'assistant',

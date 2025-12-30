@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, X, Send, Loader2, User, Bot } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ReactMarkdown from "react-markdown";
 
 export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,18 +65,18 @@ export function ChatbotWidget() {
       {/* Chat Window */}
       <div
         className={cn(
-          "fixed bottom-6 right-6 w-[380px] h-[500px] bg-background border border-border rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden transition-all duration-300",
+          "fixed bottom-6 right-6 w-[380px] h-[520px] bg-background border border-border rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden transition-all duration-300",
           isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b bg-primary text-primary-foreground">
+        <div className="flex items-center justify-between px-4 py-3 border-b bg-primary text-primary-foreground">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-primary-foreground/20 rounded-full">
               <Bot className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold">Dr. Romulus Assistant</h3>
+              <h3 className="font-semibold text-sm">Dr. Romulus Assistant</h3>
               <p className="text-xs opacity-80">Ask me anything</p>
             </div>
           </div>
@@ -83,23 +84,23 @@ export function ChatbotWidget() {
             variant="ghost"
             size="icon"
             onClick={() => setIsOpen(false)}
-            className="text-primary-foreground hover:bg-primary-foreground/20"
+            className="text-primary-foreground hover:bg-primary-foreground/20 h-8 w-8"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </Button>
         </div>
 
         {/* Messages */}
-        <ScrollArea ref={scrollRef} className="flex-1 p-4">
+        <ScrollArea ref={scrollRef} className="flex-1 px-4 py-3">
           <div className="space-y-4">
             {/* Welcome Message */}
             {messages.length === 0 && !isLoading && (
               <div className="flex gap-3">
-                <div className="p-2 bg-primary/10 rounded-full h-fit">
+                <div className="p-1.5 bg-primary/10 rounded-full h-fit shrink-0">
                   <Bot className="h-4 w-4 text-primary" />
                 </div>
-                <div className="bg-muted p-3 rounded-lg max-w-[80%]">
-                  <p className="text-sm">
+                <div className="bg-muted px-3 py-2 rounded-lg rounded-tl-none max-w-[85%]">
+                  <p className="text-sm leading-relaxed">
                     Hello! I'm here to help you with questions about business coaching, 
                     consulting, and our programs. How can I assist you today?
                   </p>
@@ -113,22 +114,28 @@ export function ChatbotWidget() {
                 className={cn("flex gap-3", msg.role === "user" && "justify-end")}
               >
                 {msg.role === "assistant" && (
-                  <div className="p-2 bg-primary/10 rounded-full h-fit">
+                  <div className="p-1.5 bg-primary/10 rounded-full h-fit shrink-0">
                     <Bot className="h-4 w-4 text-primary" />
                   </div>
                 )}
                 <div
                   className={cn(
-                    "p-3 rounded-lg max-w-[80%]",
+                    "px-3 py-2 rounded-lg max-w-[85%]",
                     msg.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
+                      ? "bg-primary text-primary-foreground rounded-tr-none"
+                      : "bg-muted rounded-tl-none"
                   )}
                 >
-                  <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                  {msg.role === "assistant" ? (
+                    <div className="text-sm leading-relaxed prose prose-sm max-w-none dark:prose-invert prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 prose-headings:my-2 prose-headings:text-sm prose-headings:font-semibold">
+                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p className="text-sm leading-relaxed">{msg.content}</p>
+                  )}
                 </div>
                 {msg.role === "user" && (
-                  <div className="p-2 bg-muted rounded-full h-fit">
+                  <div className="p-1.5 bg-muted rounded-full h-fit shrink-0">
                     <User className="h-4 w-4" />
                   </div>
                 )}
@@ -137,35 +144,41 @@ export function ChatbotWidget() {
 
             {isLoading && (
               <div className="flex gap-3">
-                <div className="p-2 bg-primary/10 rounded-full h-fit">
+                <div className="p-1.5 bg-primary/10 rounded-full h-fit shrink-0">
                   <Bot className="h-4 w-4 text-primary" />
                 </div>
-                <div className="bg-muted p-3 rounded-lg">
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                <div className="bg-muted px-3 py-2 rounded-lg rounded-tl-none">
+                  <div className="flex items-center gap-1">
+                    <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
                 </div>
               </div>
             )}
 
             {/* Lead Capture Form */}
             {showLeadForm && (
-              <div className="bg-primary/5 border border-primary/20 p-4 rounded-lg space-y-3">
+              <div className="bg-primary/5 border border-primary/20 p-3 rounded-lg space-y-2">
                 <p className="text-sm font-medium">Want personalized help? Share your info:</p>
                 <Input
                   placeholder="Your name"
                   value={leadForm.name}
                   onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
+                  className="h-9 text-sm"
                 />
                 <Input
                   type="email"
                   placeholder="Your email"
                   value={leadForm.email}
                   onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
+                  className="h-9 text-sm"
                 />
                 <div className="flex gap-2">
-                  <Button size="sm" onClick={handleLeadSubmit} className="flex-1">
+                  <Button size="sm" onClick={handleLeadSubmit} className="flex-1 h-8 text-xs">
                     Submit
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setShowLeadForm(false)}>
+                  <Button size="sm" variant="ghost" onClick={() => setShowLeadForm(false)} className="h-8 text-xs">
                     Skip
                   </Button>
                 </div>
@@ -175,7 +188,7 @@ export function ChatbotWidget() {
         </ScrollArea>
 
         {/* Input */}
-        <div className="p-4 border-t">
+        <div className="px-4 py-3 border-t bg-muted/30">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -188,9 +201,9 @@ export function ChatbotWidget() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
               disabled={isLoading}
-              className="flex-1"
+              className="flex-1 h-9 text-sm bg-background"
             />
-            <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+            <Button type="submit" size="icon" disabled={isLoading || !input.trim()} className="h-9 w-9 shrink-0">
               <Send className="h-4 w-4" />
             </Button>
           </form>
