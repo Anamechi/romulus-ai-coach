@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Star } from "lucide-react";
+import drRomulusDesk from "@/assets/dr-romulus-desk.png";
 
 export function HeroSection() {
   return (
@@ -18,63 +19,99 @@ export function HeroSection() {
       <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-gold/5 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 py-20 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Trust Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cream/10 border border-cream/20 mb-8 animate-fade-up">
-            <div className="flex -space-x-1">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="w-4 h-4 fill-gold text-gold" />
-              ))}
-            </div>
-            <span className="font-body text-sm text-cream/80">
-              Trusted by 500+ entrepreneurs worldwide
-            </span>
-          </div>
-
-          {/* Headline */}
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-cream leading-tight mb-6 animate-fade-up delay-100">
-            Build a Business That{" "}
-            <span className="text-gradient-gold">Runs Without You</span>
-          </h1>
-
-          {/* Subheadline */}
-          <p className="font-body text-lg md:text-xl text-cream/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up delay-200">
-            Elite coaching, strategic consulting, and AI-powered automation for 
-            entrepreneurs ready to scale with clarity, systems, and freedom.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up delay-300">
-            <Button variant="gold" size="xl" asChild>
-              <Link to="/apply" className="group">
-                Apply for Coaching
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-            <Button variant="heroOutline" size="xl" asChild>
-              <Link to="/programs" className="group">
-                <Play className="w-5 h-5" />
-                Explore Programs
-              </Link>
-            </Button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-cream/10 animate-fade-up delay-400">
-            {[
-              { value: "500+", label: "Clients Coached" },
-              { value: "$50M+", label: "Revenue Generated" },
-              { value: "15+", label: "Years Experience" },
-              { value: "98%", label: "Success Rate" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-display text-3xl md:text-4xl font-bold text-gold mb-2">
-                  {stat.value}
-                </div>
-                <div className="font-body text-sm text-cream/60">{stat.label}</div>
+        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+          {/* Content Side */}
+          <div className="text-center lg:text-left">
+            {/* Trust Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cream/10 border border-cream/20 mb-8 animate-fade-up">
+              <div className="flex -space-x-1">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star key={i} className="w-4 h-4 fill-gold text-gold" />
+                ))}
               </div>
-            ))}
+              <span className="font-body text-sm text-cream/80">
+                Trusted by 500+ entrepreneurs worldwide
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-cream leading-tight mb-6 animate-fade-up delay-100">
+              Build a Business That{" "}
+              <span className="text-gradient-gold">Runs Without You</span>
+            </h1>
+
+            {/* Subheadline */}
+            <p className="font-body text-lg md:text-xl text-cream/70 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed animate-fade-up delay-200">
+              Elite coaching, strategic consulting, and AI-powered automation for 
+              entrepreneurs ready to scale with clarity, systems, and freedom.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 animate-fade-up delay-300">
+              <Button variant="gold" size="xl" asChild>
+                <Link to="/apply" className="group">
+                  Apply for Coaching
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+              <Button variant="heroOutline" size="xl" asChild>
+                <Link to="/programs" className="group">
+                  <Play className="w-5 h-5" />
+                  Explore Programs
+                </Link>
+              </Button>
+            </div>
           </div>
+
+          {/* Image Side */}
+          <div className="relative hidden lg:block animate-fade-up delay-200">
+            <div className="relative">
+              {/* Main Image */}
+              <div className="aspect-[4/5] max-w-md mx-auto rounded-2xl overflow-hidden shadow-elevated border border-cream/10">
+                <img 
+                  src={drRomulusDesk} 
+                  alt="Dr. Deanna Romulus, MBA - Business Strategist"
+                  className="w-full h-full object-cover object-top"
+                />
+                {/* Subtle overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gold/20 rounded-full blur-2xl" />
+              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gold/15 rounded-full blur-xl" />
+              
+              {/* Floating credential card */}
+              <div className="absolute -bottom-4 -left-4 bg-card/90 backdrop-blur-sm p-4 rounded-xl shadow-elevated border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Star className="w-5 h-5 fill-gold text-gold" />
+                  </div>
+                  <div>
+                    <div className="font-display text-sm font-semibold text-foreground">Ed.D. & MBA</div>
+                    <div className="font-body text-xs text-muted-foreground">Business Strategist</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-cream/10 animate-fade-up delay-400 max-w-4xl mx-auto">
+          {[
+            { value: "500+", label: "Clients Coached" },
+            { value: "$50M+", label: "Revenue Generated" },
+            { value: "15+", label: "Years Experience" },
+            { value: "98%", label: "Success Rate" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="font-display text-3xl md:text-4xl font-bold text-gold mb-2">
+                {stat.value}
+              </div>
+              <div className="font-body text-sm text-cream/60">{stat.label}</div>
+            </div>
+          ))}
         </div>
       </div>
 
