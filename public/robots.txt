@@ -1,6 +1,10 @@
 # robots.txt for Dr. Romulus MBA
 # https://drromulusmba.com
 
+# ===========================================
+# SEARCH ENGINE CRAWLERS
+# ===========================================
+
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
@@ -16,6 +20,62 @@ Crawl-delay: 2
 User-agent: DuckDuckBot
 Allow: /
 
+# ===========================================
+# AI / LLM CRAWLERS - EXPLICITLY ALLOWED
+# ===========================================
+
+# OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Google AI (Gemini, Bard)
+User-agent: Google-Extended
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Microsoft / Bing AI
+User-agent: Applebot-Extended
+Allow: /
+
+# Common Crawl (used by many AI systems)
+User-agent: CCBot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# ===========================================
+# SOCIAL MEDIA CRAWLERS
+# ===========================================
+
 User-agent: Twitterbot
 Allow: /
 
@@ -25,14 +85,34 @@ Allow: /
 User-agent: LinkedInBot
 Allow: /
 
+# ===========================================
+# DEFAULT RULE
+# ===========================================
+
 User-agent: *
 Allow: /
 Crawl-delay: 2
 
-# Disallow admin and auth pages
+# ===========================================
+# RESTRICTED AREAS
+# ===========================================
+
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /auth
 
-# Sitemap location (dynamic, served by edge function)
-Sitemap: https://xxdbmkllubljncwvxkrl.supabase.co/functions/v1/sitemap
+# ===========================================
+# SITEMAP LOCATIONS (Canonical Domain)
+# ===========================================
+
+Sitemap: https://drromulusmba.com/sitemap.xml
+Sitemap: https://drromulusmba.com/sitemap-index.xml
+Sitemap: https://drromulusmba.com/sitemap-ai.xml
+
+# ===========================================
+# AI CONTENT POLICY FILES
+# ===========================================
+
+# For AI systems, see also:
+# https://drromulusmba.com/llms.txt
+# https://drromulusmba.com/ai.txt
