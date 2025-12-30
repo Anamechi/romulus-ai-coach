@@ -4,11 +4,12 @@ import { SEOHead } from "@/components/seo/SEOHead";
 import { BreadcrumbSchema } from "@/components/seo/StructuredData";
 import { useQAPage, usePublishedQAPages } from "@/hooks/useQAPages";
 import { LinkedContent } from "@/components/content/LinkedContent";
+import { AuthorCard } from "@/components/content/AuthorCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, User, CheckCircle } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 export default function QADetail() {
@@ -157,52 +158,16 @@ export default function QADetail() {
             <p className="text-foreground whitespace-pre-wrap">{qa.answer}</p>
           </div>
 
-          {/* Author/Reviewer Attribution */}
-          <div className="border-t border-border pt-8">
-            <div className="flex flex-wrap gap-6">
-              {qa.author && (
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-primary/10 rounded-full">
-                    <User className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">
-                      Answered by
-                    </p>
-                    <p className="font-medium text-foreground">
-                      {qa.author.full_name}
-                    </p>
-                    {qa.author.credentials && (
-                      <p className="text-sm text-muted-foreground">
-                        {qa.author.credentials}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {qa.reviewer && (
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-accent/10 rounded-full">
-                    <CheckCircle className="h-5 w-5 text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">
-                      Reviewed by
-                    </p>
-                    <p className="font-medium text-foreground">
-                      {qa.reviewer.full_name}
-                    </p>
-                    {qa.reviewer.credentials && (
-                      <p className="text-sm text-muted-foreground">
-                        {qa.reviewer.credentials}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )}
+          {/* Author/Reviewer Attribution - E-E-A-T Compliant */}
+          {(qa.author || qa.reviewer) && (
+            <div className="border-t border-border pt-8">
+              <AuthorCard
+                author={qa.author as any}
+                reviewer={qa.reviewer as any}
+                authorLabel="Answered by"
+              />
             </div>
-          </div>
+          )}
 
           {/* Linked Content */}
           <LinkedContent sourceType="faq" sourceId={qa.id} title="Related Resources" />

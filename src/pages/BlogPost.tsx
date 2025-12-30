@@ -6,9 +6,10 @@ import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Clock, User, CheckCircle, Calendar } from 'lucide-react';
+import { ChevronLeft, Clock, Calendar, User } from 'lucide-react';
 import { useBlogPostBySlug, useBlogPosts } from '@/hooks/useBlogPosts';
 import { LinkedContent } from '@/components/content/LinkedContent';
+import { AuthorCard } from '@/components/content/AuthorCard';
 import { format } from 'date-fns';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { ArticleSchema, BreadcrumbSchema } from '@/components/seo/StructuredData';
@@ -247,44 +248,14 @@ export default function BlogPost() {
               </ReactMarkdown>
             </div>
 
-            {/* Author/Reviewer Attribution */}
+            {/* Author/Reviewer Attribution - E-E-A-T Compliant */}
             {(post.author || post.reviewer) && (
               <div className="border-t border-b py-8 mb-12">
-                {post.author && (
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                      {(post.author as any).photo_url ? (
-                        <OptimizedImage 
-                          src={(post.author as any).photo_url} 
-                          alt={(post.author as any).full_name}
-                          containerClassName="w-full h-full rounded-full"
-                          className="w-full h-full rounded-full"
-                        />
-                      ) : (
-                        <User className="h-8 w-8 text-primary" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Written by</p>
-                      <p className="font-semibold">{(post.author as any).full_name}</p>
-                      {(post.author as any).credentials && (
-                        <p className="text-sm text-muted-foreground">{(post.author as any).credentials}</p>
-                      )}
-                      {(post.author as any).bio && (
-                        <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{(post.author as any).bio}</p>
-                      )}
-                    </div>
-                  </div>
-                )}
-                {post.reviewer && (
-                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4" />
-                    <span>Reviewed by {(post.reviewer as any).full_name}</span>
-                    {(post.reviewer as any).credentials && (
-                      <span className="text-xs">({(post.reviewer as any).credentials})</span>
-                    )}
-                  </div>
-                )}
+                <AuthorCard
+                  author={post.author as any}
+                  reviewer={post.reviewer as any}
+                  showBio
+                />
               </div>
             )}
 

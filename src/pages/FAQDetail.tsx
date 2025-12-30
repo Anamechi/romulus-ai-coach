@@ -2,9 +2,10 @@ import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, User, CheckCircle } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { useFaqBySlug, useFaqs } from '@/hooks/useFaqs';
 import { LinkedContent } from '@/components/content/LinkedContent';
+import { AuthorCard } from '@/components/content/AuthorCard';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { SingleFAQSchema, BreadcrumbSchema } from '@/components/seo/StructuredData';
 
@@ -99,27 +100,14 @@ export default function FAQDetail() {
               </CardContent>
             </Card>
 
-            {/* Author/Reviewer Attribution */}
+            {/* Author/Reviewer Attribution - E-E-A-T Compliant */}
             {(faq.author || faq.reviewer) && (
-              <div className="flex flex-wrap gap-6 text-sm text-muted-foreground mb-12">
-                {faq.author && (
-                  <div className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    <span>Written by {(faq.author as any).full_name}</span>
-                    {(faq.author as any).credentials && (
-                      <span className="text-xs">({(faq.author as any).credentials})</span>
-                    )}
-                  </div>
-                )}
-                {faq.reviewer && (
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4" />
-                    <span>Reviewed by {(faq.reviewer as any).full_name}</span>
-                    {(faq.reviewer as any).credentials && (
-                      <span className="text-xs">({(faq.reviewer as any).credentials})</span>
-                    )}
-                  </div>
-                )}
+              <div className="mb-12">
+                <AuthorCard
+                  author={faq.author as any}
+                  reviewer={faq.reviewer as any}
+                  compact
+                />
               </div>
             )}
           </article>
