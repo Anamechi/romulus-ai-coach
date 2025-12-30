@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Award, BookOpen, Briefcase } from "lucide-react";
+import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
 
 const credentials = [
   { icon: Award, text: "Ed.D. in Educational Leadership" },
@@ -16,17 +17,15 @@ export function AboutPreview() {
           {/* Image/Visual Side */}
           <div className="relative">
             <div className="aspect-[4/5] rounded-2xl bg-hero-gradient overflow-hidden relative">
-              {/* Placeholder for actual image */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="w-32 h-32 rounded-full bg-gold/20 mx-auto mb-6 flex items-center justify-center">
-                    <span className="font-display text-5xl font-bold text-gold">R</span>
-                  </div>
-                  <p className="font-body text-cream/60 text-sm">
-                    Dr. Romulus MBA
-                  </p>
-                </div>
-              </div>
+              {/* Dr. Romulus Photo */}
+              <img 
+                src={drRomulusPhoto} 
+                alt="Dr. Deanna Romulus, MBA - Business Strategist and Coach"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              />
+              
+              {/* Decorative overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
               
               {/* Decorative elements */}
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-gold/20 rounded-full blur-xl" />
