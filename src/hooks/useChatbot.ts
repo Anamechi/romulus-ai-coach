@@ -120,7 +120,13 @@ export function useChatWidget() {
         },
       });
 
+      console.log('Chatbot response:', { data, error });
+
       if (error) throw error;
+      if (!data || !data.response) {
+        console.error('Invalid response from chatbot:', data);
+        throw new Error('No response from chatbot');
+      }
 
       // Store the thread_id for future messages
       if (data.thread_id && data.thread_id !== threadId) {
