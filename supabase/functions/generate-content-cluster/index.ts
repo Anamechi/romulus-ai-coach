@@ -71,7 +71,7 @@ Do NOT:
 - Include legal, tax, or financial advice
 - Make income guarantees
 
-You MUST respond with valid JSON only, no markdown.`;
+CRITICAL: You MUST respond with ONLY a valid JSON object. No markdown, no code blocks, no explanatory text. Just raw JSON starting with { and ending with }.`;
 
       const userPrompt = `Generate article ${i + 1} of 6 for this content cluster.
 
@@ -91,26 +91,26 @@ Return ONLY a JSON object with these exact fields:
 }`;
 
       try {
-        const response = await fetch('https://api.lovable.dev/v1/chat/completions', {
+        const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${lovableApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'openai/gpt-5-mini',
+            model: 'google/gemini-2.5-flash',
             messages: [
               { role: 'system', content: systemPrompt },
               { role: 'user', content: userPrompt },
             ],
-            response_format: { type: 'json_object' },
           }),
         });
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('AI API error:', errorText);
-          throw new Error(`AI API error: ${response.status}`);
+          console.error('AI API error status:', response.status);
+          console.error('AI API error body:', errorText);
+          throw new Error(`AI API error: ${response.status} - ${errorText}`);
         }
 
         const data = await response.json();
