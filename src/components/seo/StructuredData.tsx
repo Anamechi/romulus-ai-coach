@@ -118,12 +118,18 @@ export function ArticleSchema({
     }
   };
 
+  // Enhanced speakable schema with URL, class selectors, and xpath
   const speakableSchema = speakableSummary ? {
     "@context": "https://schema.org",
     "@type": "WebPage",
+    "@id": `${BASE_URL}/blog/${slug}`,
     "speakable": {
       "@type": "SpeakableSpecification",
-      "cssSelector": [".speakable-content"]
+      "cssSelector": [".speakable-content", ".speakable-summary"],
+      "xpath": [
+        "/html/body//div[contains(@class,'speakable-content')]",
+        "/html/body//div[contains(@class,'speakable-summary')]"
+      ]
     }
   } : null;
 
@@ -190,12 +196,15 @@ export function SingleFAQSchema({ question, answer, slug, speakableAnswer }: Sin
     }]
   };
 
+  // Enhanced speakable schema with URL, class selectors, and xpath
   const speakableSchema = speakableAnswer ? {
     "@context": "https://schema.org",
     "@type": "WebPage",
+    "@id": `${BASE_URL}/faq/${slug}`,
     "speakable": {
       "@type": "SpeakableSpecification",
-      "cssSelector": [".speakable-answer"]
+      "cssSelector": [".speakable-answer"],
+      "xpath": ["/html/body//div[contains(@class,'speakable-answer')]"]
     }
   } : null;
 

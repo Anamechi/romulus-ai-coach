@@ -47,6 +47,8 @@ const SystemCheck = lazy(() => import("./pages/admin/SystemCheck"));
 const AuditLog = lazy(() => import("./pages/admin/AuditLog"));
 const ChatbotConversations = lazy(() => import("./pages/admin/ChatbotConversations"));
 const CitationHealth = lazy(() => import("./pages/admin/CitationHealth"));
+const IndexNow = lazy(() => import("./pages/admin/IndexNow"));
+const ContentClusterGenerator = lazy(() => import("./pages/admin/ContentClusterGenerator"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -105,6 +107,8 @@ const App = () => (
               <Route path="/admin/audit-log" element={<AuditLog />} />
               <Route path="/admin/chatbot-conversations" element={<ChatbotConversations />} />
               <Route path="/admin/citation-health" element={<CitationHealth />} />
+              <Route path="/admin/indexnow" element={<IndexNow />} />
+              <Route path="/admin/content-cluster-generator" element={<ContentClusterGenerator />} />
               
               {/* Catch-all */}
               <Route path="*" element={<NotFound />} />

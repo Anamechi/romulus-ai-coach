@@ -438,6 +438,119 @@ export type Database = {
         }
         Relationships: []
       }
+      cluster_items: {
+        Row: {
+          cluster_id: string
+          content: string | null
+          content_type: string
+          created_at: string | null
+          external_citations: Json | null
+          faqs: Json | null
+          funnel_stage: string
+          id: string
+          internal_links: Json | null
+          meta_description: string | null
+          meta_title: string | null
+          published_content_id: string | null
+          published_content_type: string | null
+          slug: string
+          sort_order: number | null
+          speakable_answer: string | null
+          status: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          cluster_id: string
+          content?: string | null
+          content_type: string
+          created_at?: string | null
+          external_citations?: Json | null
+          faqs?: Json | null
+          funnel_stage: string
+          id?: string
+          internal_links?: Json | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published_content_id?: string | null
+          published_content_type?: string | null
+          slug: string
+          sort_order?: number | null
+          speakable_answer?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          cluster_id?: string
+          content?: string | null
+          content_type?: string
+          created_at?: string | null
+          external_citations?: Json | null
+          faqs?: Json | null
+          funnel_stage?: string
+          id?: string
+          internal_links?: Json | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published_content_id?: string | null
+          published_content_type?: string | null
+          slug?: string
+          sort_order?: number | null
+          speakable_answer?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cluster_items_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "content_clusters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_clusters: {
+        Row: {
+          cluster_topic: string
+          created_at: string | null
+          created_by: string | null
+          error_message: string | null
+          id: string
+          language: string | null
+          primary_keyword: string
+          status: string | null
+          target_audience: string
+          updated_at: string | null
+        }
+        Insert: {
+          cluster_topic: string
+          created_at?: string | null
+          created_by?: string | null
+          error_message?: string | null
+          id?: string
+          language?: string | null
+          primary_keyword: string
+          status?: string | null
+          target_audience: string
+          updated_at?: string | null
+        }
+        Update: {
+          cluster_topic?: string
+          created_at?: string | null
+          created_by?: string | null
+          error_message?: string | null
+          id?: string
+          language?: string | null
+          primary_keyword?: string
+          status?: string | null
+          target_audience?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       content_revisions: {
         Row: {
           change_summary: string | null
