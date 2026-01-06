@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { notifyIndexNow } from './useIndexNow';
 
 export interface BlogPost {
   id: string;
@@ -77,9 +78,13 @@ export function useCreateBlogPost() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['blog_posts'] });
       toast.success('Article created successfully');
+      
+      if (data.published && data.slug) {
+        notifyIndexNow('blog', data.slug);
+      }
     },
     onError: (error) => {
       toast.error('Failed to create article: ' + error.message);
@@ -102,9 +107,13 @@ export function useUpdateBlogPost() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['blog_posts'] });
       toast.success('Article updated successfully');
+      
+      if (data.published && data.slug) {
+        notifyIndexNow('blog', data.slug);
+      }
     },
     onError: (error) => {
       toast.error('Failed to update article: ' + error.message);

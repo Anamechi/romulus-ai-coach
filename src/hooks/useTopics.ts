@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { notifyIndexNow } from './useIndexNow';
 
 export type FunnelStage = 'TOFU' | 'MOFU' | 'BOFU';
 
@@ -49,9 +50,13 @@ export function useCreateTopic() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['topics'] });
       toast.success('Topic created successfully');
+      
+      if (data.is_active && data.slug) {
+        notifyIndexNow('topic', data.slug);
+      }
     },
     onError: (error) => {
       toast.error('Failed to create topic: ' + error.message);
@@ -74,9 +79,13 @@ export function useUpdateTopic() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['topics'] });
       toast.success('Topic updated successfully');
+      
+      if (data.is_active && data.slug) {
+        notifyIndexNow('topic', data.slug);
+      }
     },
     onError: (error) => {
       toast.error('Failed to update topic: ' + error.message);

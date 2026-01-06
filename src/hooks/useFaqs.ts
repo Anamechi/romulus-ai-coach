@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { notifyIndexNow } from './useIndexNow';
 
 export interface FAQ {
   id: string;
@@ -72,9 +73,13 @@ export function useCreateFaq() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['faqs'] });
       toast.success('FAQ created successfully');
+      
+      if (data.status === 'published' && data.slug) {
+        notifyIndexNow('faq', data.slug);
+      }
     },
     onError: (error) => {
       toast.error('Failed to create FAQ: ' + error.message);
@@ -97,9 +102,13 @@ export function useUpdateFaq() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['faqs'] });
       toast.success('FAQ updated successfully');
+      
+      if (data.status === 'published' && data.slug) {
+        notifyIndexNow('faq', data.slug);
+      }
     },
     onError: (error) => {
       toast.error('Failed to update FAQ: ' + error.message);

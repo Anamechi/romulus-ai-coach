@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { notifyIndexNow } from './useIndexNow';
 
 export interface QAPage {
   id: string;
@@ -93,9 +94,13 @@ export function useCreateQAPage() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['qa-pages'] });
       toast({ title: 'Q&A page created successfully' });
+      
+      if (data.status === 'published' && data.slug) {
+        notifyIndexNow('qa', data.slug);
+      }
     },
     onError: (error: Error) => {
       toast({ title: 'Error creating Q&A page', description: error.message, variant: 'destructive' });
@@ -119,9 +124,13 @@ export function useUpdateQAPage() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['qa-pages'] });
       toast({ title: 'Q&A page updated successfully' });
+      
+      if (data.status === 'published' && data.slug) {
+        notifyIndexNow('qa', data.slug);
+      }
     },
     onError: (error: Error) => {
       toast({ title: 'Error updating Q&A page', description: error.message, variant: 'destructive' });
