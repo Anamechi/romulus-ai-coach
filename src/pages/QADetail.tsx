@@ -87,14 +87,16 @@ export default function QADetail() {
     },
   };
 
-  // Speakable schema if speakable_answer exists
+  // Enhanced speakable schema - standardized with URL, class selectors, and xpath
   const speakableSchema = qa.speakable_answer
     ? {
         "@context": "https://schema.org",
         "@type": "WebPage",
+        "@id": `https://drromulusmba.com/qa/${qa.slug}`,
         speakable: {
           "@type": "SpeakableSpecification",
-          cssSelector: ["#speakable-answer"],
+          cssSelector: [".speakable-answer"],
+          xpath: ["/html/body//div[contains(@class,'speakable-answer')]"],
         },
       }
     : null;
@@ -144,8 +146,7 @@ export default function QADetail() {
           {/* Speakable Answer Block */}
           {qa.speakable_answer && (
             <div
-              id="speakable-answer"
-              className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8"
+              className="speakable-answer bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8"
             >
               <p className="text-lg font-medium text-foreground">
                 {qa.speakable_answer}

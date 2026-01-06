@@ -34,6 +34,8 @@ import {
   History,
   HeartPulse,
   Bot,
+  Send,
+  Layers,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -59,6 +61,7 @@ const managementNavItems = [
 
 const systemNavItems = [
   { title: 'System Check', url: '/admin/system-check', icon: ShieldCheck },
+  { title: 'IndexNow', url: '/admin/indexnow', icon: Send },
   { title: 'Citation Health', url: '/admin/citation-health', icon: HeartPulse },
   { title: 'Citations', url: '/admin/citations', icon: LinkIcon },
   { title: 'Internal Links', url: '/admin/internal-links', icon: LinkIcon },
@@ -188,13 +191,24 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             </SidebarGroup>
 
             <SidebarGroup className="mt-6">
+              <SidebarGroupLabel className="text-sidebar-foreground/50 px-2">
+                AI Tools
+              </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link to="/admin/cluster-generator" className="flex items-center gap-3 bg-sidebar-primary/10 hover:bg-sidebar-primary/20">
-                        <Zap className="h-4 w-4 text-sidebar-primary" />
-                        <span className="text-sidebar-primary font-medium">AI Generator</span>
+                    <SidebarMenuButton asChild isActive={location.pathname === '/admin/content-cluster-generator'}>
+                      <Link to="/admin/content-cluster-generator" className="flex items-center gap-3 bg-sidebar-primary/10 hover:bg-sidebar-primary/20">
+                        <Layers className="h-4 w-4 text-sidebar-primary" />
+                        <span className="text-sidebar-primary font-medium">Cluster Generator</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild isActive={location.pathname === '/admin/cluster-generator'}>
+                      <Link to="/admin/cluster-generator" className="flex items-center gap-3">
+                        <Zap className="h-4 w-4" />
+                        <span>Quick Generator</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
