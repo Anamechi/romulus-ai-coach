@@ -16,6 +16,8 @@ export interface Topic {
   parent_topic_id: string | null;
   sort_order: number;
   is_active: boolean;
+  default_target_audience: string | null;
+  default_primary_keyword: string | null;
   created_at: string;
   updated_at: string;
 }
