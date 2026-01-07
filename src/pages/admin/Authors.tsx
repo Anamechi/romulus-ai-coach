@@ -35,6 +35,8 @@ const emptyAuthor: AuthorInsert = {
   linkedin_url: '',
   years_experience: null,
   is_active: true,
+  slug: null,
+  knows_about: null,
 };
 
 export default function Authors() {
@@ -63,6 +65,8 @@ export default function Authors() {
       linkedin_url: author.linkedin_url || '',
       years_experience: author.years_experience,
       is_active: author.is_active,
+      slug: author.slug || null,
+      knows_about: author.knows_about || null,
     });
     setIsOpen(true);
   };

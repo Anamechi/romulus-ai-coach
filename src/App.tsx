@@ -25,6 +25,11 @@ const QA = lazy(() => import("./pages/QA"));
 const QADetail = lazy(() => import("./pages/QADetail"));
 const TopicsIndex = lazy(() => import("./pages/TopicsIndex"));
 const TopicPage = lazy(() => import("./pages/TopicPage"));
+const AuthorsIndex = lazy(() => import("./pages/AuthorsIndex"));
+const AuthorProfile = lazy(() => import("./pages/AuthorProfile"));
+const EditorialPolicy = lazy(() => import("./pages/EditorialPolicy"));
+const Methodology = lazy(() => import("./pages/Methodology"));
+const Trust = lazy(() => import("./pages/Trust"));
 
 // Lazy load admin pages (larger bundle, rarely needed by most users)
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
@@ -85,6 +90,11 @@ const App = () => (
               <Route path="/qa/:slug" element={<QADetail />} />
               <Route path="/topics" element={<TopicsIndex />} />
               <Route path="/topics/:slug" element={<TopicPage />} />
+              <Route path="/authors" element={<AuthorsIndex />} />
+              <Route path="/authors/:slug" element={<AuthorProfile />} />
+              <Route path="/editorial-policy" element={<EditorialPolicy />} />
+              <Route path="/methodology" element={<Methodology />} />
+              <Route path="/trust" element={<Trust />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />

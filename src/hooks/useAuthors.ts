@@ -11,6 +11,8 @@ export interface Author {
   linkedin_url: string | null;
   years_experience: number | null;
   is_active: boolean;
+  slug: string | null;
+  knows_about: string[] | null;
   created_at: string;
   updated_at: string;
 }
