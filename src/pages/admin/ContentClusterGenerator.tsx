@@ -37,6 +37,7 @@ import {
   ClusterItem,
   ClusterInput 
 } from '@/hooks/useContentClusters';
+import { useTopics } from '@/hooks/useTopics';
 import { format } from 'date-fns';
 
 const LANGUAGES = [
@@ -64,6 +65,7 @@ export default function ContentClusterGenerator() {
     target_audience: '',
     primary_keyword: '',
     language: 'en',
+    topic_id: null,
   });
   const [selectedClusterId, setSelectedClusterId] = useState<string | null>(null);
   const [editingItem, setEditingItem] = useState<ClusterItem | null>(null);
@@ -71,6 +73,7 @@ export default function ContentClusterGenerator() {
 
   const { data: clusters } = useContentClusters();
   const { data: selectedCluster, isLoading: isLoadingCluster } = useContentCluster(selectedClusterId || '');
+  const { data: topics } = useTopics();
   const createCluster = useCreateCluster();
   const updateItem = useUpdateClusterItem();
   const approveItem = useApproveClusterItem();
@@ -86,6 +89,7 @@ export default function ContentClusterGenerator() {
       target_audience: '',
       primary_keyword: '',
       language: 'en',
+      topic_id: null,
     });
   };
 
@@ -192,6 +196,28 @@ export default function ContentClusterGenerator() {
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="topic_id">Topic (Optional)</Label>
+                    <Select
+                      value={formData.topic_id || 'none'}
+                      onValueChange={(value) => setFormData({ ...formData, topic_id: value === 'none' ? null : value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a topic" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none">No topic</SelectItem>
+                        {topics?.map((topic) => (
+                          <SelectItem key={topic.id} value={topic.id}>
+                            {topic.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-muted-foreground">
+                      Published content will be assigned to this topic
+                    </p>
                   </div>
                   <Button
                     type="submit"

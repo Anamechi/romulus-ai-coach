@@ -43,6 +43,7 @@ export interface ClusterInput {
   target_audience: string;
   primary_keyword: string;
   language: string;
+  topic_id?: string | null;
 }
 
 export function useContentClusters() {
@@ -112,6 +113,7 @@ export function useCreateCluster() {
           target_audience: input.target_audience,
           primary_keyword: input.primary_keyword,
           language: input.language,
+          topic_id: input.topic_id || null,
           status: 'pending',
         })
         .select()
@@ -225,6 +227,15 @@ export function usePublishClusterItems() {
 
   return useMutation({
     mutationFn: async ({ clusterId, contentType }: { clusterId: string; contentType: 'blog' | 'qa_page' }) => {
+      // Get cluster to access topic_id
+      const { data: cluster, error: clusterError } = await supabase
+        .from('content_clusters')
+        .select('topic_id')
+        .eq('id', clusterId)
+        .single();
+
+      if (clusterError) throw clusterError;
+
       // Get approved items
       const { data: items, error: fetchError } = await supabase
         .from('cluster_items')
@@ -239,7 +250,7 @@ export function usePublishClusterItems() {
 
       for (const item of items) {
         if (contentType === 'blog') {
-          // Create blog post
+          // Create blog post with topic_id from cluster
           const { data: blogPost, error: blogError } = await supabase
             .from('blog_posts')
             .insert({
@@ -250,6 +261,7 @@ export function usePublishClusterItems() {
               meta_title: item.meta_title,
               meta_description: item.meta_description,
               speakable_summary: item.speakable_answer,
+              topic_id: cluster?.topic_id || null,
               published: false,
             })
             .select()
@@ -269,7 +281,7 @@ export function usePublishClusterItems() {
 
           publishedItems.push(blogPost);
         } else if (contentType === 'qa_page') {
-          // Create Q&A page
+          // Create Q&A page with topic_id from cluster
           const { data: qaPage, error: qaError } = await supabase
             .from('qa_pages')
             .insert({
@@ -279,6 +291,7 @@ export function usePublishClusterItems() {
               meta_title: item.meta_title,
               meta_description: item.meta_description,
               speakable_answer: item.speakable_answer,
+              topic_id: cluster?.topic_id || null,
               status: 'draft',
             })
             .select()

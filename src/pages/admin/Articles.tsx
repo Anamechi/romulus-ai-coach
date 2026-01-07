@@ -24,6 +24,7 @@ import { useLogAudit } from '@/hooks/useAuditLog';
 import { validateBlogPostForPublish, ValidationResult } from '@/lib/validateContentForPublish';
 import { RevisionHistory } from '@/components/admin/RevisionHistory';
 import { ValidationDisplay } from '@/components/admin/ValidationDisplay';
+import { PublishGateModal } from '@/components/admin/PublishGateModal';
 import { format } from 'date-fns';
 
 const generateSlug = (text: string) => {
@@ -58,6 +59,9 @@ export default function ArticlesAdmin() {
   const [customImagePrompt, setCustomImagePrompt] = useState('');
   const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [forcePublish, setForcePublish] = useState(false);
+  const [publishGateOpen, setPublishGateOpen] = useState(false);
+  const [pendingPublishPost, setPendingPublishPost] = useState<BlogPost | null>(null);
+  const [pendingPublishValidation, setPendingPublishValidation] = useState<ValidationResult | null>(null);
 
   const [formData, setFormData] = useState<BlogPostInsert>({
     slug: '',
@@ -213,15 +217,20 @@ export default function ArticlesAdmin() {
         speakable_summary: post.speakable_summary,
         cover_image_url: post.cover_image_url,
       });
-      if (!result.isValid) {
-        toast.error('Cannot publish: ' + result.errors.map(e => e.message).join(', '));
+      
+      // Show modal if there are errors OR warnings
+      if (!result.isValid || result.warnings.length > 0) {
+        setPendingPublishPost(post);
+        setPendingPublishValidation(result);
+        setPublishGateOpen(true);
         return;
-      }
-      if (result.warnings.length > 0) {
-        toast.warning('Published with warnings: ' + result.warnings.map(w => w.message).join(', '));
       }
     }
 
+    await doPublish(post, newPublished);
+  };
+
+  const doPublish = async (post: BlogPost, newPublished: boolean) => {
     await updatePost.mutateAsync({ 
       id: post.id, 
       published: newPublished,
@@ -234,6 +243,22 @@ export default function ArticlesAdmin() {
       entity_id: post.id,
       entity_title: post.title,
     });
+    
+    toast.success(newPublished ? 'Article published' : 'Article unpublished');
+  };
+
+  const handlePublishGateConfirm = async () => {
+    if (!pendingPublishPost) return;
+    await doPublish(pendingPublishPost, true);
+    setPublishGateOpen(false);
+    setPendingPublishPost(null);
+    setPendingPublishValidation(null);
+  };
+
+  const handlePublishGateCancel = () => {
+    setPublishGateOpen(false);
+    setPendingPublishPost(null);
+    setPendingPublishValidation(null);
   };
 
   const handleRestoreRevision = async (snapshot: Record<string, any>) => {
@@ -655,6 +680,16 @@ export default function ArticlesAdmin() {
           </Card>
         )}
       </div>
+
+      <PublishGateModal
+        open={publishGateOpen}
+        onOpenChange={setPublishGateOpen}
+        validation={pendingPublishValidation}
+        onConfirm={handlePublishGateConfirm}
+        onCancel={handlePublishGateCancel}
+        contentType="article"
+        title={pendingPublishPost?.title}
+      />
     </AdminLayout>
   );
 }
