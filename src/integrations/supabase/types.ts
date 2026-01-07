@@ -1158,6 +1158,8 @@ export type Database = {
         Row: {
           category_id: string | null
           created_at: string
+          default_primary_keyword: string | null
+          default_target_audience: string | null
           description: string | null
           funnel_stage: Database["public"]["Enums"]["funnel_stage"] | null
           id: string
@@ -1172,6 +1174,8 @@ export type Database = {
         Insert: {
           category_id?: string | null
           created_at?: string
+          default_primary_keyword?: string | null
+          default_target_audience?: string | null
           description?: string | null
           funnel_stage?: Database["public"]["Enums"]["funnel_stage"] | null
           id?: string
@@ -1186,6 +1190,8 @@ export type Database = {
         Update: {
           category_id?: string | null
           created_at?: string
+          default_primary_keyword?: string | null
+          default_target_audience?: string | null
           description?: string | null
           funnel_stage?: Database["public"]["Enums"]["funnel_stage"] | null
           id?: string

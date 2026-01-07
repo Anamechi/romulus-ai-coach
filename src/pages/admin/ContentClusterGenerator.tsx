@@ -201,14 +201,23 @@ export default function ContentClusterGenerator() {
                     <Label htmlFor="topic_id">Topic (Optional)</Label>
                     <Select
                       value={formData.topic_id || 'none'}
-                      onValueChange={(value) => setFormData({ ...formData, topic_id: value === 'none' ? null : value })}
+                      onValueChange={(value) => {
+                        const selectedTopic = topics?.find(t => t.id === value);
+                        setFormData({ 
+                          ...formData, 
+                          topic_id: value === 'none' ? null : value,
+                          cluster_topic: selectedTopic?.name || formData.cluster_topic,
+                          target_audience: selectedTopic?.default_target_audience || formData.target_audience,
+                          primary_keyword: selectedTopic?.default_primary_keyword || formData.primary_keyword,
+                        });
+                      }}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select a topic" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="none">No topic</SelectItem>
-                        {topics?.map((topic) => (
+                        {topics?.filter(t => t.is_active).map((topic) => (
                           <SelectItem key={topic.id} value={topic.id}>
                             {topic.name}
                           </SelectItem>

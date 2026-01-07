@@ -45,6 +45,8 @@ const emptyTopic: TopicInsert = {
   funnel_stage: 'TOFU',
   sort_order: 0,
   is_active: true,
+  default_target_audience: null,
+  default_primary_keyword: null,
 };
 
 const funnelStages: { value: FunnelStage; label: string; description: string }[] = [
@@ -91,6 +93,8 @@ export default function Topics() {
       funnel_stage: topic.funnel_stage,
       sort_order: topic.sort_order,
       is_active: topic.is_active,
+      default_target_audience: topic.default_target_audience,
+      default_primary_keyword: topic.default_primary_keyword,
     });
     setIsOpen(true);
   };
@@ -265,6 +269,30 @@ export default function Topics() {
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+                </div>
+                <div className="border-t pt-4 mt-2">
+                  <p className="text-sm font-medium mb-3">Cluster Generator Defaults</p>
+                  <div className="grid gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="default_target_audience">Default Target Audience</Label>
+                      <Textarea
+                        id="default_target_audience"
+                        value={formData.default_target_audience || ''}
+                        onChange={(e) => setFormData({ ...formData, default_target_audience: e.target.value || null })}
+                        placeholder="e.g., Service-based entrepreneurs scaling their operations"
+                        rows={2}
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="default_primary_keyword">Default Primary Keyword</Label>
+                      <Input
+                        id="default_primary_keyword"
+                        value={formData.default_primary_keyword || ''}
+                        onChange={(e) => setFormData({ ...formData, default_primary_keyword: e.target.value || null })}
+                        placeholder="e.g., business automation consulting"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="grid gap-2">
