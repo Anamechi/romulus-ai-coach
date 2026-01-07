@@ -12,6 +12,8 @@ export interface Topic {
   description: string | null;
   category_id: string | null;
   funnel_stage: FunnelStage;
+  speakable_summary: string | null;
+  parent_topic_id: string | null;
   sort_order: number;
   is_active: boolean;
   created_at: string;

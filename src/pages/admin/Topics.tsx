@@ -39,6 +39,8 @@ const emptyTopic: TopicInsert = {
   name: '',
   slug: '',
   description: '',
+  speakable_summary: null,
+  parent_topic_id: null,
   category_id: null,
   funnel_stage: 'TOFU',
   sort_order: 0,
@@ -83,6 +85,8 @@ export default function Topics() {
       name: topic.name,
       slug: topic.slug,
       description: topic.description || '',
+      speakable_summary: topic.speakable_summary,
+      parent_topic_id: topic.parent_topic_id,
       category_id: topic.category_id,
       funnel_stage: topic.funnel_stage,
       sort_order: topic.sort_order,
@@ -191,6 +195,38 @@ export default function Topics() {
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     placeholder="Brief description of this topic..."
                   />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="speakable_summary">Speakable Summary (for voice assistants)</Label>
+                  <Textarea
+                    id="speakable_summary"
+                    value={formData.speakable_summary || ''}
+                    onChange={(e) => setFormData({ ...formData, speakable_summary: e.target.value || null })}
+                    placeholder="A concise, voice-friendly summary of this topic (40-60 words)"
+                    rows={3}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    {formData.speakable_summary ? `${formData.speakable_summary.trim().split(/\s+/).length} words` : '0 words'} (target: 40-60)
+                  </p>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="parent_topic">Parent Topic (Optional)</Label>
+                  <Select
+                    value={formData.parent_topic_id || 'none'}
+                    onValueChange={(value) => setFormData({ ...formData, parent_topic_id: value === 'none' ? null : value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select parent topic" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">No parent</SelectItem>
+                      {topics?.filter(t => t.id !== editingTopic?.id).map((topic) => (
+                        <SelectItem key={topic.id} value={topic.id}>
+                          {topic.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">

@@ -9,6 +9,8 @@ export interface ContentSettings {
   site_name: string | null;
   tagline: string | null;
   feature_flags: Json | null;
+  min_word_count: number | null;
+  min_internal_links: number | null;
   created_at: string;
   updated_at: string;
 }

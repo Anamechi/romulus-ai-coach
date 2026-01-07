@@ -3,7 +3,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
+import { useBlogPosts } from '@/hooks/useBlogPosts';
+import { useFaqs } from '@/hooks/useFaqs';
+import { useQAPages } from '@/hooks/useQAPages';
+import { useAuthors } from '@/hooks/useAuthors';
+import { useLinkGovernance } from '@/hooks/useLinkGovernance';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Progress } from '@/components/ui/progress';
 import {
   FileText,
   HelpCircle,
@@ -16,6 +22,8 @@ import {
   Settings,
   BookOpen,
   Tag,
+  TrendingUp,
+  Shield,
 } from 'lucide-react';
 
 const quickActions = [
@@ -27,15 +35,46 @@ const quickActions = [
   { label: 'Settings', href: '/admin/settings', icon: Settings, description: 'Site configuration' },
 ];
 
-const systemStatus = [
-  { label: 'Database', status: 'operational', icon: CheckCircle2 },
-  { label: 'Authentication', status: 'operational', icon: CheckCircle2 },
-  { label: 'AI Services', status: 'pending', icon: AlertCircle },
-  { label: 'SEO Validation', status: 'pending', icon: AlertCircle },
-];
-
 export default function Dashboard() {
   const { data: stats, isLoading } = useDashboardStats();
+  const { data: blogPosts } = useBlogPosts();
+  const { data: faqs } = useFaqs();
+  const { data: qaPages } = useQAPages();
+  const { data: authors } = useAuthors();
+  const { data: linkGovernance } = useLinkGovernance();
+
+  // Calculate AI Readiness Score
+  const totalContent = (blogPosts?.length || 0) + (faqs?.length || 0) + (qaPages?.length || 0);
+  
+  const aiReadinessScore = (() => {
+    if (totalContent === 0) return 100;
+    
+    // E-E-A-T score (25%)
+    const authorsWithProfiles = authors?.filter((a: any) => a.slug && a.bio && a.credentials).length || 0;
+    const eatScore = authors?.length ? (authorsWithProfiles / authors.length) * 100 : 0;
+    
+    // Schema coverage (25%)
+    const speakableContent = [
+      ...(blogPosts?.filter((p: any) => p.speakable_summary) || []),
+      ...(faqs?.filter((f: any) => f.speakable_answer) || []),
+      ...(qaPages?.filter((q: any) => q.speakable_answer) || []),
+    ].length;
+    const schemaScore = totalContent > 0 ? (speakableContent / totalContent) * 100 : 0;
+    
+    // Internal linking health (25%)
+    const orphanCount = linkGovernance?.orphaned?.length || 0;
+    const linkScore = totalContent > 0 ? Math.max(0, 100 - (orphanCount / totalContent) * 100) : 100;
+    
+    // Content completeness (25%) - check for missing authors
+    const contentWithAuthor = [
+      ...(blogPosts?.filter((p: any) => p.author_id) || []),
+      ...(faqs?.filter((f: any) => f.author_id) || []),
+      ...(qaPages?.filter((q: any) => q.author_id) || []),
+    ].length;
+    const contentScore = totalContent > 0 ? (contentWithAuthor / totalContent) * 100 : 100;
+    
+    return Math.round((eatScore * 0.25) + (schemaScore * 0.25) + (linkScore * 0.25) + (contentScore * 0.25));
+  })();
 
   const statCards = [
     {
@@ -139,36 +178,42 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          {/* System Status */}
-          <Card>
+          {/* AI Readiness Score */}
+          <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
             <CardHeader>
-              <CardTitle className="text-lg font-display">System Status</CardTitle>
+              <CardTitle className="text-lg font-display flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-primary" />
+                AI Citation Readiness
+              </CardTitle>
               <CardDescription>
-                Platform health overview
+                How ready your content is for AI systems
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {systemStatus.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center justify-between py-2 border-b border-border last:border-0"
-                >
-                  <span className="text-sm">{item.label}</span>
-                  <div className="flex items-center gap-2">
-                    {item.status === 'operational' ? (
-                      <>
-                        <CheckCircle2 className="h-4 w-4 text-green-500" />
-                        <span className="text-xs text-green-600">Operational</span>
-                      </>
-                    ) : (
-                      <>
-                        <AlertCircle className="h-4 w-4 text-amber-500" />
-                        <span className="text-xs text-amber-600">Pending</span>
-                      </>
-                    )}
-                  </div>
+            <CardContent className="space-y-4">
+              <div className="flex items-center gap-4">
+                <div className="text-4xl font-bold text-primary">{aiReadinessScore}</div>
+                <div className="flex-1">
+                  <Progress value={aiReadinessScore} className="h-3" />
                 </div>
-              ))}
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${authors?.some((a: any) => a.slug && a.bio) ? 'bg-green-500' : 'bg-amber-500'}`} />
+                  <span>E-E-A-T Signals</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${(linkGovernance?.orphaned?.length || 0) === 0 ? 'bg-green-500' : 'bg-amber-500'}`} />
+                  <span>Internal Linking</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Shield className="h-3 w-3 text-muted-foreground" />
+                  <span>Schema Coverage</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-3 w-3 text-muted-foreground" />
+                  <span>Content Complete</span>
+                </div>
+              </div>
               <Link to="/admin/system-check">
                 <Button variant="ghost" className="w-full mt-2 text-sm">
                   View Full Report

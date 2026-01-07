@@ -7,9 +7,11 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Pencil, Trash2, Link as LinkIcon, FileText, HelpCircle, ArrowRight } from 'lucide-react';
+import { Plus, Pencil, Trash2, Link as LinkIcon, FileText, HelpCircle, ArrowRight, AlertTriangle, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   useInternalLinks,
@@ -21,16 +23,24 @@ import {
 } from '@/hooks/useInternalLinks';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import { useFaqs } from '@/hooks/useFaqs';
+import { useQAPages } from '@/hooks/useQAPages';
 import { useAuth } from '@/hooks/useAuth';
+import { useLinkGovernance } from '@/hooks/useLinkGovernance';
+import { useContentSettings } from '@/hooks/useContentSettings';
 
 export default function InternalLinks() {
   const { user } = useAuth();
   const { data: links, isLoading } = useInternalLinks();
   const { data: blogPosts } = useBlogPosts(false, user?.id);
   const { data: faqs } = useFaqs();
+  const { data: qaPages } = useQAPages();
+  const { data: linkGovernance, isLoading: governanceLoading } = useLinkGovernance();
+  const { data: settings } = useContentSettings();
   const createLink = useCreateInternalLink();
   const updateLink = useUpdateInternalLink();
   const deleteLink = useDeleteInternalLink();
+  
+  const minInternalLinks = settings?.min_internal_links ?? 1;
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingLink, setEditingLink] = useState<InternalLink | null>(null);
@@ -122,7 +132,7 @@ export default function InternalLinks() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-display font-bold">Internal Links</h1>
-            <p className="text-muted-foreground">Manage content relationships and topic clusters</p>
+            <p className="text-muted-foreground">Manage content relationships, topic clusters, and link governance</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
@@ -251,79 +261,228 @@ export default function InternalLinks() {
           </Dialog>
         </div>
 
-        {isLoading ? (
-          <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <Skeleton key={i} className="h-16 w-full" />
-            ))}
-          </div>
-        ) : links && links.length > 0 ? (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Source</TableHead>
-                <TableHead></TableHead>
-                <TableHead>Target</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {links.map((link) => (
-                <TableRow key={link.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {link.source_type === 'blog_post' ? (
-                        <FileText className="h-4 w-4 text-primary" />
-                      ) : (
-                        <HelpCircle className="h-4 w-4 text-accent-foreground" />
-                      )}
-                      <span className="font-medium truncate max-w-[200px]">
-                        {getContentTitle(link.source_type, link.source_id)}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {link.target_type === 'blog_post' ? (
-                        <FileText className="h-4 w-4 text-primary" />
-                      ) : (
-                        <HelpCircle className="h-4 w-4 text-accent-foreground" />
-                      )}
-                      <span className="font-medium truncate max-w-[200px]">
-                        {getContentTitle(link.target_type, link.target_id)}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={link.is_active ? 'default' : 'secondary'}>
-                      {link.is_active ? 'Active' : 'Inactive'}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button variant="ghost" size="icon" onClick={() => openEditDialog(link)}>
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" onClick={() => handleDelete(link.id)}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        ) : (
-          <div className="text-center py-12 text-muted-foreground">
-            <LinkIcon className="mx-auto h-12 w-12 mb-4 opacity-50" />
-            <p>No internal links created yet</p>
-            <p className="text-sm">Create links to connect related content</p>
-          </div>
-        )}
+        {/* Governance Summary Cards */}
+        <div className="grid md:grid-cols-3 gap-4">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <LinkIcon className="h-4 w-4" />
+                Total Links
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">{links?.length || 0}</div>
+            </CardContent>
+          </Card>
+          <Card className={linkGovernance?.orphaned?.length ? "border-amber-500/50" : ""}>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-amber-500" />
+                Orphaned Content
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-amber-500">{linkGovernance?.orphaned?.length || 0}</div>
+              <p className="text-xs text-muted-foreground">No incoming links</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <XCircle className="h-4 w-4 text-destructive" />
+                Below Threshold
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-destructive">{linkGovernance?.belowThresholdItems?.length || 0}</div>
+              <p className="text-xs text-muted-foreground">Less than {minInternalLinks} links</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Tabs defaultValue="links">
+          <TabsList>
+            <TabsTrigger value="links">All Links ({links?.length || 0})</TabsTrigger>
+            <TabsTrigger value="governance" className="gap-2">
+              Governance
+              {(linkGovernance?.orphaned?.length || 0) > 0 && (
+                <Badge variant="destructive" className="ml-1">{linkGovernance?.orphaned?.length}</Badge>
+              )}
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="links">
+            {isLoading ? (
+              <div className="space-y-2">
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton key={i} className="h-16 w-full" />
+                ))}
+              </div>
+            ) : links && links.length > 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Source</TableHead>
+                    <TableHead></TableHead>
+                    <TableHead>Target</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {links.map((link) => (
+                    <TableRow key={link.id}>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          {link.source_type === 'blog_post' ? (
+                            <FileText className="h-4 w-4 text-primary" />
+                          ) : (
+                            <HelpCircle className="h-4 w-4 text-accent-foreground" />
+                          )}
+                          <span className="font-medium truncate max-w-[200px]">
+                            {getContentTitle(link.source_type, link.source_id)}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          {link.target_type === 'blog_post' ? (
+                            <FileText className="h-4 w-4 text-primary" />
+                          ) : (
+                            <HelpCircle className="h-4 w-4 text-accent-foreground" />
+                          )}
+                          <span className="font-medium truncate max-w-[200px]">
+                            {getContentTitle(link.target_type, link.target_id)}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={link.is_active ? 'default' : 'secondary'}>
+                          {link.is_active ? 'Active' : 'Inactive'}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button variant="ghost" size="icon" onClick={() => openEditDialog(link)}>
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" onClick={() => handleDelete(link.id)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="text-center py-12 text-muted-foreground">
+                <LinkIcon className="mx-auto h-12 w-12 mb-4 opacity-50" />
+                <p>No internal links created yet</p>
+                <p className="text-sm">Create links to connect related content</p>
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="governance" className="space-y-6">
+            {governanceLoading ? (
+              <div className="space-y-2">
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton key={i} className="h-16 w-full" />
+                ))}
+              </div>
+            ) : (
+              <>
+                {/* Orphaned Content */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <AlertTriangle className="h-5 w-5 text-amber-500" />
+                      Orphaned Content ({linkGovernance?.orphaned?.length || 0})
+                    </CardTitle>
+                    <CardDescription>
+                      Content with no incoming links has weak authority flow
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {linkGovernance?.orphaned?.length ? (
+                      <div className="space-y-2">
+                        {linkGovernance.orphaned.map((item: any) => (
+                          <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
+                            <div className="flex items-center gap-3">
+                              {item.type === 'blog_post' ? (
+                                <FileText className="h-4 w-4 text-primary" />
+                              ) : item.type === 'faq' ? (
+                                <HelpCircle className="h-4 w-4 text-accent-foreground" />
+                              ) : (
+                                <FileText className="h-4 w-4 text-muted-foreground" />
+                              )}
+                              <div>
+                                <p className="font-medium truncate max-w-md">{item.title}</p>
+                                <p className="text-xs text-muted-foreground capitalize">{item.type.replace('_', ' ')}</p>
+                              </div>
+                            </div>
+                            <Badge variant="secondary">0 incoming links</Badge>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 text-muted-foreground">
+                        <LinkIcon className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                        <p>No orphaned content found</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Below Threshold */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <XCircle className="h-5 w-5 text-destructive" />
+                      Below Link Threshold ({linkGovernance?.belowThresholdItems?.length || 0})
+                    </CardTitle>
+                    <CardDescription>
+                      Content with fewer than {minInternalLinks} internal links
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {linkGovernance?.belowThresholdItems?.length ? (
+                      <div className="space-y-2">
+                        {linkGovernance.belowThresholdItems.map((item: any) => (
+                          <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
+                            <div className="flex items-center gap-3">
+                              {item.type === 'blog_post' ? (
+                                <FileText className="h-4 w-4 text-primary" />
+                              ) : item.type === 'faq' ? (
+                                <HelpCircle className="h-4 w-4 text-accent-foreground" />
+                              ) : (
+                                <FileText className="h-4 w-4 text-muted-foreground" />
+                              )}
+                              <div>
+                                <p className="font-medium truncate max-w-md">{item.title}</p>
+                                <p className="text-xs text-muted-foreground capitalize">{item.type.replace('_', ' ')}</p>
+                              </div>
+                            </div>
+                            <Badge variant="destructive">{item.incomingLinks} links</Badge>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 text-muted-foreground">
+                        <LinkIcon className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                        <p>All content meets minimum link threshold</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </>
+            )}
+          </TabsContent>
+        </Tabs>
       </div>
     </AdminLayout>
   );
