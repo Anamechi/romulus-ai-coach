@@ -21,6 +21,7 @@ import { useLogAudit } from '@/hooks/useAuditLog';
 import { validateFAQForPublish, ValidationResult } from '@/lib/validateContentForPublish';
 import { RevisionHistory } from '@/components/admin/RevisionHistory';
 import { ValidationDisplay } from '@/components/admin/ValidationDisplay';
+import { PublishGateModal } from '@/components/admin/PublishGateModal';
 import { toast } from 'sonner';
 
 const generateSlug = (text: string) => {
@@ -48,6 +49,9 @@ export default function FAQsAdmin() {
   const [editingFaq, setEditingFaq] = useState<FAQ | null>(null);
   const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [forcePublish, setForcePublish] = useState(false);
+  const [publishGateOpen, setPublishGateOpen] = useState(false);
+  const [pendingPublishFaq, setPendingPublishFaq] = useState<FAQ | null>(null);
+  const [pendingPublishValidation, setPendingPublishValidation] = useState<ValidationResult | null>(null);
 
   const [formData, setFormData] = useState<FAQInsert>({
     slug: '',
@@ -173,12 +177,20 @@ export default function FAQsAdmin() {
         topic_id: faq.topic_id,
         speakable_answer: faq.speakable_answer,
       });
-      if (!result.isValid) {
-        toast.error('Cannot publish: ' + result.errors.map(e => e.message).join(', '));
+      
+      // Show modal if there are errors OR warnings
+      if (!result.isValid || result.warnings.length > 0) {
+        setPendingPublishFaq(faq);
+        setPendingPublishValidation(result);
+        setPublishGateOpen(true);
         return;
       }
     }
 
+    await doPublish(faq, newStatus);
+  };
+
+  const doPublish = async (faq: FAQ, newStatus: string) => {
     await updateFaq.mutateAsync({ id: faq.id, status: newStatus });
     logAudit.mutate({
       action: newStatus === 'published' ? 'publish' : 'unpublish',
@@ -186,6 +198,21 @@ export default function FAQsAdmin() {
       entity_id: faq.id,
       entity_title: faq.question,
     });
+    toast.success(newStatus === 'published' ? 'FAQ published' : 'FAQ unpublished');
+  };
+
+  const handlePublishGateConfirm = async () => {
+    if (!pendingPublishFaq) return;
+    await doPublish(pendingPublishFaq, 'published');
+    setPublishGateOpen(false);
+    setPendingPublishFaq(null);
+    setPendingPublishValidation(null);
+  };
+
+  const handlePublishGateCancel = () => {
+    setPublishGateOpen(false);
+    setPendingPublishFaq(null);
+    setPendingPublishValidation(null);
   };
 
   const handleRestoreRevision = async (snapshot: Record<string, any>) => {
@@ -529,6 +556,16 @@ export default function FAQsAdmin() {
           </DialogContent>
         </Dialog>
       </div>
+
+      <PublishGateModal
+        open={publishGateOpen}
+        onOpenChange={setPublishGateOpen}
+        validation={pendingPublishValidation}
+        onConfirm={handlePublishGateConfirm}
+        onCancel={handlePublishGateCancel}
+        contentType="FAQ"
+        title={pendingPublishFaq?.question}
+      />
     </AdminLayout>
   );
 }

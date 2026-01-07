@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { validateQAPageForPublish, ValidationResult } from "@/lib/validateContentForPublish";
 import { ValidationDisplay } from "@/components/admin/ValidationDisplay";
 import { RevisionHistory } from "@/components/admin/RevisionHistory";
+import { PublishGateModal } from "@/components/admin/PublishGateModal";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -43,6 +44,9 @@ export default function QAPages() {
   const [editingQA, setEditingQA] = useState<any>(null);
   const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [forcePublish, setForcePublish] = useState(false);
+  const [publishGateOpen, setPublishGateOpen] = useState(false);
+  const [pendingPublishQA, setPendingPublishQA] = useState<any>(null);
+  const [pendingPublishValidation, setPendingPublishValidation] = useState<ValidationResult | null>(null);
   const [bulkInput, setBulkInput] = useState("");
   const [bulkTopicId, setBulkTopicId] = useState("");
   const [bulkAuthorId, setBulkAuthorId] = useState("");
@@ -321,12 +325,20 @@ export default function QAPages() {
         meta_title: qa.meta_title,
         meta_description: qa.meta_description,
       });
-      if (!result.isValid) {
-        toast.error('Cannot publish: ' + result.errors.map((e: any) => e.message).join(', '));
+      
+      // Show modal if there are errors OR warnings
+      if (!result.isValid || result.warnings.length > 0) {
+        setPendingPublishQA(qa);
+        setPendingPublishValidation(result);
+        setPublishGateOpen(true);
         return;
       }
     }
 
+    await doPublish(qa, newStatus);
+  };
+
+  const doPublish = async (qa: any, newStatus: string) => {
     await updateQA.mutateAsync({ id: qa.id, status: newStatus });
     logAudit.mutate({
       action: newStatus === 'published' ? 'publish' : 'unpublish',
@@ -334,6 +346,21 @@ export default function QAPages() {
       entity_id: qa.id,
       entity_title: qa.question,
     });
+    toast.success(newStatus === 'published' ? 'Q&A published' : 'Q&A unpublished');
+  };
+
+  const handlePublishGateConfirm = async () => {
+    if (!pendingPublishQA) return;
+    await doPublish(pendingPublishQA, 'published');
+    setPublishGateOpen(false);
+    setPendingPublishQA(null);
+    setPendingPublishValidation(null);
+  };
+
+  const handlePublishGateCancel = () => {
+    setPublishGateOpen(false);
+    setPendingPublishQA(null);
+    setPendingPublishValidation(null);
   };
 
   return (
@@ -694,6 +721,16 @@ What is Y?||Y is...`}
           </TableBody>
         </Table>
       </div>
+
+      <PublishGateModal
+        open={publishGateOpen}
+        onOpenChange={setPublishGateOpen}
+        validation={pendingPublishValidation}
+        onConfirm={handlePublishGateConfirm}
+        onCancel={handlePublishGateCancel}
+        contentType="Q&A page"
+        title={pendingPublishQA?.question}
+      />
     </AdminLayout>
   );
 }
