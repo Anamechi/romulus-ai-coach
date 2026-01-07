@@ -109,8 +109,10 @@ export type Database = {
           full_name: string
           id: string
           is_active: boolean | null
+          knows_about: string[] | null
           linkedin_url: string | null
           photo_url: string | null
+          slug: string | null
           updated_at: string
           years_experience: number | null
         }
@@ -121,8 +123,10 @@ export type Database = {
           full_name: string
           id?: string
           is_active?: boolean | null
+          knows_about?: string[] | null
           linkedin_url?: string | null
           photo_url?: string | null
+          slug?: string | null
           updated_at?: string
           years_experience?: number | null
         }
@@ -133,8 +137,10 @@ export type Database = {
           full_name?: string
           id?: string
           is_active?: boolean | null
+          knows_about?: string[] | null
           linkedin_url?: string | null
           photo_url?: string | null
+          slug?: string | null
           updated_at?: string
           years_experience?: number | null
         }
@@ -523,6 +529,7 @@ export type Database = {
           primary_keyword: string
           status: string | null
           target_audience: string
+          topic_id: string | null
           updated_at: string | null
         }
         Insert: {
@@ -535,6 +542,7 @@ export type Database = {
           primary_keyword: string
           status?: string | null
           target_audience: string
+          topic_id?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -547,9 +555,18 @@ export type Database = {
           primary_keyword?: string
           status?: string | null
           target_audience?: string
+          topic_id?: string | null
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "content_clusters_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       content_revisions: {
         Row: {
@@ -590,6 +607,8 @@ export type Database = {
           feature_flags: Json | null
           id: string
           master_content_prompt: string
+          min_internal_links: number | null
+          min_word_count: number | null
           site_name: string | null
           tagline: string | null
           updated_at: string
@@ -599,6 +618,8 @@ export type Database = {
           feature_flags?: Json | null
           id?: string
           master_content_prompt?: string
+          min_internal_links?: number | null
+          min_word_count?: number | null
           site_name?: string | null
           tagline?: string | null
           updated_at?: string
@@ -608,6 +629,8 @@ export type Database = {
           feature_flags?: Json | null
           id?: string
           master_content_prompt?: string
+          min_internal_links?: number | null
+          min_word_count?: number | null
           site_name?: string | null
           tagline?: string | null
           updated_at?: string
@@ -1140,8 +1163,10 @@ export type Database = {
           id: string
           is_active: boolean | null
           name: string
+          parent_topic_id: string | null
           slug: string
           sort_order: number | null
+          speakable_summary: string | null
           updated_at: string
         }
         Insert: {
@@ -1152,8 +1177,10 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name: string
+          parent_topic_id?: string | null
           slug: string
           sort_order?: number | null
+          speakable_summary?: string | null
           updated_at?: string
         }
         Update: {
@@ -1164,8 +1191,10 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name?: string
+          parent_topic_id?: string | null
           slug?: string
           sort_order?: number | null
+          speakable_summary?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -1174,6 +1203,13 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "topics_parent_topic_id_fkey"
+            columns: ["parent_topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
             referencedColumns: ["id"]
           },
         ]

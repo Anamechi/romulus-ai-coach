@@ -17,6 +17,11 @@ const footerLinks = {
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
   ],
+  trust: [
+    { label: "Editorial Policy", href: "/editorial-policy" },
+    { label: "Methodology", href: "/methodology" },
+    { label: "Trust Hub", href: "/trust" },
+  ],
 };
 
 const socialLinks = [
@@ -84,6 +89,23 @@ export function Footer() {
             <h4 className="font-display text-lg font-semibold text-cream mb-6">Resources</h4>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="font-body text-sm text-cream/70 hover:text-gold transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Trust Links */}
+          <div>
+            <h4 className="font-display text-lg font-semibold text-cream mb-6">Trust</h4>
+            <ul className="space-y-3">
+              {footerLinks.trust.map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
