@@ -2,27 +2,25 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Award, BookOpen, Briefcase } from "lucide-react";
 import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
-
-const credentials = [
-  { icon: Award, text: "Ed.D. in Educational Leadership" },
-  { icon: Briefcase, text: "MBA (Finance)" },
-  { icon: BookOpen, text: "Adult Org Development Certificate" },
-];
-
+const credentials = [{
+  icon: Award,
+  text: "Ed.D. in Educational Leadership"
+}, {
+  icon: Briefcase,
+  text: "MBA (Finance)"
+}, {
+  icon: BookOpen,
+  text: "Adult Org Development Certificate"
+}];
 export function AboutPreview() {
-  return (
-    <section className="py-24 bg-muted/30">
+  return <section className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
           {/* Image/Visual Side */}
           <div className="relative">
             <div className="aspect-[4/5] rounded-2xl bg-hero-gradient overflow-hidden relative">
               {/* Dr. Romulus Photo */}
-              <img 
-                src={drRomulusPhoto} 
-                alt="Dr. Deanna Romulus, MBA - Business Strategist and Coach"
-                className="absolute inset-0 w-full h-full object-cover object-center"
-              />
+              <img src={drRomulusPhoto} alt="Dr. Deanna Romulus, MBA - Business Strategist and Coach" className="absolute inset-0 w-full h-full object-cover object-center" />
               
               {/* Decorative overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
@@ -57,29 +55,18 @@ export function AboutPreview() {
               <span className="text-gradient-gold">Been There</span>
             </h2>
             
-            <p className="font-body text-lg text-muted-foreground mb-6 leading-relaxed">
-              Dr. Romulus brings a unique combination of academic rigor and real-world 
-              executive experience to every coaching engagement. Having led multi-million 
-              dollar initiatives and built successful businesses from the ground up, 
-              he understands the challenges you face.
-            </p>
+            <p className="font-body text-lg text-muted-foreground mb-6 leading-relaxed">Dr. Romulus brings a unique combination of academic rigor and real-world executive experience to every coaching engagement. Having led multi-million dollar initiatives and built successful businesses from the ground up, she understands the challenges you face.</p>
             
-            <p className="font-body text-muted-foreground mb-8 leading-relaxed">
-              His approach combines proven business frameworks with cutting-edge automation 
-              strategies, helping entrepreneurs build systems that scale without sacrificing 
-              their sanity or family time.
-            </p>
+            <p className="font-body text-muted-foreground mb-8 leading-relaxed">Her approach combines proven business frameworks with cutting-edge automation strategies, helping entrepreneurs build systems that scale without sacrificing their sanity or family time.</p>
 
             {/* Credentials */}
             <div className="space-y-4 mb-8">
-              {credentials.map((cred) => (
-                <div key={cred.text} className="flex items-center gap-3">
+              {credentials.map(cred => <div key={cred.text} className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center">
                     <cred.icon className="w-5 h-5 text-gold" />
                   </div>
                   <span className="font-body text-foreground">{cred.text}</span>
-                </div>
-              ))}
+                </div>)}
             </div>
 
             <Button variant="default" size="lg" asChild>
@@ -91,6 +78,5 @@ export function AboutPreview() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
