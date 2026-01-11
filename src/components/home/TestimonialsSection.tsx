@@ -14,7 +14,7 @@ const testimonials = [
     result: "25+ Hours Saved Weekly",
   },
   {
-    quote: "His fundability coaching helped us secure $500K in business credit with 0% interest. Game changer for our growth.",
+    quote: "Her fundability coaching helped us secure $500K in business credit with 0% interest. Game changer for our growth.",
     name: "Jennifer Park",
     role: "Owner, Park & Associates",
     result: "$500K in Credit Secured",
