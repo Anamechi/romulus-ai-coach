@@ -33,7 +33,7 @@ const programs = [
     title: "Elite Mastermind",
     subtitle: "Community of growth-minded founders",
     description: "Join a curated group of 12 entrepreneurs sharing insights, challenges, and victories in a confidential setting.",
-    price: "$997/mo",
+    price: "",
     features: [
       "2x monthly group calls",
       "Private community access",
