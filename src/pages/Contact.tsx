@@ -2,22 +2,22 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Mail, MapPin, Clock, Linkedin, Twitter, Youtube } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Contact() {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://link.drromulusmba.com/js/form_embed.js";
-    script.async = true;
-    document.body.appendChild(script);
+  const formSrc = useMemo(
+    () => "https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era",
+    []
+  );
+  const [loaded, setLoaded] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
 
-    return () => {
-      const existingScript = document.querySelector('script[src="https://link.drromulusmba.com/js/form_embed.js"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
-  }, []);
+  useEffect(() => {
+    setLoaded(false);
+    setTimedOut(false);
+    const t = window.setTimeout(() => setTimedOut(true), 7000);
+    return () => window.clearTimeout(t);
+  }, [formSrc]);
 
   return (
     <Layout>
@@ -49,12 +49,38 @@ export default function Contact() {
                 Send a Message
               </h2>
               
-              <div style={{ height: "762px" }}>
+              <div
+                className="w-full rounded-xl bg-card border border-border p-2 shadow-lg"
+                style={{ minHeight: "762px" }}
+              >
+                {!loaded && (
+                  <div className="h-[762px] w-full grid place-items-center">
+                    <div className="text-center max-w-sm px-6">
+                      <p className="font-body text-sm text-muted-foreground">
+                        Loading contact form…
+                      </p>
+                      {timedOut && (
+                        <div className="mt-3 space-y-3">
+                          <p className="font-body text-sm text-muted-foreground">
+                            If you still see a blank area, the form provider may be
+                            blocking embeds in this preview.
+                          </p>
+                          <Button variant="outline" asChild>
+                            <a href={formSrc} target="_blank" rel="noreferrer">
+                              Open the form in a new tab
+                              <ArrowRight className="w-4 h-4" />
+                            </a>
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
                 <iframe
-                  src="https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era"
+                  src={formSrc}
                   style={{ 
                     width: "100%", 
-                    height: "100%", 
+                    height: "762px", 
                     border: "none", 
                     borderRadius: "4px"
                   }}
@@ -71,6 +97,7 @@ export default function Contact() {
                   data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
                   data-form-id="kjHkGhRKm1JxSVIm8Era"
                   title="Contact Us Form (on the website)"
+                  onLoad={() => setLoaded(true)}
                 />
               </div>
             </div>
