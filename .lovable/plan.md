@@ -1,32 +1,27 @@
 
+# Remove Scrollbar from Contact Form
 
-# Fix: Contact Form Not Displaying
-
-## Problem Identified
-The GoHighLevel `form_embed.js` script is injecting CSS that hides the form iframe:
-- Sets `.ep-iFrameContainer { display: none }`
-- Sets container elements to `opacity: 0; visibility: hidden`
+## Problem
+The GHL contact form iframe is set to 762px height, but the actual form content is taller, causing an internal scrollbar that requires visitors to scroll within the iframe to see the entire form.
 
 ## Solution
+Increase the iframe height to accommodate the full form content without scrolling. Based on typical GHL contact forms with multiple fields, a height of approximately **900-1000px** should display the entire form.
 
-### 1. Remove the External Script
-Delete the `useEffect` hook that loads `form_embed.js` - this script is meant for popup/modal forms and conflicts with inline iframe embeds.
+## Technical Changes
 
-### 2. Keep the Iframe Only
-The iframe will load and display the form correctly without the external JavaScript. The `data-layout="{'id':'INLINE'}"` attribute tells GHL to display inline, which works natively without the embed script.
+### File: `src/pages/Contact.tsx`
 
-## File Changes
+Update height values in 3 locations:
 
-**`src/pages/Contact.tsx`**
-- Remove lines 8-22 (the `useEffect` hook that loads `form_embed.js`)
-- Remove the `useEffect` import if no longer needed
-- Keep the iframe exactly as-is
+1. **Container div** (line 54): Change `minHeight` from `762px` to `1000px`
+2. **Loading placeholder div** (line 57): Change `h-[762px]` to `h-[1000px]`  
+3. **Iframe inline style** (line 83): Change `height: "762px"` to `height: "1000px"`
+4. **data-height attribute** (line 96): Change `data-height="762"` to `data-height="1000"`
 
-## Technical Details
-- The iframe `src` directly loads the form from GHL servers
-- All `data-*` attributes are processed by GHL's internal form code
-- The external `form_embed.js` is only required for popup/slide-in forms, not inline iframes
+## Why 1000px?
+- GHL forms typically need 900-1100px depending on field count
+- 1000px provides buffer for form content plus submit button
+- If the form still shows a scrollbar after publishing, we can adjust further
 
-## Expected Result
-The contact form will display immediately under the "Send a Message" header within the styled container.
-
+## Result
+Visitors will see the complete contact form without any internal scrollbar, providing a cleaner user experience.
