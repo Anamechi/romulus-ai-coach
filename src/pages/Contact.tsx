@@ -2,25 +2,8 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Mail, MapPin, Clock, Linkedin, Twitter, Youtube } from "lucide-react";
-import { useEffect } from "react";
 
 export default function Contact() {
-  useEffect(() => {
-    // Load GHL form embed script
-    const script = document.createElement("script");
-    script.src = "https://link.drromulusmba.com/js/form_embed.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // Cleanup script on unmount
-      const existingScript = document.querySelector('script[src="https://link.drromulusmba.com/js/form_embed.js"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
-  }, []);
-
   return (
     <Layout>
       {/* Hero Section */}
