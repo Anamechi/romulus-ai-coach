@@ -51,10 +51,10 @@ export default function Contact() {
                 Send a Message
               </h2>
               
-              <div className="w-full min-h-[600px]">
+              <div className="w-full" style={{ height: "2731px" }}>
                 <iframe
                   src="https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era"
-                  style={{ width: "100%", height: "100%", border: "none", borderRadius: "15px", minHeight: "600px" }}
+                  style={{ width: "100%", height: "100%", border: "none", borderRadius: "15px" }}
                   id="inline-kjHkGhRKm1JxSVIm8Era"
                   data-layout="{'id':'INLINE'}"
                   data-trigger-type="alwaysShow"
