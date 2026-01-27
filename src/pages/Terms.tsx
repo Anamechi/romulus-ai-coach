@@ -23,10 +23,8 @@ const Terms = () => {
             
             <div className="prose prose-lg max-w-none text-foreground">
               
-              {/* Terms of Service */}
               <section className="mb-16">
-                <h2 className="font-display text-2xl font-bold text-primary mt-8 mb-4">📜 Terms of Service</h2>
-                <p className="text-muted-foreground mb-6">Effective Date: August 1, 2025</p>
+                <h2 className="font-display text-2xl font-bold text-primary mt-8 mb-4">Terms of Service</h2>
 
                 <h3 className="font-display text-xl font-semibold text-primary mt-8 mb-3">1. Agreement to Terms</h3>
                 <p>
@@ -70,7 +68,6 @@ const Terms = () => {
 
                 <h3 className="font-display text-xl font-semibold text-primary mt-8 mb-3">9. Contact</h3>
                 <p>
-                  📧{" "}
                   <a href="mailto:hello@drromulusmba.com" className="text-gold hover:underline">
                     hello@drromulusmba.com
                   </a>
@@ -79,7 +76,7 @@ const Terms = () => {
 
               {/* SMS Messaging Terms */}
               <section className="mb-16 pt-8 border-t border-border">
-                <h2 className="font-display text-2xl font-bold text-primary mb-4">📲 SMS Messaging Terms (A2P)</h2>
+                <h2 className="font-display text-2xl font-bold text-primary mb-4">SMS Messaging Terms (A2P)</h2>
                 
                 <p>
                   By opting in to receive SMS messages from Dr. Romulus MBA, you agree to receive text messages related to educational content, coaching services, appointment reminders, service updates, and promotional offers, depending on your interaction with our services.
@@ -113,10 +110,8 @@ const Terms = () => {
                 </p>
               </section>
 
-              {/* Earnings Disclaimer */}
               <section className="mb-16 pt-8 border-t border-border">
-                <h2 className="font-display text-2xl font-bold text-primary mb-4">💼 Earnings Disclaimer</h2>
-                <p className="text-muted-foreground mb-6">Effective Date: August 1, 2025</p>
+                <h2 className="font-display text-2xl font-bold text-primary mb-4">Earnings Disclaimer</h2>
 
                 <p>
                   Dr. Romulus MBA provides education, training, and strategic guidance. We make no guarantees regarding income, revenue, business success, or results of any kind.
@@ -135,10 +130,9 @@ const Terms = () => {
                 </p>
               </section>
 
-              {/* Refund Policy */}
               <section className="pt-8 border-t border-border">
-                <h2 className="font-display text-2xl font-bold text-primary mb-4">🔁 Refund Policy</h2>
-                <p className="text-muted-foreground mb-6">Effective Date: August 1, 2025</p>
+                <h2 className="font-display text-2xl font-bold text-primary mb-4">Refund Policy</h2>
+                
 
                 <h3 className="font-display text-xl font-semibold text-primary mt-8 mb-3">Digital Products & Programs</h3>
                 <p>Due to the nature of digital content and immediate access:</p>
@@ -161,7 +155,6 @@ const Terms = () => {
 
                 <h3 className="font-display text-xl font-semibold text-primary mt-8 mb-3">Contact for Refund Inquiries</h3>
                 <p>
-                  📧{" "}
                   <a href="mailto:hello@drromulusmba.com" className="text-gold hover:underline">
                     hello@drromulusmba.com
                   </a>
