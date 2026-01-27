@@ -2,8 +2,23 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Mail, MapPin, Clock, Linkedin, Twitter, Youtube } from "lucide-react";
+import { useEffect } from "react";
 
 export default function Contact() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://link.drromulusmba.com/js/form_embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      const existingScript = document.querySelector('script[src="https://link.drromulusmba.com/js/form_embed.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -34,28 +49,30 @@ export default function Contact() {
                 Send a Message
               </h2>
               
-              <iframe
-                src="https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era"
-                style={{ 
-                  width: "100%", 
-                  height: "786px", 
-                  border: "none", 
-                  borderRadius: "4px"
-                }}
-                id="inline-kjHkGhRKm1JxSVIm8Era"
-                data-layout="{'id':'INLINE'}"
-                data-trigger-type="alwaysShow"
-                data-trigger-value=""
-                data-activation-type="alwaysActivated"
-                data-activation-value=""
-                data-deactivation-type="neverDeactivate"
-                data-deactivation-value=""
-                data-form-name="Contact Us Form (on the website)"
-                data-height="786"
-                data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
-                data-form-id="kjHkGhRKm1JxSVIm8Era"
-                title="Contact Us Form (on the website)"
-              />
+              <div style={{ height: "762px" }}>
+                <iframe
+                  src="https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era"
+                  style={{ 
+                    width: "100%", 
+                    height: "100%", 
+                    border: "none", 
+                    borderRadius: "4px"
+                  }}
+                  id="inline-kjHkGhRKm1JxSVIm8Era"
+                  data-layout="{'id':'INLINE'}"
+                  data-trigger-type="alwaysShow"
+                  data-trigger-value=""
+                  data-activation-type="alwaysActivated"
+                  data-activation-value=""
+                  data-deactivation-type="neverDeactivate"
+                  data-deactivation-value=""
+                  data-form-name="Contact Us Form (on the website)"
+                  data-height="762"
+                  data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
+                  data-form-id="kjHkGhRKm1JxSVIm8Era"
+                  title="Contact Us Form (on the website)"
+                />
+              </div>
             </div>
 
             {/* Contact Info */}
