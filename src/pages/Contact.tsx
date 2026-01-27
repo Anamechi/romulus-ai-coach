@@ -51,10 +51,10 @@ export default function Contact() {
               
               <div
                 className="w-full rounded-xl bg-card border border-border p-2 shadow-lg"
-                style={{ minHeight: "1200px" }}
+                style={{ minHeight: "1400px" }}
               >
                 {!loaded && (
-                  <div className="h-[1200px] w-full grid place-items-center">
+                  <div className="h-[1400px] w-full grid place-items-center">
                     <div className="text-center max-w-sm px-6">
                       <p className="font-body text-sm text-muted-foreground">
                         Loading contact form…
@@ -80,7 +80,7 @@ export default function Contact() {
                   src={formSrc}
                   style={{ 
                     width: "100%", 
-                    height: "1200px", 
+                    height: "1400px", 
                     border: "none", 
                     borderRadius: "4px"
                   }}
@@ -93,7 +93,7 @@ export default function Contact() {
                   data-deactivation-type="neverDeactivate"
                   data-deactivation-value=""
                   data-form-name="Contact Us Form (on the website)"
-                  data-height="1200"
+                  data-height="1400"
                   data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
                   data-form-id="kjHkGhRKm1JxSVIm8Era"
                   title="Contact Us Form (on the website)"
