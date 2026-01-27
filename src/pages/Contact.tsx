@@ -3,24 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Mail, MapPin, Clock, Linkedin, Twitter, Youtube } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-
 export default function Contact() {
-  const formSrc = useMemo(
-    () => "https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era",
-    []
-  );
+  const formSrc = useMemo(() => "https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era", []);
   const [loaded, setLoaded] = useState(false);
   const [timedOut, setTimedOut] = useState(false);
-
   useEffect(() => {
     setLoaded(false);
     setTimedOut(false);
     const t = window.setTimeout(() => setTimedOut(true), 7000);
     return () => window.clearTimeout(t);
   }, [formSrc]);
-
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero Section */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -49,18 +42,15 @@ export default function Contact() {
                 Send a Message
               </h2>
               
-              <div
-                className="w-full rounded-xl bg-card border border-border p-2 shadow-lg"
-                style={{ minHeight: "1400px" }}
-              >
-                {!loaded && (
-                  <div className="h-[1400px] w-full grid place-items-center">
+              <div className="w-full rounded-xl bg-card border border-border p-2 shadow-lg" style={{
+              minHeight: "1400px"
+            }}>
+                {!loaded && <div className="h-[1400px] w-full grid place-items-center">
                     <div className="text-center max-w-sm px-6">
                       <p className="font-body text-sm text-muted-foreground">
                         Loading contact form…
                       </p>
-                      {timedOut && (
-                        <div className="mt-3 space-y-3">
+                      {timedOut && <div className="mt-3 space-y-3">
                           <p className="font-body text-sm text-muted-foreground">
                             If you still see a blank area, the form provider may be
                             blocking embeds in this preview.
@@ -71,34 +61,15 @@ export default function Contact() {
                               <ArrowRight className="w-4 h-4" />
                             </a>
                           </Button>
-                        </div>
-                      )}
+                        </div>}
                     </div>
-                  </div>
-                )}
-                <iframe
-                  src={formSrc}
-                  style={{ 
-                    width: "100%", 
-                    height: "1400px", 
-                    border: "none", 
-                    borderRadius: "4px"
-                  }}
-                  id="inline-kjHkGhRKm1JxSVIm8Era"
-                  data-layout="{'id':'INLINE'}"
-                  data-trigger-type="alwaysShow"
-                  data-trigger-value=""
-                  data-activation-type="alwaysActivated"
-                  data-activation-value=""
-                  data-deactivation-type="neverDeactivate"
-                  data-deactivation-value=""
-                  data-form-name="Contact Us Form (on the website)"
-                  data-height="1400"
-                  data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
-                  data-form-id="kjHkGhRKm1JxSVIm8Era"
-                  title="Contact Us Form (on the website)"
-                  onLoad={() => setLoaded(true)}
-                />
+                  </div>}
+                <iframe src={formSrc} style={{
+                width: "100%",
+                height: "1400px",
+                border: "none",
+                borderRadius: "4px"
+              }} id="inline-kjHkGhRKm1JxSVIm8Era" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="Contact Us Form (on the website)" data-height="1400" data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era" data-form-id="kjHkGhRKm1JxSVIm8Era" title="Contact Us Form (on the website)" onLoad={() => setLoaded(true)} />
               </div>
             </div>
 
@@ -115,9 +86,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-body font-semibold text-foreground mb-1">Email</h3>
-                    <a href="mailto:contact@drromulus.com" className="font-body text-muted-foreground hover:text-gold transition-colors">
-                      contact@drromulus.com
-                    </a>
+                    <a href="mailto:contact@drromulus.com" className="font-body text-muted-foreground hover:text-gold transition-colors">hello@drromulusmba.com</a>
                   </div>
                 </div>
 
@@ -152,20 +121,21 @@ export default function Contact() {
               <div>
                 <h3 className="font-body font-semibold text-foreground mb-4">Follow Along</h3>
                 <div className="flex gap-4">
-                  {[
-                    { icon: Linkedin, href: "#", label: "LinkedIn" },
-                    { icon: Twitter, href: "#", label: "Twitter" },
-                    { icon: Youtube, href: "#", label: "YouTube" },
-                  ].map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      aria-label={social.label}
-                      className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center hover:bg-gold hover:text-slate-deep transition-all duration-300"
-                    >
+                  {[{
+                  icon: Linkedin,
+                  href: "#",
+                  label: "LinkedIn"
+                }, {
+                  icon: Twitter,
+                  href: "#",
+                  label: "Twitter"
+                }, {
+                  icon: Youtube,
+                  href: "#",
+                  label: "YouTube"
+                }].map(social => <a key={social.label} href={social.href} aria-label={social.label} className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center hover:bg-gold hover:text-slate-deep transition-all duration-300">
                       <social.icon size={20} />
-                    </a>
-                  ))}
+                    </a>)}
                 </div>
               </div>
 
@@ -188,6 +158,5 @@ export default function Contact() {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 }
