@@ -1,15 +1,9 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Link } from "react-router-dom";
-
 const Terms = () => {
-  return (
-    <Layout>
-      <SEOHead
-        title="Terms of Service | Dr. Romulus MBA"
-        description="Terms of Service, Refund Policy, and Earnings Disclaimer for Dr. Romulus MBA services and programs."
-        canonicalUrl="/terms"
-      />
+  return <Layout>
+      <SEOHead title="Terms of Service | Dr. Romulus MBA" description="Terms of Service, Refund Policy, and Earnings Disclaimer for Dr. Romulus MBA services and programs." canonicalUrl="/terms" />
       
       <div className="bg-cream py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -76,7 +70,7 @@ const Terms = () => {
 
               {/* SMS Messaging Terms */}
               <section className="mb-16 pt-8 border-t border-border">
-                <h2 className="font-display text-2xl font-bold text-primary mb-4">SMS Messaging Terms (A2P)</h2>
+                <h2 className="font-display text-2xl font-bold text-primary mb-4">SMS Messaging Terms </h2>
                 
                 <p>
                   By opting in to receive SMS messages from Dr. Romulus MBA, you agree to receive text messages related to educational content, coaching services, appointment reminders, service updates, and promotional offers, depending on your interaction with our services.
@@ -165,8 +159,6 @@ const Terms = () => {
           </div>
         </div>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Terms;
