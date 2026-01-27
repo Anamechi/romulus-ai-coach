@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock, User } from "lucide-react";
+import { NewsletterForm } from "@/components/forms/NewsletterForm";
 
 const featuredPost = {
   slug: "7-automation-wins-entrepreneurs",
@@ -185,16 +186,7 @@ export default function Blog() {
             <p className="font-body text-muted-foreground mb-8">
               Join 5,000+ entrepreneurs receiving actionable strategies every Tuesday.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg border border-border bg-card font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold"
-              />
-              <Button variant="gold" size="lg">
-                Subscribe
-              </Button>
-            </form>
+            <NewsletterForm variant="inline" source="Website – Blog – Weekly Insights" />
           </div>
         </div>
       </section>

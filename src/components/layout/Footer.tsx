@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Twitter, Youtube, Mail } from "lucide-react";
+import { NewsletterForm } from "@/components/forms/NewsletterForm";
 
 const footerLinks = {
   company: [
@@ -124,19 +125,7 @@ export function Footer() {
             <p className="text-cream/70 font-body text-sm mb-4">
               Get weekly insights on business growth and automation strategies.
             </p>
-            <form className="flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-4 py-3 rounded-lg bg-cream/10 border border-cream/20 text-cream placeholder:text-cream/50 font-body text-sm focus:outline-none focus:border-gold transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-4 py-3 rounded-lg bg-gold-gradient text-slate-deep font-body font-semibold text-sm hover:shadow-gold transition-all duration-300"
-              >
-                Subscribe
-              </button>
-            </form>
+            <NewsletterForm variant="footer" source="Website – Footer – Weekly Insights" />
           </div>
         </div>
 
