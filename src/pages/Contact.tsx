@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Mail, MapPin, Clock, Linkedin, Twitter, Youtube } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Clock, Phone, Linkedin, Twitter, Youtube } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 export default function Contact() {
   const formSrc = useMemo(() => "https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era", []);
@@ -86,7 +86,17 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-body font-semibold text-foreground mb-1">Email</h3>
-                    <a href="mailto:contact@drromulus.com" className="font-body text-muted-foreground hover:text-gold transition-colors">hello@drromulusmba.com</a>
+                    <a href="mailto:hello@drromulusmba.com" className="font-body text-muted-foreground hover:text-gold transition-colors">hello@drromulusmba.com</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-5 h-5 text-gold" />
+                  </div>
+                  <div>
+                    <h3 className="font-body font-semibold text-foreground mb-1">Phone</h3>
+                    <a href="tel:+14697463460" className="font-body text-muted-foreground hover:text-gold transition-colors">+1 469-746-3460</a>
                   </div>
                 </div>
 
