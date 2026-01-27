@@ -1,27 +1,26 @@
 
-# Remove Scrollbar from Contact Form
+# Update Phone Number on Contact Page
 
-## Problem
-The GHL contact form iframe is set to 762px height, but the actual form content is taller, causing an internal scrollbar that requires visitors to scroll within the iframe to see the entire form.
-
-## Solution
-Increase the iframe height to accommodate the full form content without scrolling. Based on typical GHL contact forms with multiple fields, a height of approximately **900-1000px** should display the entire form.
+## Change Summary
+Update the business phone number from `+1 469-746-3460` to `+1 877-412-6215`.
 
 ## Technical Changes
 
 ### File: `src/pages/Contact.tsx`
 
-Update height values in 3 locations:
+**Line 99** - Update the phone link and display text:
 
-1. **Container div** (line 54): Change `minHeight` from `762px` to `1000px`
-2. **Loading placeholder div** (line 57): Change `h-[762px]` to `h-[1000px]`  
-3. **Iframe inline style** (line 83): Change `height: "762px"` to `height: "1000px"`
-4. **data-height attribute** (line 96): Change `data-height="762"` to `data-height="1000"`
+```tsx
+// Current:
+<a href="tel:+14697463460" className="font-body text-muted-foreground hover:text-gold transition-colors">+1 469-746-3460</a>
 
-## Why 1000px?
-- GHL forms typically need 900-1100px depending on field count
-- 1000px provides buffer for form content plus submit button
-- If the form still shows a scrollbar after publishing, we can adjust further
+// Updated to:
+<a href="tel:+18774126215" className="font-body text-muted-foreground hover:text-gold transition-colors">+1 877-412-6215</a>
+```
+
+This updates both:
+1. The `tel:` link href (for click-to-call functionality)
+2. The visible display text
 
 ## Result
-Visitors will see the complete contact form without any internal scrollbar, providing a cleaner user experience.
+The Contact page will display the new toll-free phone number (+1 877-412-6215) with proper click-to-call functionality.
