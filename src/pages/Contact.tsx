@@ -34,25 +34,28 @@ export default function Contact() {
                 Send a Message
               </h2>
               
-              <div className="w-full rounded-xl bg-card/50 border border-border/50 p-6 shadow-lg backdrop-blur-sm" style={{ minHeight: "786px" }}>
-                <iframe
-                  src="https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era"
-                  style={{ width: "100%", height: "786px", border: "none", borderRadius: "8px" }}
-                  id="inline-kjHkGhRKm1JxSVIm8Era"
-                  data-layout="{'id':'INLINE'}"
-                  data-trigger-type="alwaysShow"
-                  data-trigger-value=""
-                  data-activation-type="alwaysActivated"
-                  data-activation-value=""
-                  data-deactivation-type="neverDeactivate"
-                  data-deactivation-value=""
-                  data-form-name="Contact Us Form (on the website)"
-                  data-height="786"
-                  data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
-                  data-form-id="kjHkGhRKm1JxSVIm8Era"
-                  title="Contact Us Form (on the website)"
-                />
-              </div>
+              <iframe
+                src="https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era"
+                style={{ 
+                  width: "100%", 
+                  height: "786px", 
+                  border: "none", 
+                  borderRadius: "4px"
+                }}
+                id="inline-kjHkGhRKm1JxSVIm8Era"
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Contact Us Form (on the website)"
+                data-height="786"
+                data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
+                data-form-id="kjHkGhRKm1JxSVIm8Era"
+                title="Contact Us Form (on the website)"
+              />
             </div>
 
             {/* Contact Info */}
