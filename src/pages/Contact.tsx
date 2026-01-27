@@ -1,52 +1,25 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Mail, MapPin, Phone, Clock, Linkedin, Twitter, Youtube, Loader2 } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, Mail, MapPin, Clock, Linkedin, Twitter, Youtube } from "lucide-react";
+import { useEffect } from "react";
 
 export default function Contact() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  useEffect(() => {
+    // Load GHL form embed script
+    const script = document.createElement("script");
+    script.src = "https://link.drromulusmba.com/js/form_embed.js";
+    script.async = true;
+    document.body.appendChild(script);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const { error } = await supabase.from("leads").insert({
-        full_name: formData.name,
-        email: formData.email,
-        source: formData.subject,
-        notes: formData.message,
-        status: "new",
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Message Sent",
-        description: "Thank you for reaching out. We'll get back to you within 24 hours.",
-      });
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (error) {
-      console.error("Error submitting contact form:", error);
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    return () => {
+      // Cleanup script on unmount
+      const existingScript = document.querySelector('script[src="https://link.drromulusmba.com/js/form_embed.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
 
   return (
     <Layout>
@@ -72,90 +45,31 @@ export default function Contact() {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
-            {/* Contact Form */}
+            {/* Embedded GHL Form */}
             <div>
               <h2 className="font-display text-2xl font-bold text-foreground mb-6">
                 Send a Message
               </h2>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-body text-sm font-medium text-foreground mb-2 block">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-card font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold transition-colors"
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label className="font-body text-sm font-medium text-foreground mb-2 block">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-card font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold transition-colors"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="font-body text-sm font-medium text-foreground mb-2 block">
-                    Subject
-                  </label>
-                  <select
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-card font-body text-foreground focus:outline-none focus:border-gold transition-colors"
-                  >
-                    <option value="">Select a topic</option>
-                    <option value="coaching">1:1 Coaching Inquiry</option>
-                    <option value="mastermind">Mastermind Interest</option>
-                    <option value="automation">Automation Services</option>
-                    <option value="consulting">Business Consulting</option>
-                    <option value="partnership">Partnership Opportunity</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="font-body text-sm font-medium text-foreground mb-2 block">
-                    Message
-                  </label>
-                  <textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    required
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-card font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold transition-colors resize-none"
-                    placeholder="Tell us about your business and how we can help..."
-                  />
-                </div>
-
-                <Button type="submit" variant="gold" size="lg" className="w-full sm:w-auto" disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      Send Message
-                      <ArrowRight className="w-4 h-4" />
-                    </>
-                  )}
-                </Button>
-              </form>
+              <div className="w-full min-h-[600px]">
+                <iframe
+                  src="https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era"
+                  style={{ width: "100%", height: "100%", border: "none", borderRadius: "15px", minHeight: "600px" }}
+                  id="inline-kjHkGhRKm1JxSVIm8Era"
+                  data-layout="{'id':'INLINE'}"
+                  data-trigger-type="alwaysShow"
+                  data-trigger-value=""
+                  data-activation-type="alwaysActivated"
+                  data-activation-value=""
+                  data-deactivation-type="neverDeactivate"
+                  data-deactivation-value=""
+                  data-form-name="Contact Us Form (on the website)"
+                  data-height="2731"
+                  data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
+                  data-form-id="kjHkGhRKm1JxSVIm8Era"
+                  title="Contact Us Form (on the website)"
+                />
+              </div>
             </div>
 
             {/* Contact Info */}
@@ -177,17 +91,6 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-gold" />
-                  </div>
-                  <div>
-                    <h3 className="font-body font-semibold text-foreground mb-1">Phone</h3>
-                    <a href="tel:+1-555-123-4567" className="font-body text-muted-foreground hover:text-gold transition-colors">
-                      +1 (555) 123-4567
-                    </a>
-                  </div>
-                </div>
 
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
