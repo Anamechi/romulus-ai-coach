@@ -51,7 +51,7 @@ export default function Contact() {
                 Send a Message
               </h2>
               
-              <div className="w-full" style={{ height: "756px" }}>
+              <div className="w-full" style={{ height: "786px" }}>
                 <iframe
                   src="https://link.drromulusmba.com/widget/form/kjHkGhRKm1JxSVIm8Era"
                   style={{ width: "100%", height: "100%", border: "none", borderRadius: "4px" }}
@@ -64,7 +64,7 @@ export default function Contact() {
                   data-deactivation-type="neverDeactivate"
                   data-deactivation-value=""
                   data-form-name="Contact Us Form (on the website)"
-                  data-height="756"
+                  data-height="786"
                   data-layout-iframe-id="inline-kjHkGhRKm1JxSVIm8Era"
                   data-form-id="kjHkGhRKm1JxSVIm8Era"
                   title="Contact Us Form (on the website)"
