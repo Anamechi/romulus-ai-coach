@@ -41,8 +41,47 @@ export default function Apply() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateStep = (step: number): boolean => {
+    switch (step) {
+      case 1:
+        if (!formData.name || !formData.email) {
+          toast({
+            title: "Required Fields Missing",
+            description: "Please fill in your name and email address.",
+            variant: "destructive",
+          });
+          return false;
+        }
+        return true;
+      case 2:
+        if (!formData.businessName || !formData.industry || !formData.yearsInBusiness || !formData.annualRevenue) {
+          toast({
+            title: "Required Fields Missing",
+            description: "Please fill in all required business information.",
+            variant: "destructive",
+          });
+          return false;
+        }
+        return true;
+      case 3:
+        if (!formData.biggestChallenge || !formData.goals || !formData.timeline || !formData.investmentReady) {
+          toast({
+            title: "Required Fields Missing",
+            description: "Please fill in all required fields about your goals and challenges.",
+            variant: "destructive",
+          });
+          return false;
+        }
+        return true;
+      default:
+        return true;
+    }
+  };
+
   const handleNext = () => {
-    if (currentStep < 4) setCurrentStep(currentStep + 1);
+    if (validateStep(currentStep) && currentStep < 4) {
+      setCurrentStep(currentStep + 1);
+    }
   };
 
   const handleBack = () => {
