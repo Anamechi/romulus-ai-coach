@@ -288,10 +288,10 @@ export default function Programs() {
             Book a free 30-minute strategy session and get personalized recommendations.
           </p>
           <Button variant="gold" size="xl" asChild>
-            <Link to="/apply">
+            <a href="https://link.drromulusmba.com/widget/bookings/automation_a" target="_blank" rel="noopener noreferrer">
               Schedule Your Call
               <ArrowRight className="w-5 h-5" />
-            </Link>
+            </a>
           </Button>
         </div>
       </section>
