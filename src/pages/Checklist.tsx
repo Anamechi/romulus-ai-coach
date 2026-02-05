@@ -1,70 +1,20 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ArrowRight } from "lucide-react";
 
 export default function Checklist() {
-  const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
+  const formSrc = useMemo(() => "https://link.drromulusmba.com/widget/form/YOUR_GHL_FORM_ID", []);
+  const [loaded, setLoaded] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const trimmedName = formData.name.trim();
-    const trimmedEmail = formData.email.trim().toLowerCase();
-
-    if (!trimmedName || !trimmedEmail) {
-      toast({
-        title: "Please fill in all fields",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!trimmedEmail.includes("@")) {
-      toast({
-        title: "Please enter a valid email",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // Save to leads table
-      const { error } = await supabase.from("leads").insert({
-        full_name: trimmedName,
-        email: trimmedEmail,
-        source: "Fundability & Systems Checklist",
-        status: "new",
-      });
-
-      if (error) throw error;
-
-      // Redirect to thank-you page
-      navigate("/checklist/thank-you");
-    } catch (error) {
-      console.error("Submission error:", error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again or contact us directly.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  useEffect(() => {
+    setLoaded(false);
+    setTimedOut(false);
+    const t = window.setTimeout(() => setTimedOut(true), 7000);
+    return () => window.clearTimeout(t);
+  }, [formSrc]);
 
   const benefits = [
     "A clear view of where your business lacks structure",
@@ -82,7 +32,7 @@ export default function Checklist() {
       />
 
       <section className="py-20 md:py-28 bg-gradient-to-b from-background to-muted/30">
-        <div className="container max-w-4xl mx-auto px-4">
+        <div className="container max-w-5xl mx-auto px-4">
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-2 bg-gold/10 text-gold rounded-full text-sm font-medium mb-6">
               Free Diagnostic Tool
@@ -131,61 +81,59 @@ export default function Checklist() {
               </div>
             </div>
 
-            {/* Right Column - Form */}
-            <div className="bg-card border border-border rounded-xl p-8 shadow-lg">
-              <h3 className="font-display text-xl font-semibold text-foreground mb-6 text-center">
+            {/* Right Column - GHL Form */}
+            <div className="bg-card border border-border rounded-xl p-4 shadow-lg">
+              <h3 className="font-display text-xl font-semibold text-foreground mb-4 text-center">
                 Get the Fundability & Systems Checklist
               </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-foreground">
-                    Your Name
-                  </Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="First and Last Name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    required
-                    className="bg-background"
-                  />
-                </div>
+              <div className="w-full rounded-lg" style={{ minHeight: "500px" }}>
+                {!loaded && (
+                  <div className="h-[500px] w-full grid place-items-center">
+                    <div className="text-center max-w-sm px-6">
+                      <p className="font-body text-sm text-muted-foreground">
+                        Loading form…
+                      </p>
+                      {timedOut && (
+                        <div className="mt-3 space-y-3">
+                          <p className="font-body text-sm text-muted-foreground">
+                            If you still see a blank area, the form provider may be
+                            blocking embeds in this preview.
+                          </p>
+                          <Button variant="outline" asChild>
+                            <a href={formSrc} target="_blank" rel="noreferrer">
+                              Open the form in a new tab
+                              <ArrowRight className="w-4 h-4" />
+                            </a>
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+                <iframe
+                  src={formSrc}
+                  style={{
+                    width: "100%",
+                    height: "500px",
+                    border: "none",
+                    borderRadius: "4px",
+                  }}
+                  id="inline-checklist-form"
+                  data-layout="{'id':'INLINE'}"
+                  data-trigger-type="alwaysShow"
+                  data-activation-type="alwaysActivated"
+                  data-deactivation-type="neverDeactivate"
+                  data-form-name="Fundability & Systems Checklist"
+                  data-height="500"
+                  title="Fundability & Systems Checklist Form"
+                  onLoad={() => setLoaded(true)}
+                />
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-foreground">
-                    Email Address
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    required
-                    className="bg-background"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  variant="gold"
-                  size="lg"
-                  className="w-full"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Sending..." : "Get the Checklist"}
-                </Button>
-
-                <p className="text-xs text-muted-foreground text-center">
-                  Your information is secure and will never be shared.
-                </p>
-              </form>
+              <p className="text-xs text-muted-foreground text-center mt-4">
+                Your information is secure and will never be shared.
+              </p>
             </div>
           </div>
         </div>
