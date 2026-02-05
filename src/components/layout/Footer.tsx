@@ -11,6 +11,7 @@ const footerLinks = {
   ],
   resources: [
     { label: "Income Clarity Diagnostic", href: "/diagnostic" },
+    { label: "Fundability Checklist", href: "/checklist" },
     { label: "Insights & Articles", href: "/blog" },
   ],
   legal: [

@@ -33,6 +33,8 @@ const Methodology = lazy(() => import("./pages/Methodology"));
 const Trust = lazy(() => import("./pages/Trust"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
+const Checklist = lazy(() => import("./pages/Checklist"));
+const ChecklistThankYou = lazy(() => import("./pages/ChecklistThankYou"));
 
 // Lazy load admin pages (larger bundle, rarely needed by most users)
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
@@ -101,6 +103,8 @@ const App = () => (
               <Route path="/trust" element={<Trust />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/checklist" element={<Checklist />} />
+              <Route path="/checklist/thank-you" element={<ChecklistThankYou />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
