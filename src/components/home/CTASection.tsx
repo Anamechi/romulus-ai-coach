@@ -58,6 +58,11 @@ export function CTASection() {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
+            <Button variant="heroOutline" size="lg" asChild>
+              <Link to="/checklist">
+                Download the Checklist
+              </Link>
+            </Button>
           </div>
 
           {/* Trust Note */}
