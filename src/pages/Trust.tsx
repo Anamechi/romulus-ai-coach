@@ -192,17 +192,17 @@ export default function Trust() {
 
           {/* CTA */}
           <div className="text-center bg-primary/5 border border-primary/20 rounded-lg p-8">
-            <h2 className="text-2xl font-display font-bold mb-4">Ready to Work With Us?</h2>
+            <h2 className="text-2xl font-display font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-muted-foreground mb-6">
-              If you're looking for guidance from a trusted expert in business automation and growth,
-              we'd love to hear from you.
+              The Income Clarity Diagnostic reveals exactly what's blocking your growth—so you can 
+              fix the right thing.
             </p>
             <div className="flex justify-center gap-4">
               <Link
-                to="/apply"
+                to="/diagnostic"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
               >
-                Apply Now
+                Take the Diagnostic
               </Link>
               <Link
                 to="/contact"

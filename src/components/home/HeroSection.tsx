@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import drRomulusDesk from "@/assets/dr-romulus-desk.png";
 
 export function HeroSection() {
@@ -30,34 +30,28 @@ export function HeroSection() {
                 ))}
               </div>
               <span className="font-body text-sm text-cream/80">
-                Trusted by 500+ entrepreneurs worldwide
+                Trusted by entrepreneurs worldwide
               </span>
             </div>
 
             {/* Headline */}
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-cream leading-tight mb-6 animate-fade-up delay-100">
-              Build a Business That{" "}
-              <span className="text-gradient-gold">Runs Without You</span>
+              Inconsistent Income Is a{" "}
+              <span className="text-gradient-gold">Systems Problem</span>
             </h1>
 
             {/* Subheadline */}
             <p className="font-body text-lg md:text-xl text-cream/70 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed animate-fade-up delay-200">
-              Elite coaching, strategic consulting, and AI-powered automation for 
-              entrepreneurs ready to scale with clarity, systems, and freedom.
+              You don't need another tactic. You need to understand what's actually 
+              broken—so you can fix the right thing, once.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 animate-fade-up delay-300">
               <Button variant="gold" size="xl" asChild>
-                <Link to="/apply" className="group">
-                  Apply for Coaching
+                <Link to="/diagnostic" className="group">
+                  Take the Income Clarity Diagnostic
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              <Button variant="heroOutline" size="xl" asChild>
-                <Link to="/programs" className="group">
-                  <Play className="w-5 h-5" />
-                  Explore Programs
                 </Link>
               </Button>
             </div>
@@ -97,19 +91,18 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-cream/10 animate-fade-up delay-400 max-w-4xl mx-auto">
+        {/* Value Props instead of stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 pt-12 border-t border-cream/10 animate-fade-up delay-400 max-w-4xl mx-auto">
           {[
-            { value: "500+", label: "Clients Coached" },
-            { value: "$50M+", label: "Revenue Generated" },
-            { value: "15+", label: "Years Experience" },
-            { value: "98%", label: "Success Rate" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="font-display text-3xl md:text-4xl font-bold text-gold mb-2">
-                {stat.value}
+            { title: "Clarity First", description: "Understand the real problem before taking action" },
+            { title: "Systems Thinking", description: "Fix root causes, not just symptoms" },
+            { title: "Guided Path", description: "Know exactly what to do next" },
+          ].map((prop) => (
+            <div key={prop.title} className="text-center">
+              <div className="font-display text-lg md:text-xl font-bold text-gold mb-2">
+                {prop.title}
               </div>
-              <div className="font-body text-sm text-cream/60">{stat.label}</div>
+              <div className="font-body text-sm text-cream/60">{prop.description}</div>
             </div>
           ))}
         </div>

@@ -16,7 +16,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/programs", label: "Programs" },
+  { href: "/programs", label: "How I Help" },
   { href: "/blog", label: "Insights" },
   { href: "/contact", label: "Contact" },
 ];
@@ -120,7 +120,7 @@ export function Header() {
               </>
             )}
             <Button variant="gold" size="lg" asChild>
-              <Link to="/apply">Apply Now</Link>
+              <Link to="/diagnostic">Start with Clarity</Link>
             </Button>
           </div>
 
@@ -190,8 +190,8 @@ export function Header() {
               )}
               
               <Button variant="gold" size="lg" className="mt-2" asChild>
-                <Link to="/apply" onClick={() => setIsOpen(false)}>
-                  Apply Now
+                <Link to="/diagnostic" onClick={() => setIsOpen(false)}>
+                  Start with Clarity
                 </Link>
               </Button>
             </div>

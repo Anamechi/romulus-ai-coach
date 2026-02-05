@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar, CheckCircle } from "lucide-react";
+import { ArrowRight, Target, CheckCircle } from "lucide-react";
 
 const benefits = [
-  "Free 30-minute strategy call",
-  "Custom growth roadmap",
-  "No obligation or pressure",
+  "Identify your income bottleneck",
+  "Understand what's really broken",
+  "Get a clear next step",
 ];
 
 export function CTASection() {
@@ -27,17 +27,17 @@ export function CTASection() {
         <div className="max-w-4xl mx-auto text-center">
           {/* Icon */}
           <div className="w-16 h-16 rounded-2xl bg-gold/20 flex items-center justify-center mx-auto mb-8">
-            <Calendar className="w-8 h-8 text-gold" />
+            <Target className="w-8 h-8 text-gold" />
           </div>
 
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-cream mb-6">
-            Ready to Build Your{" "}
-            <span className="text-gradient-gold">Freedom Engine?</span>
+            Stop Guessing What's{" "}
+            <span className="text-gradient-gold">Holding You Back</span>
           </h2>
           
           <p className="font-body text-lg md:text-xl text-cream/70 max-w-2xl mx-auto mb-8">
-            Book a complimentary strategy session to discover exactly how to scale 
-            your business without burning out.
+            The Income Clarity Diagnostic reveals the specific gap in your business 
+            causing inconsistent revenue—so you can finally fix the right thing.
           </p>
 
           {/* Benefits */}
@@ -53,21 +53,16 @@ export function CTASection() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button variant="gold" size="xl" asChild>
-              <Link to="/apply" className="group">
-                Apply for Coaching
+              <Link to="/diagnostic" className="group">
+                Take the Income Clarity Diagnostic
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-            <Button variant="heroOutline" size="xl" asChild>
-              <Link to="/contact">
-                Have Questions? Contact Us
               </Link>
             </Button>
           </div>
 
           {/* Trust Note */}
           <p className="font-body text-sm text-cream/50 mt-8">
-            Join 500+ entrepreneurs who've transformed their businesses with Dr. Romulus
+            Clarity before action. Understanding before investment.
           </p>
         </div>
       </div>

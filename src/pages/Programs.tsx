@@ -1,106 +1,50 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Sparkles, Users, Zap, Building2 } from "lucide-react";
+import { ArrowRight, Target, Zap, Building2, Users } from "lucide-react";
+import { SEOHead } from "@/components/seo/SEOHead";
 
-const programs = [
+const approaches = [
   {
-    id: "coaching",
-    icon: Sparkles,
-    title: "1:1 Executive Coaching",
-    subtitle: "For founders ready to break through",
-    description: "Personalized strategic guidance designed for ambitious entrepreneurs who want to scale with intention, not just effort.",
-    price: "Starting at $2,500/mo",
-    features: [
-      "Weekly 60-minute strategy sessions",
-      "Unlimited async support via Voxer",
-      "Custom quarterly roadmap",
-      "Access to exclusive frameworks",
-      "Monthly business audit",
-      "Priority response within 24 hours",
-    ],
-    outcomes: [
-      "Clear 90-day action plan",
-      "Identified revenue levers",
-      "Optimized time allocation",
-      "Accountability partnership",
-    ],
-    featured: true,
+    icon: Target,
+    title: "Strategic Clarity",
+    whoFor: "For business owners who feel stuck despite working hard",
+    problem: "You're taking action but not seeing proportional results",
+    outcome: "Understand exactly what's blocking growth and what to prioritize",
   },
   {
-    id: "mastermind",
-    icon: Users,
-    title: "Elite Mastermind",
-    subtitle: "Community of growth-minded founders",
-    description: "Join a curated group of 12 entrepreneurs sharing insights, challenges, and victories in a confidential setting.",
-    price: "",
-    features: [
-      "2x monthly group calls",
-      "Private community access",
-      "Monthly guest expert sessions",
-      "Peer accountability partners",
-      "Quarterly in-person retreat",
-      "Resource library access",
-    ],
-    outcomes: [
-      "Expanded network",
-      "Diverse perspectives",
-      "Shared best practices",
-      "Ongoing support system",
-    ],
-    featured: false,
-  },
-  {
-    id: "automation",
     icon: Zap,
-    title: "Automation & AI Setup",
-    subtitle: "Done-for-you systems",
-    description: "We build and implement custom automation workflows that save you 20+ hours weekly on repetitive operations.",
-    price: "Starting at $5,000",
-    features: [
-      "Full operations audit",
-      "Custom workflow design",
-      "AI tool integration",
-      "Team training included",
-      "60-day optimization support",
-      "Documentation & SOPs",
-    ],
-    outcomes: [
-      "20+ hours saved weekly",
-      "Reduced error rates",
-      "Scalable systems",
-      "Team efficiency gains",
-    ],
-    featured: false,
+    title: "Operational Systems",
+    whoFor: "For entrepreneurs drowning in day-to-day operations",
+    problem: "Your business can't run without your constant attention",
+    outcome: "Build systems that operate consistently—with or without you",
   },
   {
-    id: "consulting",
     icon: Building2,
-    title: "Business Structure Consulting",
-    subtitle: "Entity, credit & tax optimization",
-    description: "Optimize your business foundation for maximum protection, fundability, and tax efficiency.",
-    price: "Starting at $3,000",
-    features: [
-      "Entity structure analysis",
-      "Business credit building plan",
-      "Tax strategy session",
-      "Asset protection review",
-      "Banking relationship guidance",
-      "Quarterly check-ins (first year)",
-    ],
-    outcomes: [
-      "Optimized entity structure",
-      "Improved fundability score",
-      "Tax savings identified",
-      "Protected assets",
-    ],
-    featured: false,
+    title: "Business Foundation",
+    whoFor: "For founders ready to scale but lacking structure",
+    problem: "Your business isn't set up to access capital or partnerships",
+    outcome: "Create a credible, fundable business structure that opens doors",
+  },
+  {
+    icon: Users,
+    title: "Consistent Revenue",
+    whoFor: "For service providers tired of income rollercoasters",
+    problem: "Revenue swings wildly month to month despite your efforts",
+    outcome: "Identify and fix the gap causing income inconsistency",
   },
 ];
 
 export default function Programs() {
   return (
     <Layout>
+      <SEOHead
+        title="How I Help | Dr. Romulus MBA"
+        description="Strategic guidance for entrepreneurs ready to build businesses that are structured, credible, and scalable. Discover if we're the right fit."
+        canonicalUrl="/programs"
+        ogType="website"
+      />
+
       {/* Hero Section */}
       <section className="py-24 bg-hero-gradient relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
@@ -113,122 +57,69 @@ export default function Programs() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <span className="inline-block px-4 py-2 rounded-full bg-cream/10 text-gold font-body text-sm font-medium mb-6">
-              Programs & Services
+              How I Help
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-cream mb-6">
-              Choose Your Path to{" "}
-              <span className="text-gradient-gold">Business Freedom</span>
+              Clarity First,{" "}
+              <span className="text-gradient-gold">Then Action</span>
             </h1>
             <p className="font-body text-lg md:text-xl text-cream/70 max-w-2xl mx-auto">
-              Whether you need strategic clarity, hands-on support, or complete system 
-              overhauls, we have a solution tailored to your growth stage.
+              Most entrepreneurs don't have a motivation problem. They have a clarity problem. 
+              The right guidance starts with understanding what's actually broken.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Programs Grid */}
+      {/* Approach Cards */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {programs.map((program) => (
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
+              The Problems I{" "}
+              <span className="text-gradient-gold">Solve</span>
+            </h2>
+            <p className="font-body text-lg text-muted-foreground">
+              Each engagement starts with diagnosis. You'll never be asked to choose 
+              a package—only to understand your situation more clearly.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {approaches.map((approach) => (
               <div
-                key={program.id}
-                id={program.id}
-                className={`relative p-8 rounded-2xl border transition-all duration-300 ${
-                  program.featured
-                    ? "bg-primary text-primary-foreground border-gold/30 lg:col-span-2"
-                    : "bg-card border-border hover:border-gold/30"
-                }`}
+                key={approach.title}
+                className="p-8 rounded-2xl bg-card border border-border hover:border-gold/30 transition-all duration-300"
               >
-                {program.featured && (
-                  <div className="absolute -top-3 right-8 px-4 py-1 rounded-full bg-gold-gradient text-slate-deep font-body text-sm font-semibold">
-                    Most Popular
-                  </div>
-                )}
+                <div className="w-14 h-14 rounded-xl bg-gold/10 flex items-center justify-center mb-6">
+                  <approach.icon className="w-7 h-7 text-gold" />
+                </div>
 
-                <div className={`grid ${program.featured ? "lg:grid-cols-2 gap-12" : ""}`}>
-                  {/* Main Content */}
+                <h3 className="font-display text-xl font-semibold text-foreground mb-2">
+                  {approach.title}
+                </h3>
+                
+                <p className="font-body text-sm text-gold mb-4">
+                  {approach.whoFor}
+                </p>
+
+                <div className="space-y-4">
                   <div>
-                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
-                      program.featured ? "bg-gold/20" : "bg-gold/10"
-                    }`}>
-                      <program.icon className="w-7 h-7 text-gold" />
-                    </div>
-
-                    <h2 className={`font-display text-2xl font-bold mb-2 ${
-                      program.featured ? "text-cream" : "text-foreground"
-                    }`}>
-                      {program.title}
-                    </h2>
-                    
-                    <p className={`font-body text-sm mb-4 ${
-                      program.featured ? "text-gold" : "text-gold"
-                    }`}>
-                      {program.subtitle}
+                    <p className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-1">
+                      The Problem
                     </p>
-
-                    <p className={`font-body mb-6 leading-relaxed ${
-                      program.featured ? "text-cream/70" : "text-muted-foreground"
-                    }`}>
-                      {program.description}
+                    <p className="font-body text-muted-foreground">
+                      {approach.problem}
                     </p>
-
-                    <div className={`font-display text-2xl font-bold mb-6 ${
-                      program.featured ? "text-gold" : "text-foreground"
-                    }`}>
-                      {program.price}
-                    </div>
-
-                    <Button
-                      variant={program.featured ? "gold" : "default"}
-                      size="lg"
-                      asChild
-                    >
-                      <Link to="/apply">
-                        Apply Now
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
-                    </Button>
                   </div>
 
-                  {/* Features & Outcomes */}
-                  <div className={program.featured ? "" : "mt-8"}>
-                    <div className="mb-6">
-                      <h4 className={`font-body text-sm font-semibold uppercase tracking-wider mb-4 ${
-                        program.featured ? "text-cream/60" : "text-muted-foreground"
-                      }`}>
-                        What's Included
-                      </h4>
-                      <ul className="space-y-3">
-                        {program.features.map((feature) => (
-                          <li key={feature} className={`flex items-start gap-3 font-body text-sm ${
-                            program.featured ? "text-cream/80" : "text-foreground"
-                          }`}>
-                            <Check className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className={`font-body text-sm font-semibold uppercase tracking-wider mb-4 ${
-                        program.featured ? "text-cream/60" : "text-muted-foreground"
-                      }`}>
-                        Expected Outcomes
-                      </h4>
-                      <ul className="space-y-2">
-                        {program.outcomes.map((outcome) => (
-                          <li key={outcome} className={`flex items-center gap-2 font-body text-sm ${
-                            program.featured ? "text-cream/80" : "text-foreground"
-                          }`}>
-                            <div className="w-1.5 h-1.5 rounded-full bg-gold" />
-                            {outcome}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  <div>
+                    <p className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-1">
+                      The Outcome
+                    </p>
+                    <p className="font-body text-foreground">
+                      {approach.outcome}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -237,42 +128,85 @@ export default function Programs() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* How It Works */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-display text-3xl font-bold text-foreground text-center mb-12">
-              Frequently Asked Questions
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
+              How We Work Together
             </h2>
-            
-            <div className="space-y-6">
+            <p className="font-body text-lg text-muted-foreground">
+              Every engagement begins the same way—with clarity about what's actually happening.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  q: "How do I know which program is right for me?",
-                  a: "Book a free strategy call and we'll assess your current situation, goals, and recommend the best fit. Most founders start with 1:1 coaching for personalized guidance."
+                  step: "1",
+                  title: "Diagnostic First",
+                  description: "We start with the Income Clarity Diagnostic to identify exactly what's causing your challenges.",
                 },
                 {
-                  q: "What's the time commitment?",
-                  a: "1:1 coaching is 1 hour/week. Mastermind is 2-3 hours/month. Automation setup requires 3-5 hours of your time over 4-6 weeks for discovery and feedback."
+                  step: "2",
+                  title: "Tailored Path",
+                  description: "Based on what we discover, I'll recommend a path forward—coaching, systems work, or foundational changes.",
                 },
                 {
-                  q: "Do you offer refunds?",
-                  a: "We offer a 30-day satisfaction guarantee on coaching programs. If you're not seeing value, we'll refund your investment or extend your engagement."
+                  step: "3",
+                  title: "Guided Implementation",
+                  description: "You'll never be left with a plan and no support. Every recommendation comes with the guidance to execute.",
                 },
-                {
-                  q: "Can I combine programs?",
-                  a: "Absolutely. Many clients pair 1:1 coaching with automation setup for maximum impact. We offer package discounts for combined services."
-                },
-              ].map((faq) => (
-                <div key={faq.q} className="p-6 rounded-xl bg-card border border-border">
-                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                    {faq.q}
+              ].map((step) => (
+                <div key={step.step} className="text-center">
+                  <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6">
+                    <span className="font-display text-2xl font-bold text-gold">{step.step}</span>
+                  </div>
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                    {step.title}
                   </h3>
                   <p className="font-body text-muted-foreground">
-                    {faq.a}
+                    {step.description}
                   </p>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Philosophy Section */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
+                  Why I Don't List{" "}
+                  <span className="text-gradient-gold">Packages</span>
+                </h2>
+                <p className="font-body text-muted-foreground mb-4 leading-relaxed">
+                  Packages assume your problem fits into a predefined box. But your business 
+                  is unique, and so is the gap holding it back.
+                </p>
+                <p className="font-body text-muted-foreground mb-4 leading-relaxed">
+                  I don't believe in selling you hours or deliverables. I believe in 
+                  solving the actual problem—and that requires understanding it first.
+                </p>
+                <p className="font-body text-foreground leading-relaxed">
+                  That's why every client relationship starts with the same thing: clarity.
+                </p>
+              </div>
+              
+              <div className="bg-muted/50 rounded-2xl p-8 border border-border">
+                <blockquote className="font-display text-xl text-foreground italic mb-4">
+                  "When people understand the system, they can navigate it—and win—on their own terms."
+                </blockquote>
+                <cite className="font-body text-sm text-gold not-italic">
+                  — Dr. Deanna Romulus
+                </cite>
+              </div>
             </div>
           </div>
         </div>
@@ -285,14 +219,17 @@ export default function Programs() {
             Not Sure Where to Start?
           </h2>
           <p className="font-body text-lg text-cream/70 max-w-2xl mx-auto mb-8">
-            Book a free 30-minute strategy session and get personalized recommendations.
+            The Income Clarity Diagnostic will reveal exactly what's blocking your growth—and 
+            whether working together is the right next step.
           </p>
-          <Button variant="gold" size="xl" asChild>
-            <a href="https://link.drromulusmba.com/widget/bookings/automation_a" target="_blank" rel="noopener noreferrer">
-              Schedule Your Call
-              <ArrowRight className="w-5 h-5" />
-            </a>
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button variant="gold" size="xl" asChild>
+              <Link to="/diagnostic">
+                Take the Income Clarity Diagnostic
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
     </Layout>
