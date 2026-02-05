@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, BookOpen, Building, CheckCircle, GraduationCap, Heart, Lightbulb, Target, Users } from "lucide-react";
+import { ArrowRight, Building, CheckCircle, GraduationCap, Heart, Lightbulb, Target, Users } from "lucide-react";
 import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { PersonSchema, BreadcrumbSchema } from "@/components/seo/StructuredData";
@@ -53,34 +53,30 @@ const personSchema = {
     "https://www.linkedin.com/in/deannaromulusmba/"
   ]
 };
-const expertise = [
-  {
-    icon: Building,
-    title: "Business Structure & Credibility",
-    description: "Build proper business foundations that stand up to scrutiny from banks, partners, and platforms.",
-  },
+
+const approach = [
   {
     icon: Target,
-    title: "Fundability-Ready Foundations",
-    description: "Create the financial infrastructure needed to access capital when opportunity calls.",
+    title: "Pattern Recognition",
+    description: "Seeing the connections others miss—understanding why your business behaves the way it does.",
   },
   {
     icon: Lightbulb,
-    title: "Automation That Works",
-    description: "Implement systems that save time and reduce stress without sacrificing quality or control.",
+    title: "Systems Thinking",
+    description: "Identifying root causes instead of chasing symptoms. One fix that unlocks everything else.",
   },
   {
-    icon: Users,
-    title: "Growth-Supporting Systems",
-    description: "Design operations that support sustainable growth—not burnout.",
+    icon: Building,
+    title: "Clarity Before Action",
+    description: "Understanding the problem fully before prescribing solutions. No guesswork.",
   },
 ];
 
 const values = [
   {
-    icon: BookOpen,
-    title: "Trust-First Education",
-    description: "Teaching entrepreneurs how to build legitimate businesses that stand up to scrutiny from banks, partners, platforms, and AI-driven systems alike.",
+    icon: Heart,
+    title: "Access for All",
+    description: "Raised in an underserved community, committed to providing clear information that opens doors.",
   },
   {
     icon: CheckCircle,
@@ -88,9 +84,9 @@ const values = [
     description: "No shortcuts. No guaranteed outcomes. Just clarity, structure, and confidence to make informed decisions.",
   },
   {
-    icon: Heart,
-    title: "Access for All",
-    description: "Fueled by lived experience in underserved communities, committed to providing clear information that opens doors.",
+    icon: Users,
+    title: "Trust-First Education",
+    description: "Teaching entrepreneurs how to understand systems—so they can navigate them and win on their own terms.",
   },
 ];
 
@@ -130,22 +126,20 @@ export default function About() {
               </p>
               
               <p className="font-body text-lg text-muted-foreground mb-6 leading-relaxed">
-                Dr. Deanna Romulus helps entrepreneurs build businesses that are 
-                structured, credible, and scalable—without confusion, overwhelm, 
-                or shortcuts.
+                Dr. Romulus helps entrepreneurs see what's actually happening in their 
+                businesses—not just what they think is happening. That clarity is the 
+                foundation for every meaningful change.
               </p>
               
               <p className="font-body text-muted-foreground mb-8 leading-relaxed">
                 With a background spanning marketing, finance, education, and operations, 
-                Dr. Romulus brings a rare ability to translate complex systems into clear, 
-                practical steps. She is known for helping business owners understand what 
-                actually matters when it comes to business setup, fundability, automation, 
-                and long-term sustainability.
+                she brings a rare ability to recognize patterns and identify the real 
+                bottleneck—the one fix that unlocks everything else.
               </p>
 
               <Button variant="gold" size="lg" asChild>
-                <Link to="/apply">
-                  Work With Dr. Romulus
+                <Link to="/diagnostic">
+                  Take the Income Clarity Diagnostic
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
@@ -175,10 +169,10 @@ export default function About() {
               {/* Experience Card */}
               <div className="absolute -top-4 -right-4 bg-card p-4 rounded-xl shadow-elevated border border-border">
                 <div className="flex items-center gap-3">
-                  <Award className="w-8 h-8 text-gold" />
+                  <Target className="w-8 h-8 text-gold" />
                   <div>
-                    <div className="font-body text-sm font-semibold text-foreground">Systems Builder</div>
-                    <div className="font-body text-xs text-muted-foreground">Consultant & Advisor</div>
+                    <div className="font-body text-sm font-semibold text-foreground">Pattern Recognition</div>
+                    <div className="font-body text-xs text-muted-foreground">Systems Thinker</div>
                   </div>
                 </div>
               </div>
@@ -187,27 +181,28 @@ export default function About() {
         </div>
       </section>
 
-      {/* Background Section */}
+      {/* Philosophy Section */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-                  Academic Foundation,{" "}
-                  <span className="text-gradient-gold">Real-World Results</span>
+                  Why Clarity{" "}
+                  <span className="text-gradient-gold">Precedes Action</span>
                 </h2>
                 <p className="font-body text-muted-foreground leading-relaxed mb-6">
-                  Dr. Romulus holds an MBA with a global perspective and a Doctorate 
-                  in Educational Leadership. Her academic foundation, combined with 
-                  real-world experience as a financial advisor, consultant, and systems 
-                  builder, allows her to coach from both theory and application—never 
-                  hype, never guesswork.
+                  Most entrepreneurs are working hard on the wrong things. Not because 
+                  they're lazy or uninformed—but because they haven't been shown how to 
+                  see their business as a system.
                 </p>
-                <p className="font-body text-muted-foreground leading-relaxed">
-                  Raised in an underserved community, Dr. Romulus understands firsthand 
-                  how lack of access to clear information can limit opportunity. That 
-                  lived experience fuels her commitment to trust-first education.
+                <p className="font-body text-muted-foreground leading-relaxed mb-6">
+                  Dr. Romulus's academic foundation (MBA, Doctorate in Educational Leadership) 
+                  combined with real-world experience as a financial advisor, consultant, and 
+                  systems builder, allows her to guide from both theory and practice.
+                </p>
+                <p className="font-body text-foreground leading-relaxed">
+                  The result: clarity that precedes action, so every step you take actually moves the needle.
                 </p>
               </div>
               
@@ -224,23 +219,21 @@ export default function About() {
         </div>
       </section>
 
-      {/* Expertise Section */}
+      {/* Approach Section */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-              How Dr. Romulus{" "}
-              <span className="text-gradient-gold">Helps Clients</span>
+              The{" "}
+              <span className="text-gradient-gold">Approach</span>
             </h2>
             <p className="font-body text-lg text-muted-foreground">
-              Through coaching and consulting, Dr. Romulus equips entrepreneurs 
-              with the clarity, structure, and confidence needed to make informed 
-              decisions and take aligned next steps.
+              Three principles guide every engagement—regardless of scope or duration.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {expertise.map((item) => (
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {approach.map((item) => (
               <div
                 key={item.title}
                 className="p-8 rounded-2xl bg-card border border-border hover:border-gold/30 transition-all duration-300"
@@ -265,11 +258,12 @@ export default function About() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-              The <span className="text-gradient-gold">Approach</span>
+              The <span className="text-gradient-gold">Foundation</span>
             </h2>
             <p className="font-body text-lg text-muted-foreground">
-              Grounded, honest, and systems-driven. No promises of shortcuts 
-              or guaranteed outcomes—just real education that empowers.
+              Raised in an underserved community, Dr. Romulus understands how lack 
+              of access to clear information can limit opportunity. That lived 
+              experience fuels everything.
             </p>
           </div>
 
@@ -298,15 +292,15 @@ export default function About() {
       <section className="py-24 bg-primary">
         <div className="container mx-auto px-4 text-center">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-cream mb-6">
-            Ready to Build a Business That Works?
+            Ready to See What's Actually Happening?
           </h2>
           <p className="font-body text-lg text-cream/70 max-w-2xl mx-auto mb-8">
-            Let's discuss how strategic coaching and systems can transform 
-            your business into something structured, credible, and scalable.
+            The Income Clarity Diagnostic reveals the specific gap in your business 
+            causing inconsistent results—so you can finally fix the right thing.
           </p>
           <Button variant="gold" size="xl" asChild>
-            <Link to="/apply">
-              Apply for Coaching
+            <Link to="/diagnostic">
+              Take the Income Clarity Diagnostic
               <ArrowRight className="w-5 h-5" />
             </Link>
           </Button>

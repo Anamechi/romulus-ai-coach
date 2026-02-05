@@ -295,12 +295,12 @@ export default function BlogPost() {
 
             {/* CTA */}
             <section className="text-center bg-muted/50 rounded-2xl p-8">
-              <h2 className="text-xl font-display font-semibold mb-4">Ready to Transform Your Business?</h2>
+              <h2 className="text-xl font-display font-semibold mb-4">Ready for Clarity?</h2>
               <p className="text-muted-foreground mb-6">
-                Get personalized coaching to build a structured, credible, and scalable business.
+                Discover what's actually blocking your growth with the Income Clarity Diagnostic.
               </p>
-              <Link to="/apply">
-                <Button size="lg">Apply for Coaching</Button>
+              <Link to="/diagnostic">
+                <Button size="lg">Take the Diagnostic</Button>
               </Link>
             </section>
           </div>

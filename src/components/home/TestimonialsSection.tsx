@@ -2,22 +2,22 @@ import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "Working with Dr. Romulus transformed not just my business, but my entire approach to leadership. Revenue doubled in 8 months.",
+    quote: "Working with Dr. Romulus transformed not just my business, but my entire approach to leadership. I finally understood what was actually holding me back.",
     name: "Sarah Chen",
     role: "CEO, TechScale Solutions",
-    result: "2x Revenue in 8 Months",
+    result: "Clarity That Changed Everything",
   },
   {
-    quote: "The automation systems we implemented saved me 25 hours a week. I finally have time for strategy instead of putting out fires.",
+    quote: "The systems we implemented saved me 25 hours a week. I finally have time for strategy instead of putting out fires.",
     name: "Marcus Williams",
     role: "Founder, Williams Consulting",
-    result: "25+ Hours Saved Weekly",
+    result: "25+ Hours Reclaimed Weekly",
   },
   {
-    quote: "Her fundability coaching helped us secure $500K in business credit with 0% interest. Game changer for our growth.",
+    quote: "For the first time, I understood why my income kept fluctuating. Once I saw the pattern, fixing it was straightforward.",
     name: "Jennifer Park",
     role: "Owner, Park & Associates",
-    result: "$500K in Credit Secured",
+    result: "Consistent Revenue Achieved",
   },
 ];
 
@@ -28,15 +28,15 @@ export function TestimonialsSection() {
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <span className="inline-block px-4 py-2 rounded-full bg-gold/10 text-gold font-body text-sm font-medium mb-6">
-            Client Results
+            Client Stories
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Real Stories,{" "}
-            <span className="text-gradient-gold">Real Results</span>
+            When Clarity Arrives,{" "}
+            <span className="text-gradient-gold">Everything Changes</span>
           </h2>
           <p className="font-body text-lg text-muted-foreground">
-            Don't just take our word for it. Here's what our clients have achieved 
-            through strategic coaching and automation.
+            The transformation starts with understanding what's actually happening 
+            in your business—not just what you think is happening.
           </p>
         </div>
 
