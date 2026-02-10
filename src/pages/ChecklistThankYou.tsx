@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function ChecklistThankYou() {
   // TODO: Replace with actual checklist download URL
-  const checklistDownloadUrl = "#";
+  const checklistDownloadUrl = "https://checklist.drromulusmba.com";
 
   const steps = [
     {

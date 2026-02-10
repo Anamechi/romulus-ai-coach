@@ -59,9 +59,9 @@ export function CTASection() {
               </Link>
             </Button>
             <Button variant="heroOutline" size="lg" asChild>
-              <Link to="/checklist">
+              <a href="https://checklist.drromulusmba.com" target="_blank" rel="noopener noreferrer">
                 Download the Checklist
-              </Link>
+              </a>
             </Button>
           </div>
 
