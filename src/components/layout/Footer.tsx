@@ -11,7 +11,7 @@ const footerLinks = {
   ],
   resources: [
     { label: "Income Clarity Diagnostic", href: "/diagnostic" },
-    { label: "Fundability Checklist", href: "/checklist" },
+    { label: "Fundability Checklist", href: "https://checklist.drromulusmba.com" },
     { label: "Insights & Articles", href: "/blog" },
   ],
   legal: [
