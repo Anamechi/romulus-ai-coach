@@ -10,7 +10,7 @@ const footerLinks = {
     { label: "Contact", href: "/contact" },
   ],
   resources: [
-    { label: "Fundability & Systems Checklist", href: "https://checklist.drromulusmba.com/checklist" },
+    { label: "Fundability & Systems Checklist", href: "https://checklist.drromulusmba.com/" },
     { label: "Insights & Articles", href: "/blog" },
     { label: "Income Clarity Diagnostic", href: "/diagnostic" },
   ],

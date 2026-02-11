@@ -185,7 +185,7 @@ export default function Contact() {
                   The Fundability & Systems Checklist reveals what's actually blocking your growth.
                 </p>
                 <Button variant="default" asChild>
-                  <a href="https://checklist.drromulusmba.com/checklist" target="_blank" rel="noopener noreferrer">
+                  <a href="https://checklist.drromulusmba.com/" target="_blank" rel="noopener noreferrer">
                     Get the Checklist
                     <ArrowRight className="w-4 h-4" />
                   </a>
