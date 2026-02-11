@@ -120,7 +120,9 @@ export function Header() {
               </>
             )}
             <Button variant="gold" size="lg" asChild>
-              <Link to="/diagnostic">Start with Clarity</Link>
+              <a href="https://checklist.drromulusmba.com/checklist" target="_blank" rel="noopener noreferrer">
+                Get the Checklist
+              </a>
             </Button>
           </div>
 
@@ -190,9 +192,9 @@ export function Header() {
               )}
               
               <Button variant="gold" size="lg" className="mt-2" asChild>
-                <Link to="/diagnostic" onClick={() => setIsOpen(false)}>
-                  Start with Clarity
-                </Link>
+                <a href="https://checklist.drromulusmba.com/checklist" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
+                  Get the Checklist
+                </a>
               </Button>
             </div>
           </div>

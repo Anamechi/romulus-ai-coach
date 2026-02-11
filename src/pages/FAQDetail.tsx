@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+import { ChecklistCTA } from '@/components/content/ChecklistCTA';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -134,15 +135,13 @@ export default function FAQDetail() {
           )}
 
           {/* CTA */}
-          <section className="mt-12 pt-12 border-t text-center">
-            <h2 className="text-xl font-display font-semibold mb-4">Still have questions?</h2>
-            <p className="text-muted-foreground mb-6">
-              Can't find what you're looking for? Get in touch and we'll help you out.
-            </p>
-            <Link to="/contact">
-              <Button size="lg">Contact Us</Button>
-            </Link>
-          </section>
+          <div className="mt-12 pt-12 border-t">
+            <ChecklistCTA
+              heading="Want to Know What You're Missing?"
+              description="Start with the Fundability & Systems Checklist to uncover the gaps holding you back."
+              buttonText="Get the Checklist"
+            />
+          </div>
         </div>
       </div>
     </Layout>

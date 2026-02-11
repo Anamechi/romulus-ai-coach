@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { ChecklistCTA } from '@/components/content/ChecklistCTA';
 import ReactMarkdown, { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Layout } from '@/components/layout/Layout';
@@ -294,15 +295,11 @@ export default function BlogPost() {
             )}
 
             {/* CTA */}
-            <section className="text-center bg-muted/50 rounded-2xl p-8">
-              <h2 className="text-xl font-display font-semibold mb-4">Ready for Clarity?</h2>
-              <p className="text-muted-foreground mb-6">
-                Discover what's actually blocking your growth with the Income Clarity Diagnostic.
-              </p>
-              <Link to="/diagnostic">
-                <Button size="lg">Take the Diagnostic</Button>
-              </Link>
-            </section>
+            <ChecklistCTA
+              heading="Want to Know What You're Missing?"
+              description="Start with the Fundability & Systems Checklist to uncover what's blocking your growth."
+              buttonText="Get the Checklist"
+            />
           </div>
         </div>
       </article>

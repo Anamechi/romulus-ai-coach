@@ -179,16 +179,16 @@ export default function Contact() {
               {/* Quick CTA */}
               <div className="mt-12 p-6 rounded-xl bg-muted/50 border border-border">
                 <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                  Ready for Clarity?
+                  Not Sure Where to Start?
                 </h3>
                 <p className="font-body text-muted-foreground text-sm mb-4">
-                  The Income Clarity Diagnostic reveals what's actually blocking your growth.
+                  The Fundability & Systems Checklist reveals what's actually blocking your growth.
                 </p>
                 <Button variant="default" asChild>
-                  <Link to="/diagnostic">
-                    Take the Diagnostic
+                  <a href="https://checklist.drromulusmba.com/checklist" target="_blank" rel="noopener noreferrer">
+                    Get the Checklist
                     <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </div>
