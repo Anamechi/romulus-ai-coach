@@ -4,6 +4,7 @@ import { BreadcrumbSchema, OrganizationSchema } from '@/components/seo/Structure
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import { ChecklistCTA } from '@/components/content/ChecklistCTA';
 import { ArrowLeft, Shield, Award, Users, FileText, ExternalLink, CheckCircle2, Star } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 
@@ -191,27 +192,11 @@ export default function Trust() {
           </Card>
 
           {/* CTA */}
-          <div className="text-center bg-primary/5 border border-primary/20 rounded-lg p-8">
-            <h2 className="text-2xl font-display font-bold mb-4">Ready to Get Started?</h2>
-            <p className="text-muted-foreground mb-6">
-              The Income Clarity Diagnostic reveals exactly what's blocking your growth—so you can 
-              fix the right thing.
-            </p>
-            <div className="flex justify-center gap-4">
-              <Link
-                to="/diagnostic"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
-              >
-                Take the Diagnostic
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg hover:bg-muted transition-colors"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
+          <ChecklistCTA
+            heading="Ready to Get Started?"
+            description="The Fundability & Systems Checklist reveals exactly what's missing in your business—so you can fix the right thing."
+            buttonText="Get the Checklist"
+          />
         </div>
       </div>
     </Layout>

@@ -10,9 +10,9 @@ const footerLinks = {
     { label: "Contact", href: "/contact" },
   ],
   resources: [
-    { label: "Income Clarity Diagnostic", href: "/diagnostic" },
-    { label: "Fundability Checklist", href: "https://checklist.drromulusmba.com" },
+    { label: "Fundability & Systems Checklist", href: "https://checklist.drromulusmba.com/checklist" },
     { label: "Insights & Articles", href: "/blog" },
+    { label: "Income Clarity Diagnostic", href: "/diagnostic" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
@@ -140,8 +140,16 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Phone Line */}
+        <div className="mt-12 pt-8 border-t border-cream/10 text-center">
+          <p className="font-body text-sm text-cream/60 mb-2">
+            Questions? Call or text{" "}
+            <a href="tel:+18774126215" className="text-gold hover:underline">1-877-412-6215</a>
+          </p>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-cream/10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-6 pt-6 border-t border-cream/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-body text-sm text-cream/50">
             © {new Date().getFullYear()} Dr. Romulus MBA. All rights reserved.
           </p>

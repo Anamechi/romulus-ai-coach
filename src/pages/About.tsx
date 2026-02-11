@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Building, CheckCircle, GraduationCap, Heart, Lightbulb, Target, Users } from "lucide-react";
+import { ChecklistCTA } from "@/components/content/ChecklistCTA";
 import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { PersonSchema, BreadcrumbSchema } from "@/components/seo/StructuredData";
@@ -138,10 +139,10 @@ export default function About() {
               </p>
 
               <Button variant="gold" size="lg" asChild>
-                <Link to="/diagnostic">
-                  Take the Income Clarity Diagnostic
+                <a href="https://checklist.drromulusmba.com/checklist" target="_blank" rel="noopener noreferrer">
+                  Get the Checklist
                   <ArrowRight className="w-4 h-4" />
-                </Link>
+                </a>
               </Button>
             </div>
 
@@ -289,23 +290,12 @@ export default function About() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-primary">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-cream mb-6">
-            Ready to See What's Actually Happening?
-          </h2>
-          <p className="font-body text-lg text-cream/70 max-w-2xl mx-auto mb-8">
-            The Income Clarity Diagnostic reveals the specific gap in your business 
-            causing inconsistent results—so you can finally fix the right thing.
-          </p>
-          <Button variant="gold" size="xl" asChild>
-            <Link to="/diagnostic">
-              Take the Income Clarity Diagnostic
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </Button>
-        </div>
-      </section>
+      <ChecklistCTA
+        variant="dark"
+        heading="Ready to See What's Actually Happening?"
+        description="The Fundability & Systems Checklist reveals the specific gaps in your business—so you can finally fix the right thing."
+        buttonText="Get the Checklist"
+      />
     </Layout>
   );
 }

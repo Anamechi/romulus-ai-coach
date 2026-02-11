@@ -1,6 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Clock, Target, Lightbulb } from "lucide-react";
+import { ChecklistCTA, CHECKLIST_URL } from "@/components/content/ChecklistCTA";
 import { SEOHead } from "@/components/seo/SEOHead";
 
 const benefits = [
@@ -69,11 +70,11 @@ export default function Diagnostic() {
             </p>
             <Button variant="gold" size="xl" asChild>
               <a 
-                href="https://link.drromulusmba.com/widget/bookings/automation_a" 
+                href={CHECKLIST_URL}
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-                Take the Diagnostic
+                Get the Checklist
                 <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
@@ -216,26 +217,12 @@ export default function Diagnostic() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-primary">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-cream mb-6">
-            Ready for Clarity?
-          </h2>
-          <p className="font-body text-lg text-cream/70 max-w-2xl mx-auto mb-8">
-            Stop trying tactics. Start fixing the right problem.
-          </p>
-          <Button variant="gold" size="xl" asChild>
-            <a 
-              href="https://link.drromulusmba.com/widget/bookings/automation_a" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              Take the Income Clarity Diagnostic
-              <ArrowRight className="w-5 h-5" />
-            </a>
-          </Button>
-        </div>
-      </section>
+      <ChecklistCTA
+        variant="dark"
+        heading="Ready for Clarity?"
+        description="Stop trying tactics. Start with the Fundability & Systems Checklist."
+        buttonText="Get the Checklist"
+      />
     </Layout>
   );
 }

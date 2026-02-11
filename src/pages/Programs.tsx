@@ -1,7 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ArrowRight, Target, Zap, Building2, Users } from "lucide-react";
+import { Target, Zap, Building2, Users } from "lucide-react";
+import { ChecklistCTA } from "@/components/content/ChecklistCTA";
 import { SEOHead } from "@/components/seo/SEOHead";
 
 const approaches = [
@@ -213,25 +212,12 @@ export default function Programs() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-primary">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-cream mb-6">
-            Not Sure Where to Start?
-          </h2>
-          <p className="font-body text-lg text-cream/70 max-w-2xl mx-auto mb-8">
-            The Income Clarity Diagnostic will reveal exactly what's blocking your growth—and 
-            whether working together is the right next step.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button variant="gold" size="xl" asChild>
-              <Link to="/diagnostic">
-                Take the Income Clarity Diagnostic
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <ChecklistCTA
+        variant="dark"
+        heading="Not Sure Where to Start?"
+        description="The Fundability & Systems Checklist will reveal exactly what's missing in your business—and whether working together is the right next step."
+        buttonText="Take the Fundability & Systems Checklist"
+      />
     </Layout>
   );
 }
