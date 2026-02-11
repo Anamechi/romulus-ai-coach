@@ -70,11 +70,11 @@ export default function Diagnostic() {
             </p>
             <Button variant="gold" size="xl" asChild>
               <a 
-                href={CHECKLIST_URL}
+                href="https://link.drromulusmba.com/widget/booking/RI6rJkfYSIJgaYsVWJGP"
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-                Get the Checklist
+                Get Live Income Clarity
                 <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
