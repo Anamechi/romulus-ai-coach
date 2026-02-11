@@ -120,7 +120,7 @@ export function Header() {
               </>
             )}
             <Button variant="gold" size="lg" asChild>
-              <a href="https://checklist.drromulusmba.com/checklist" target="_blank" rel="noopener noreferrer">
+              <a href="https://checklist.drromulusmba.com/" target="_blank" rel="noopener noreferrer">
                 Get the Checklist
               </a>
             </Button>
@@ -192,7 +192,7 @@ export function Header() {
               )}
               
               <Button variant="gold" size="lg" className="mt-2" asChild>
-                <a href="https://checklist.drromulusmba.com/checklist" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
+                <a href="https://checklist.drromulusmba.com/" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
                   Get the Checklist
                 </a>
               </Button>

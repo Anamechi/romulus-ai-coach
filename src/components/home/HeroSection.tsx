@@ -49,7 +49,7 @@ export function HeroSection() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 animate-fade-up delay-300">
               <Button variant="gold" size="xl" asChild>
-                <a href="https://checklist.drromulusmba.com/checklist" target="_blank" rel="noopener noreferrer" className="group">
+                <a href="https://checklist.drromulusmba.com/" target="_blank" rel="noopener noreferrer" className="group">
                   Get the Checklist
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>

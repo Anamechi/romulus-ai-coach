@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const CHECKLIST_URL = "https://checklist.drromulusmba.com/checklist";
+const CHECKLIST_URL = "https://checklist.drromulusmba.com/";
 
 interface ChecklistCTAProps {
   /** Heading text */
