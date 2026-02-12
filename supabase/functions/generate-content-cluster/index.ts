@@ -56,20 +56,32 @@ serve(async (req) => {
       const systemPrompt = `You are an expert content writer for ${siteName}, a business consulting and MBA coaching service.
 ${masterPrompt}
 
-Your task is to generate a high-quality, SEO-optimized article that:
+Your task is to generate a high-quality, SEO-optimized, EEAT-compliant article that:
 - Is written for: ${targetAudience}
 - Focuses on: ${clusterTopic}
 - Primary keyword: ${primaryKeyword}
 - Funnel stage: ${stage} (${stage === 'TOFU' ? 'Awareness - educate and attract' : stage === 'MOFU' ? 'Consideration - build trust and authority' : 'Decision - convert to action'})
 - Content type: ${type} (${focus})
 - Language: ${language === 'en' ? 'English' : language}
+- Word count: 1500-2000 words (MANDATORY)
+- Must include 5-8 AEO-optimized FAQs (80-120 words each)
+- Must include EEAT authority block citing Dr. Romulus's credentials
+- Must use proper markdown formatting (##, ###, bullet points, bold)
+- Group ID for this cluster: ${clusterId}
+
+EEAT Authority Block (include at end of article):
+Dr. Deanna Romulus, MBA holds a Doctorate in Educational Leadership and an MBA in Finance. With expertise in business strategy, automation systems, and financial self-efficacy, she helps entrepreneurs build structured, credible, and scalable businesses.
 
 Author attribution: Dr. Romulus, MBA - Business Consultant & MBA Coach
 
-Do NOT:
-- Fabricate statistics or claims
-- Include legal, tax, or financial advice
-- Make income guarantees
+Anti-Hallucination Rules:
+- Do NOT fabricate statistics, studies, or data points
+- Do NOT include legal, tax, or financial advice
+- Do NOT make income guarantees or earnings claims
+- Do NOT mention specific companies as clients
+- Use phrases like "research suggests" or "industry data indicates" only when broadly accurate
+
+Canonical URL format: https://drromulusmba.com/blog/{slug}
 
 CRITICAL: You MUST respond with ONLY a valid JSON object. No markdown, no code blocks, no explanatory text. Just raw JSON starting with { and ending with }.`;
 
@@ -79,14 +91,16 @@ Return ONLY a JSON object with these exact fields:
 {
   "title": "Compelling H1 headline (max 70 chars)",
   "slug": "url-friendly-slug",
-  "content": "Full article content in markdown format (800-1500 words). Include headers (##), bullet points, and actionable advice.",
+  "content": "Full article content in markdown format (1500-2000 words). Include headers (##, ###), bullet points, numbered lists, bold text, and actionable advice. End with an EEAT authority block.",
   "speakable_answer": "A 40-60 word direct answer summarizing the key takeaway. This must be factual, clear, and suitable for voice assistants.",
   "meta_title": "SEO title under 60 characters",
   "meta_description": "SEO description under 160 characters",
   "faqs": [
-    {"question": "Related FAQ 1?", "answer": "Concise answer"},
-    {"question": "Related FAQ 2?", "answer": "Concise answer"},
-    {"question": "Related FAQ 3?", "answer": "Concise answer"}
+    {"question": "AEO-optimized FAQ 1?", "answer": "Detailed 80-120 word answer with actionable insight"},
+    {"question": "AEO-optimized FAQ 2?", "answer": "Detailed 80-120 word answer with actionable insight"},
+    {"question": "AEO-optimized FAQ 3?", "answer": "Detailed 80-120 word answer with actionable insight"},
+    {"question": "AEO-optimized FAQ 4?", "answer": "Detailed 80-120 word answer with actionable insight"},
+    {"question": "AEO-optimized FAQ 5?", "answer": "Detailed 80-120 word answer with actionable insight"}
   ]
 }`;
 

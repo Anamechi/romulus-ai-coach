@@ -59,6 +59,8 @@ const ChatbotConversations = lazy(() => import("./pages/admin/ChatbotConversatio
 const CitationHealth = lazy(() => import("./pages/admin/CitationHealth"));
 const IndexNow = lazy(() => import("./pages/admin/IndexNow"));
 const ContentClusterGenerator = lazy(() => import("./pages/admin/ContentClusterGenerator"));
+const AIToolsRegistry = lazy(() => import("./pages/admin/AIToolsRegistry"));
+const Translations = lazy(() => import("./pages/admin/Translations"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -129,6 +131,8 @@ const App = () => (
               <Route path="/admin/citation-health" element={<CitationHealth />} />
               <Route path="/admin/indexnow" element={<IndexNow />} />
               <Route path="/admin/content-cluster-generator" element={<ContentClusterGenerator />} />
+              <Route path="/admin/ai-tools" element={<AIToolsRegistry />} />
+              <Route path="/admin/translations" element={<Translations />} />
               
               {/* Catch-all */}
               <Route path="*" element={<NotFound />} />
