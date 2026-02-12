@@ -56,3 +56,9 @@ verify_jwt = false
 
 [functions.generate-content-cluster]
 verify_jwt = false
+
+[functions.translate-content]
+verify_jwt = false
+
+[functions.generate-qa]
+verify_jwt = false

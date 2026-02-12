@@ -36,6 +36,8 @@ import {
   Bot,
   Send,
   Layers,
+  Wrench,
+  Languages,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -197,10 +199,26 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
+                    <SidebarMenuButton asChild isActive={location.pathname === '/admin/ai-tools'}>
+                      <Link to="/admin/ai-tools" className="flex items-center gap-3 bg-sidebar-primary/10 hover:bg-sidebar-primary/20">
+                        <Wrench className="h-4 w-4 text-sidebar-primary" />
+                        <span className="text-sidebar-primary font-medium">Tools Registry</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
                     <SidebarMenuButton asChild isActive={location.pathname === '/admin/content-cluster-generator'}>
-                      <Link to="/admin/content-cluster-generator" className="flex items-center gap-3 bg-sidebar-primary/10 hover:bg-sidebar-primary/20">
-                        <Layers className="h-4 w-4 text-sidebar-primary" />
-                        <span className="text-sidebar-primary font-medium">Cluster Generator</span>
+                      <Link to="/admin/content-cluster-generator" className="flex items-center gap-3">
+                        <Layers className="h-4 w-4" />
+                        <span>Cluster Generator</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild isActive={location.pathname === '/admin/translations'}>
+                      <Link to="/admin/translations" className="flex items-center gap-3">
+                        <Languages className="h-4 w-4" />
+                        <span>Translations</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

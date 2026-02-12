@@ -637,6 +637,69 @@ export type Database = {
         }
         Relationships: []
       }
+      content_translations: {
+        Row: {
+          canonical_url: string | null
+          content: string | null
+          created_at: string | null
+          excerpt: string | null
+          faqs: Json | null
+          group_id: string | null
+          hreflang_tag: string | null
+          id: string
+          language: string
+          meta_description: string | null
+          meta_title: string | null
+          slug: string
+          source_id: string
+          source_type: string
+          speakable_summary: string | null
+          status: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          canonical_url?: string | null
+          content?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          faqs?: Json | null
+          group_id?: string | null
+          hreflang_tag?: string | null
+          id?: string
+          language?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          slug: string
+          source_id: string
+          source_type: string
+          speakable_summary?: string | null
+          status?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          canonical_url?: string | null
+          content?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          faqs?: Json | null
+          group_id?: string | null
+          hreflang_tag?: string | null
+          id?: string
+          language?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          slug?: string
+          source_id?: string
+          source_type?: string
+          speakable_summary?: string | null
+          status?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       discovered_domains: {
         Row: {
           created_at: string
@@ -781,6 +844,54 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      image_health_checks: {
+        Row: {
+          alt_text: string | null
+          caption: string | null
+          content_id: string
+          content_type: string
+          created_at: string | null
+          duplicate_of: string | null
+          has_json_ld: boolean | null
+          id: string
+          image_url: string
+          is_duplicate: boolean | null
+          last_checked_at: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          alt_text?: string | null
+          caption?: string | null
+          content_id: string
+          content_type: string
+          created_at?: string | null
+          duplicate_of?: string | null
+          has_json_ld?: boolean | null
+          id?: string
+          image_url: string
+          is_duplicate?: boolean | null
+          last_checked_at?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          alt_text?: string | null
+          caption?: string | null
+          content_id?: string
+          content_type?: string
+          created_at?: string | null
+          duplicate_of?: string | null
+          has_json_ld?: boolean | null
+          id?: string
+          image_url?: string
+          is_duplicate?: boolean | null
+          last_checked_at?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       internal_links: {
         Row: {

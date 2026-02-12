@@ -174,13 +174,13 @@ export default function Settings() {
             <CardHeader>
               <CardTitle>Master Content Prompt</CardTitle>
               <CardDescription>
-                This prompt governs all AI-generated content. It defines the voice, structure, and E-E-A-T requirements for all content generation.
+                This prompt governs ALL AI-generated content — clusters, QAs, translations, and citations. It defines voice, structure, EEAT, SEO/AEO rules, and anti-hallucination logic.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="master-prompt">Prompt</Label>
+                  <Label htmlFor="master-prompt">Full Master Prompt</Label>
                   <span className="text-xs text-muted-foreground">
                     {masterPrompt.length} characters
                   </span>
@@ -190,11 +190,41 @@ export default function Settings() {
                   value={masterPrompt}
                   onChange={(e) => setMasterPrompt(e.target.value)}
                   placeholder="Enter the master prompt that will govern all AI content generation..."
-                  className="min-h-[300px] font-mono text-sm"
+                  className="min-h-[400px] font-mono text-sm"
                 />
               </div>
-              <div className="bg-muted/50 rounded-lg p-4 text-sm text-muted-foreground">
-                <strong>Tip:</strong> Include instructions for voice/tone, content structure, E-E-A-T signals, SEO requirements, and funnel-stage considerations.
+              
+              {/* Required Sections Checklist */}
+              <div className="bg-muted/50 rounded-lg p-4 space-y-3">
+                <p className="font-semibold text-sm">Required Sections Checklist:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                  {[
+                    { key: 'brand voice', label: 'Brand Voice & Tone' },
+                    { key: 'target audience', label: 'Target Audience Rules' },
+                    { key: 'mission', label: 'Mission Statement' },
+                    { key: 'E-E-A-T', label: 'EEAT Authority Block' },
+                    { key: 'speakable', label: 'Speakable Summary Rules (40-60 words)' },
+                    { key: 'FAQ', label: 'FAQ Rules (80-120 words)' },
+                    { key: 'markdown', label: 'Markdown Formatting Enforcement' },
+                    { key: 'JSON-LD', label: 'JSON-LD Schema Requirement' },
+                    { key: 'canonical', label: 'Canonical URL Rules' },
+                    { key: 'hreflang', label: 'Hreflang Rules' },
+                    { key: 'spell', label: 'Spell-Check Enforcement' },
+                    { key: 'professional', label: 'Professional Language Enforcement' },
+                    { key: 'hallucination', label: 'Anti-Hallucination Logic' },
+                  ].map(({ key, label }) => {
+                    const isPresent = masterPrompt.toLowerCase().includes(key.toLowerCase());
+                    return (
+                      <div key={key} className={`flex items-center gap-2 ${isPresent ? 'text-green-600' : 'text-muted-foreground'}`}>
+                        {isPresent ? '✓' : '○'} {label}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 text-sm">
+                <strong>💡 Template:</strong> If starting from scratch, include sections for: Brand Voice, Target Audience, Mission Statement, EEAT Authority Block, Speakable Rules (40-60 words), FAQ Rules (80-120 words), Markdown formatting, JSON-LD schema requirements, Canonical URL rules, Hreflang rules, Spell-check enforcement, Professional tone enforcement, and Anti-hallucination logic (no fabricated stats, no income guarantees, no legal/tax advice).
               </div>
             </CardContent>
           </Card>
