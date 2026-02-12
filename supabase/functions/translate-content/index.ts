@@ -101,8 +101,29 @@ Return JSON with these fields:
 
     const data = await response.json();
     const rawContent = data.choices[0].message.content;
-    const cleanContent = rawContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-    const translated = JSON.parse(cleanContent);
+    let cleanContent = rawContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    
+    // Try to extract JSON object from the content
+    let translated;
+    try {
+      translated = JSON.parse(cleanContent);
+    } catch {
+      // Try to find JSON object boundaries
+      const startIdx = cleanContent.indexOf('{');
+      const endIdx = cleanContent.lastIndexOf('}');
+      if (startIdx !== -1 && endIdx > startIdx) {
+        try {
+          translated = JSON.parse(cleanContent.slice(startIdx, endIdx + 1));
+        } catch (e2) {
+          console.error('JSON repair failed, raw length:', cleanContent.length);
+          console.error('Content start:', cleanContent.substring(0, 200));
+          console.error('Content end:', cleanContent.substring(cleanContent.length - 200));
+          throw new Error('Failed to parse translation response - content may have been truncated');
+        }
+      } else {
+        throw new Error('No JSON object found in translation response');
+      }
+    }
 
     // Determine group_id from cluster
     let groupId = null;
