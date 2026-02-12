@@ -189,7 +189,13 @@ Format: [{"title": "...", "excerpt": "...", "content": "## Introduction\\n\\nFir
       }
       const errorText = await response.text();
       console.error("AI gateway error:", response.status, errorText);
-      throw new Error("AI generation failed");
+      if (response.status >= 500) {
+        return new Response(JSON.stringify({ error: "AI service temporarily unavailable. Please try again in a moment." }), {
+          status: 503,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      throw new Error("AI generation failed: " + response.status);
     }
 
     const aiData = await response.json();
