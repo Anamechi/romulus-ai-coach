@@ -35,6 +35,7 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Checklist = lazy(() => import("./pages/Checklist"));
 const ChecklistThankYou = lazy(() => import("./pages/ChecklistThankYou"));
+const DiagnosticThankYou = lazy(() => import("./pages/DiagnosticThankYou"));
 
 // Lazy load admin pages (larger bundle, rarely needed by most users)
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
@@ -107,6 +108,7 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/checklist" element={<Checklist />} />
               <Route path="/checklist/thank-you" element={<ChecklistThankYou />} />
+              <Route path="/diagnostic-thank-you" element={<DiagnosticThankYou />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
