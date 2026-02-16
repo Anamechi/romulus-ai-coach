@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 const About = lazy(() => import("./pages/About"));
 const Programs = lazy(() => import("./pages/Programs"));
 const Diagnostic = lazy(() => import("./pages/Diagnostic"));
+const DiagnosticKit = lazy(() => import("./pages/DiagnosticKit"));
 const BlogIndex = lazy(() => import("./pages/BlogIndex"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -88,6 +89,7 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/programs" element={<Programs />} />
               <Route path="/diagnostic" element={<Diagnostic />} />
+              <Route path="/diagnostic-kit" element={<DiagnosticKit />} />
               <Route path="/blog" element={<BlogIndex />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<Contact />} />
