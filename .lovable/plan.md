@@ -1,34 +1,15 @@
 
-# Embed GHL Calendar on Income Clarity Diagnostic Page
 
-## Change
+# Remove Redundant "When You're Finished..." Section
 
-Replace the placeholder block in the "Schedule Your Session" section with the actual GoHighLevel calendar booking widget, using an iframe approach consistent with how the contact page handles GHL embeds (iframe-only, no external script tag to avoid CSS injection issues in preview).
+## What and Why
+
+The "When You're Finished..." block and the "Want Expert Guidance Reviewing Your Results?" block both serve the same purpose: directing the user toward the Income Clarity Diagnostic. Having both creates unnecessary repetition and weakens the conversion flow. Removing the softer block leaves one clear, well-structured upsell.
 
 ## Technical Detail
 
-**File:** `src/pages/IncomeClarityDiagnostic.tsx` (lines 121-125)
+**File:** `src/pages/DiagnosticKitThankYou.tsx`
 
-**Before:**
-```tsx
-<div className="bg-slate-800/50 rounded-xl p-12 md:p-16 border border-slate-700 text-center">
-  <p className="text-slate-500 text-sm">
-    [GHL CALENDAR EMBED CODE WILL BE INSERTED HERE]
-  </p>
-</div>
-```
+Remove the entire "When You're Finished..." section (the `<section>` containing the "When You're Finished..." heading, the "Income Systems Review" mention, and the "Learn More" button). The "Want Expert Guidance Reviewing Your Results?" section remains as the sole post-delivery CTA.
 
-**After:**
-```tsx
-<div className="rounded-xl overflow-hidden" style={{ height: '1400px' }}>
-  <iframe
-    src="https://link.drromulusmba.com/widget/booking/RI6rJkfYSIJgaYsVWJGP"
-    style={{ width: '100%', height: '100%', border: 'none', overflow: 'hidden' }}
-    scrolling="no"
-    id="RI6rJkfYSIJgaYsVWJGP_1771307168463"
-    title="Book Income Clarity Diagnostic Session"
-  />
-</div>
-```
-
-The iframe uses a fixed `1400px` height (matching the pattern from the contact page) to maximize visibility and reduce internal scrollbars. The external `form_embed.js` script is intentionally omitted to avoid CSS injection issues in the preview environment.
+No other files are affected. No other sections are modified.
