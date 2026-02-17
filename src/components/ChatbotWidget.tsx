@@ -3,18 +3,16 @@ import { useChatWidget } from "@/hooks/useChatbot";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageCircle, X, Send, Loader2, User, Bot } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 
 export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
-  const [showLeadForm, setShowLeadForm] = useState(false);
-  const [leadForm, setLeadForm] = useState({ name: "", email: "" });
   const scrollRef = useRef<HTMLDivElement>(null);
   
-  const { messages, isLoading, sendMessage, captureLead, getOrCreateConversation } = useChatWidget();
+  const { messages, isLoading, sendMessage, getOrCreateConversation } = useChatWidget();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -34,23 +32,10 @@ export function ChatbotWidget() {
     const message = input.trim();
     setInput("");
     await sendMessage(message);
-    
-    // Show lead form after 3 messages if not already shown
-    if ((messages?.length ?? 0) >= 2 && !showLeadForm) {
-      setShowLeadForm(true);
-    }
-  };
-
-  const handleLeadSubmit = async () => {
-    if (!leadForm.name || !leadForm.email) return;
-    await captureLead(leadForm.name, leadForm.email);
-    setShowLeadForm(false);
-    await sendMessage(`Hi, I'm ${leadForm.name}. I just shared my contact info.`);
   };
 
   return (
     <>
-      {/* Chat Button */}
       <Button
         onClick={handleOpen}
         className={cn(
@@ -62,7 +47,6 @@ export function ChatbotWidget() {
         <MessageCircle className="h-6 w-6" />
       </Button>
 
-      {/* Chat Window */}
       <div
         className={cn(
           "fixed bottom-6 right-6 w-[380px] h-[520px] bg-background border border-border rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden transition-all duration-300",
@@ -93,7 +77,6 @@ export function ChatbotWidget() {
         {/* Messages */}
         <ScrollArea ref={scrollRef} className="flex-1 px-4 py-3">
           <div className="space-y-4">
-            {/* Welcome Message */}
             {(!messages || messages.length === 0) && !isLoading && (
               <div className="flex gap-3">
                 <div className="p-1.5 bg-primary/10 rounded-full h-fit shrink-0">
@@ -101,7 +84,7 @@ export function ChatbotWidget() {
                 </div>
                 <div className="bg-muted px-3 py-2 rounded-lg rounded-tl-none max-w-[85%]">
                   <p className="text-sm leading-relaxed">
-                    Welcome. I can help you understand which program may be the right fit. What brings you here today?
+                    Welcome. I can help determine the appropriate next step for your business. What brings you here today?
                   </p>
                 </div>
               </div>
@@ -152,34 +135,6 @@ export function ChatbotWidget() {
                     <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
                     <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* Lead Capture Form */}
-            {showLeadForm && (
-              <div className="bg-primary/5 border border-primary/20 p-3 rounded-lg space-y-2">
-                <p className="text-sm font-medium">Want personalized help? Share your info:</p>
-                <Input
-                  placeholder="Your name"
-                  value={leadForm.name}
-                  onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
-                  className="h-9 text-sm"
-                />
-                <Input
-                  type="email"
-                  placeholder="Your email"
-                  value={leadForm.email}
-                  onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
-                  className="h-9 text-sm"
-                />
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={handleLeadSubmit} className="flex-1 h-8 text-xs">
-                    Submit
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setShowLeadForm(false)} className="h-8 text-xs">
-                    Skip
-                  </Button>
                 </div>
               </div>
             )}

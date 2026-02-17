@@ -118,6 +118,10 @@ export function useChatWidget() {
         throw new Error('No response from chatbot');
       }
 
+      if (data.webinar_lead_captured) {
+        console.log('Webinar lead captured via chatbot conversation');
+      }
+
       const assistantMessage: ChatMessage = {
         role: 'assistant',
         content: data.response,
