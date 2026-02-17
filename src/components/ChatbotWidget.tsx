@@ -36,7 +36,7 @@ export function ChatbotWidget() {
     await sendMessage(message);
     
     // Show lead form after 3 messages if not already shown
-    if (messages.length >= 2 && !showLeadForm) {
+    if ((messages?.length ?? 0) >= 2 && !showLeadForm) {
       setShowLeadForm(true);
     }
   };
@@ -94,7 +94,7 @@ export function ChatbotWidget() {
         <ScrollArea ref={scrollRef} className="flex-1 px-4 py-3">
           <div className="space-y-4">
             {/* Welcome Message */}
-            {messages.length === 0 && !isLoading && (
+            {(!messages || messages.length === 0) && !isLoading && (
               <div className="flex gap-3">
                 <div className="p-1.5 bg-primary/10 rounded-full h-fit shrink-0">
                   <Bot className="h-4 w-4 text-primary" />
@@ -107,7 +107,7 @@ export function ChatbotWidget() {
               </div>
             )}
 
-            {messages.map((msg, idx) => (
+            {(messages ?? []).map((msg, idx) => (
               <div
                 key={idx}
                 className={cn("flex gap-3", msg.role === "user" && "justify-end")}
