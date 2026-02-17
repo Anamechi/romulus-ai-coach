@@ -1,56 +1,35 @@
 
 
-# Update Website Chatbot with Knowledge Base
+# Restrict Chatbot to Checklist-First Funnel
 
-## Overview
+## What and Why
 
-Replace the current OpenAI Assistants API implementation with a Lovable AI-powered chatbot that uses a comprehensive system prompt as its knowledge base. This eliminates the thread/polling complexity and gives full control over the chatbot's behavior, tone, and offer routing.
+The current system prompt exposes all four offers with pricing ($27, $297, $1,997, $10,000). You want the chatbot to only guide visitors through two steps:
 
-## What Changes
+1. **First** -- Point them to the free Fundability and Systems Checklist (https://checklist.drromulusmba.com/)
+2. **Then** -- If they have completed the checklist and need deeper help, recommend the Income Clarity Diagnostic (/diagnostic)
 
-### 1. Rewrite Edge Function (`supabase/functions/chatbot-respond/index.ts`)
+The chatbot should never mention Systems Before Scale, the Installation Intensive, or any pricing for those programs. This keeps the conversation focused on the diagnostic-first conversion funnel.
 
-Replace the entire OpenAI Assistants API flow (threads, runs, polling) with a single Lovable AI Gateway call using a detailed system prompt.
+## Technical Detail
 
-**Key aspects:**
-- Uses `LOVABLE_API_KEY` (already configured) instead of `OPENAI_API_KEY`
-- Sends full conversation history for context (no more thread management)
-- System prompt contains the complete knowledge base: offer ladder, decision logic, constraint rules, CTA rules, and style rules
-- Handles 429/402 rate limit errors properly
-- Non-streaming (matches current widget behavior)
+**File:** `supabase/functions/chatbot-respond/index.ts`
 
-**System prompt will encode:**
-- Identity: Dr. Deanna Romulus, MBA -- Systems and Income Clarity Strategist
-- Tone rules: calm, structured, professional, direct, no emojis, 3-6 sentences max
-- All four offers with exact pricing ($27, $297, $1,997, $10,000)
-- Decision routing logic (inconsistent income -> Kit, completed kit -> Diagnostic, etc.)
-- Constraint rules (no negotiating, no discounts, no custom advice)
-- CTA rules (one per response, exact URLs)
-- Fallback response for unknown topics
+Rewrite the `SYSTEM_PROMPT` constant with the following changes:
 
-### 2. Simplify Frontend Hook (`src/hooks/useChatbot.ts`)
+- **Remove** the full "Offer Ladder" listing all four products and their prices
+- **Replace** with a two-step funnel:
+  - **Step 1 (Default):** Always start by recommending the Fundability and Systems Checklist at `https://checklist.drromulusmba.com/`
+  - **Step 2 (After checklist):** If the visitor has already completed the checklist and wants expert guidance interpreting results or determining next steps, recommend the Income Clarity Diagnostic at `https://drromulusmba.com/diagnostic`
+- **Decision logic** updated:
+  - Any question about income, offers, structure, growth, or getting started -> Recommend the Checklist first
+  - Visitor says they completed the checklist -> Recommend the Income Clarity Diagnostic
+  - If asked about other programs or pricing -> Respond: "The best place to start is the Fundability and Systems Checklist. From there, we can determine the right next step."
+- **CTA rules** simplified to only two URLs:
+  - Checklist: `https://checklist.drromulusmba.com/`
+  - Income Clarity Diagnostic: `https://drromulusmba.com/diagnostic`
+- **Constraint rules** updated: Never disclose pricing or details of Systems Before Scale or the Installation Intensive. If asked directly, redirect to the checklist or diagnostic as the appropriate starting point.
+- All other rules (tone, style, fallback, identity) remain unchanged.
 
-- Remove `threadId` state and all thread-related logic
-- The hook no longer sends/receives `thread_id` -- just `messages` and `conversation_id`
-- Everything else (conversation persistence, lead capture) stays the same
+No other files need to change.
 
-### 3. Update Chat Widget (`src/components/ChatbotWidget.tsx`)
-
-- Update the welcome message to match the new tone: "Welcome. I can help you understand which program may be the right fit. What brings you here today?"
-- Update header subtitle from "Ask me anything" to "Program Guidance"
-
-## Files Changed
-
-| File | Action |
-|------|--------|
-| `supabase/functions/chatbot-respond/index.ts` | Rewrite -- Lovable AI with knowledge base system prompt |
-| `src/hooks/useChatbot.ts` | Edit -- remove thread_id logic |
-| `src/components/ChatbotWidget.tsx` | Edit -- update welcome message and subtitle |
-
-## What Stays the Same
-
-- Conversation persistence in `chatbot_conversations` table
-- Lead capture flow
-- Chat UI layout and styling
-- Admin conversation viewer
-- `config.toml` entry (already has `verify_jwt = false`)
