@@ -1,10 +1,87 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
+
+const SYSTEM_PROMPT = `You are the website assistant for Dr. Deanna Romulus, MBA — Systems & Income Clarity Strategist.
+
+IDENTITY
+You represent Dr. Romulus on her website. You are calm, structured, professional, and direct. You speak with intelligent authority. You are never pushy, never salesy, and never use hype or exaggerated claims.
+
+PURPOSE
+Your role is to:
+- Clarify which offer is appropriate for the visitor
+- Explain differences between programs
+- Guide users toward the correct next step
+- Answer structured questions about programs
+- Route traffic correctly
+
+You are NOT designed to:
+- Provide free consulting
+- Deliver business strategy
+- Replace paid sessions
+- Offer customized advice
+
+OFFER LADDER
+
+1. Complete Income Systems Diagnostic Kit — $27
+   Self-guided diagnostic. Includes checklist, video walkthrough, interpretation guide, and private audio.
+   Purpose: Identify structural income bottlenecks.
+   URL: https://drromulusmba.com/diagnostickit
+
+2. Income Clarity Diagnostic — $297
+   Private 60-minute structured evaluation. Reviews diagnostic results. Determines whether Systems Before Scale is appropriate.
+   This is not coaching. This is not brainstorming. This is a structured evaluation.
+   URL: https://drromulusmba.com/diagnostic
+
+3. Systems Before Scale™ — $1,997
+   Guided implementation program focused on: offer clarity and revenue alignment, clean fundable structure, decision frameworks, and installing systems before scale.
+   This is the core implementation program. Available by invitation after completing the Income Clarity Diagnostic.
+
+4. Systems Installation Intensive — $10,000
+   Private, high-touch implementation. Invitation only. For business owners who want speed and direct installation support.
+   Available by invitation after completing the Income Clarity Diagnostic.
+
+DECISION LOGIC
+
+- If the user mentions inconsistent income, unclear offers, or not knowing where to start → Recommend the Diagnostic Kit ($27).
+- If the user has completed the kit and needs help interpreting results or wants next steps → Recommend the Income Clarity Diagnostic ($297).
+- If the user wants implementation, systems, or structure → Explain Systems Before Scale™ and note it is available after a diagnostic.
+- If the user wants it done for them or wants speed → Explain the Systems Installation Intensive and state it is invitation-only after a diagnostic.
+
+CONSTRAINT RULES
+
+- Never quote pricing beyond what is listed above.
+- Never negotiate pricing.
+- Never create discounts or special offers.
+- Never promise results.
+- Never give custom strategic advice.
+- If a user asks a strategy question like "Should I change my offer?" respond with: "That's a great question. That level of analysis happens inside the Income Clarity Diagnostic."
+
+CTA RULES
+
+- Only use one CTA per response.
+- Use exact URLs:
+  - Diagnostic Kit: https://drromulusmba.com/diagnostickit
+  - Income Clarity Diagnostic: https://drromulusmba.com/diagnostic
+  - Systems Before Scale™: mention it is available after a diagnostic session
+  - Installation Intensive: mention it can be discussed after a diagnostic session
+- Never spam links.
+
+STYLE RULES
+
+- Responses must be 3–6 sentences maximum.
+- No emojis.
+- No excessive enthusiasm.
+- No corporate jargon.
+- Clear, structured, professional tone.
+
+FALLBACK
+
+If the question is outside your knowledge base, respond with:
+"I'm not able to provide that information here. You can email support or schedule a session for deeper guidance."`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -12,41 +89,11 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, conversation_id, thread_id } = await req.json();
-    const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
-    const OPENAI_ASSISTANT_ID = Deno.env.get("OPENAI_ASSISTANT_ID");
+    const { messages, conversation_id } = await req.json();
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
-    if (!OPENAI_API_KEY) {
-      throw new Error("OPENAI_API_KEY is not configured");
-    }
-
-    if (!OPENAI_ASSISTANT_ID) {
-      throw new Error("OPENAI_ASSISTANT_ID is not configured");
-    }
-
-    // Get or create a thread
-    let currentThreadId = thread_id;
-    
-    if (!currentThreadId) {
-      // Create a new thread
-      const threadResponse = await fetch("https://api.openai.com/v1/threads", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${OPENAI_API_KEY}`,
-          "Content-Type": "application/json",
-          "OpenAI-Beta": "assistants=v2",
-        },
-        body: JSON.stringify({}),
-      });
-
-      if (!threadResponse.ok) {
-        const errorText = await threadResponse.text();
-        console.error("Failed to create thread:", errorText);
-        throw new Error("Failed to create thread");
-      }
-
-      const threadData = await threadResponse.json();
-      currentThreadId = threadData.id;
+    if (!LOVABLE_API_KEY) {
+      throw new Error("LOVABLE_API_KEY is not configured");
     }
 
     // Get the latest user message
@@ -55,115 +102,53 @@ serve(async (req) => {
       throw new Error("No user message found");
     }
 
-    // Add the message to the thread
-    const messageResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages`, {
+    // Build message history for context
+    const aiMessages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...messages.map((m: { role: string; content: string }) => ({
+        role: m.role,
+        content: m.content,
+      })),
+    ];
+
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
         "Content-Type": "application/json",
-        "OpenAI-Beta": "assistants=v2",
       },
       body: JSON.stringify({
-        role: "user",
-        content: latestMessage.content,
+        model: "google/gemini-2.5-flash",
+        messages: aiMessages,
+        stream: false,
       }),
     });
 
-    if (!messageResponse.ok) {
-      const errorText = await messageResponse.text();
-      console.error("Failed to add message:", errorText);
-      throw new Error("Failed to add message to thread");
-    }
-
-    // Run the assistant
-    const runResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/runs`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-        "OpenAI-Beta": "assistants=v2",
-      },
-      body: JSON.stringify({
-        assistant_id: OPENAI_ASSISTANT_ID,
-      }),
-    });
-
-    if (!runResponse.ok) {
-      const errorText = await runResponse.text();
-      console.error("Failed to run assistant:", errorText);
-      throw new Error("Failed to run assistant");
-    }
-
-    const runData = await runResponse.json();
-    const runId = runData.id;
-
-    // Poll for completion
-    let runStatus = runData.status;
-    let attempts = 0;
-    const maxAttempts = 60; // 60 seconds max wait
-
-    while (runStatus !== "completed" && runStatus !== "failed" && runStatus !== "cancelled" && attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const statusResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/runs/${runId}`, {
-        headers: {
-          "Authorization": `Bearer ${OPENAI_API_KEY}`,
-          "OpenAI-Beta": "assistants=v2",
-        },
-      });
-
-      if (!statusResponse.ok) {
-        const errorText = await statusResponse.text();
-        console.error("Failed to get run status:", errorText);
-        throw new Error("Failed to get run status");
+    if (!response.ok) {
+      if (response.status === 429) {
+        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }), {
+          status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
-
-      const statusData = await statusResponse.json();
-      runStatus = statusData.status;
-      attempts++;
-
-      if (runStatus === "failed") {
-        console.error("Run failed:", statusData.last_error);
-        throw new Error(statusData.last_error?.message || "Assistant run failed");
+      if (response.status === 402) {
+        return new Response(JSON.stringify({ error: "Service temporarily unavailable. Please try again later." }), {
+          status: 402,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
+      const errorText = await response.text();
+      console.error("AI gateway error:", response.status, errorText);
+      throw new Error("AI gateway error");
     }
 
-    if (runStatus !== "completed") {
-      throw new Error("Assistant response timed out");
-    }
-
-    // Get the assistant's response
-    const messagesResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages?limit=1&order=desc`, {
-      headers: {
-        "Authorization": `Bearer ${OPENAI_API_KEY}`,
-        "OpenAI-Beta": "assistants=v2",
-      },
-    });
-
-    if (!messagesResponse.ok) {
-      const errorText = await messagesResponse.text();
-      console.error("Failed to get messages:", errorText);
-      throw new Error("Failed to get assistant response");
-    }
-
-    const messagesData = await messagesResponse.json();
-    const assistantMessage = messagesData.data[0];
-    
-    let responseText = "I apologize, but I couldn't generate a response. Please try again.";
-    
-    if (assistantMessage && assistantMessage.role === "assistant" && assistantMessage.content.length > 0) {
-      const textContent = assistantMessage.content.find((c: any) => c.type === "text");
-      if (textContent) {
-        responseText = textContent.text.value;
-      }
-    }
+    const data = await response.json();
+    const responseText = data.choices?.[0]?.message?.content || 
+      "I apologize, but I couldn't generate a response. Please try again.";
 
     console.log(`Chatbot response generated for conversation: ${conversation_id}`);
 
-    return new Response(JSON.stringify({ 
-      response: responseText,
-      thread_id: currentThreadId 
-    }), {
+    return new Response(JSON.stringify({ response: responseText }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
