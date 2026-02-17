@@ -131,32 +131,8 @@ const DiagnosticKitThankYou = () => {
           </div>
         </section>
 
-        {/* ── NEXT STEP ── */}
-        <section className="pb-16 md:pb-20">
-          <div className="container mx-auto px-6 max-w-2xl text-center">
-            <div className="border border-slate-700 rounded-xl p-8 bg-slate-800/40">
-              <h2 className="font-display text-2xl font-bold mb-3">
-                When You're Finished…
-              </h2>
-              <p className="text-slate-400 leading-relaxed mb-6">
-                If your results reveal deeper structural gaps, learn about the{" "}
-                <span className="text-white font-medium">
-                  Income Systems Review
-                </span>
-                .
-              </p>
-              <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white" asChild>
-                <a href={UPSELL_URL}>
-                  Learn More
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </a>
-              </Button>
-            </div>
-          </div>
-        </section>
-
         {/* ── INCOME CLARITY DIAGNOSTIC UPSELL ── */}
-        <section className="pt-8 pb-20 md:pb-28">
+        <section className="pb-20 md:pb-28">
           <div className="container mx-auto px-6 max-w-2xl">
             <div className="border border-amber-500/20 rounded-xl p-8 md:p-10 bg-slate-800/30">
               <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-4">
