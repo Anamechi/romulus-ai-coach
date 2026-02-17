@@ -132,7 +132,7 @@ const DiagnosticKitThankYou = () => {
         </section>
 
         {/* ── NEXT STEP ── */}
-        <section className="pb-20 md:pb-28">
+        <section className="pb-16 md:pb-20">
           <div className="container mx-auto px-6 max-w-2xl text-center">
             <div className="border border-slate-700 rounded-xl p-8 bg-slate-800/40">
               <h2 className="font-display text-2xl font-bold mb-3">
@@ -151,6 +151,70 @@ const DiagnosticKitThankYou = () => {
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </a>
               </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* ── INTERPRETATION SESSION ── */}
+        <section className="pb-20 md:pb-28">
+          <div className="container mx-auto px-6 max-w-2xl">
+            <div className="border border-amber-500/20 rounded-xl p-8 md:p-10 bg-slate-800/30">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-4">
+                When You're Ready For Structured Clarity…
+              </h2>
+
+              <div className="space-y-4 text-slate-300 leading-relaxed mb-8">
+                <p>
+                  The Diagnostic Kit shows you{" "}
+                  <span className="text-white font-medium">what's happening</span>.
+                </p>
+                <p>
+                  The Interpretation Session determines{" "}
+                  <span className="text-white font-medium">what should happen next</span>.
+                </p>
+              </div>
+
+              <p className="text-slate-400 text-sm uppercase tracking-wider mb-4">
+                During this private 60-minute session we will:
+              </p>
+
+              <ul className="space-y-3 text-slate-300 mb-8">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                  <span>Review your completed diagnostic</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                  <span>Identify your primary structural constraint</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                  <span>Clarify the correct repair sequence</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                  <span>Determine whether Systems Before Scale™ is appropriate</span>
+                </li>
+              </ul>
+
+              <p className="text-slate-500 text-sm text-center mb-6">
+                This session is required before any deeper implementation work.
+              </p>
+
+              <div className="text-center space-y-4">
+                <p className="text-white font-display text-xl font-semibold">
+                  Investment: $297
+                </p>
+                <Button variant="gold" size="lg" asChild>
+                  <a href={UPSELL_URL}>
+                    Request My Interpretation Session
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </a>
+                </Button>
+                <p className="text-slate-600 text-xs pt-2">
+                  Spots are limited to maintain focused review capacity.
+                </p>
+              </div>
             </div>
           </div>
         </section>
