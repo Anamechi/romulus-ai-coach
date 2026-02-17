@@ -202,7 +202,7 @@ export default function BlogPost() {
               </h1>
 
               {/* Meta info */}
-              <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-4 text-muted-foreground text-sm">
                 {post.author && (
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4" />
@@ -221,6 +221,12 @@ export default function BlogPost() {
                     <span>{post.reading_time_minutes} min read</span>
                   </div>
                 )}
+                {post.updated_at && post.published_at && post.updated_at !== post.published_at && (
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    <span>Updated {format(new Date(post.updated_at), 'MMMM d, yyyy')}</span>
+                  </div>
+                )}
               </div>
             </header>
 
@@ -235,10 +241,12 @@ export default function BlogPost() {
               />
             )}
 
-            {/* Speakable Summary (for voice assistants) */}
+            {/* Speakable Summary (for voice assistants & AI citation) */}
             {post.speakable_summary && (
-              <div className="speakable-content sr-only">
-                {post.speakable_summary}
+              <div className="speakable-content speakable-summary bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8">
+                <p className="text-lg font-medium text-foreground">
+                  {post.speakable_summary}
+                </p>
               </div>
             )}
 

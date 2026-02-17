@@ -18,8 +18,7 @@ export function OrganizationSchema() {
       "jobTitle": "Business Consultant & MBA Coach"
     },
     "sameAs": [
-      "https://linkedin.com/in/drromulusmba",
-      "https://twitter.com/drromulusmba"
+      "https://www.linkedin.com/in/deannaromulusmba/"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -286,7 +285,7 @@ export function PersonSchema() {
     "url": `${BASE_URL}/about`,
     "image": `${BASE_URL}/dr-romulus.jpg`,
     "sameAs": [
-      "https://linkedin.com/in/drromulusmba"
+      "https://www.linkedin.com/in/deannaromulusmba/"
     ],
     "worksFor": {
       "@type": "Organization",

@@ -140,9 +140,16 @@ export default function QADetail() {
           )}
 
           {/* Question */}
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-8">
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
             {qa.question}
           </h1>
+
+          {/* Freshness date */}
+          {qa.updated_at && (
+            <p className="text-sm text-muted-foreground mb-8">
+              Last updated {new Date(qa.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
+          )}
 
           {/* Speakable Answer Block */}
           {qa.speakable_answer && (

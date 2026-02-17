@@ -5,6 +5,7 @@ import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { CTASection } from "@/components/home/CTASection";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { OrganizationSchema, WebSiteSchema, PersonSchema } from "@/components/seo/StructuredData";
+import { Helmet } from 'react-helmet-async';
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -64,6 +65,9 @@ const Index = () => {
       />
       <OrganizationSchema />
       <WebSiteSchema />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
+      </Helmet>
       <HeroSection />
       <AboutPreview />
       <TestimonialsSection />
