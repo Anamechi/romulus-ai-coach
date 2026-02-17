@@ -43,7 +43,6 @@ export function useChatConversations() {
 
 export function useChatWidget() {
   const [conversationId, setConversationId] = useState<string | null>(null);
-  const [threadId, setThreadId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -66,11 +65,6 @@ export function useChatWidget() {
     if (existing && existing.length > 0) {
       setConversationId(existing[0].id);
       setMessages((existing[0].messages as unknown as ChatMessage[]) || []);
-      // Try to get stored thread_id from conversation metadata
-      const storedThreadId = (existing[0] as any).thread_id;
-      if (storedThreadId) {
-        setThreadId(storedThreadId);
-      }
       return existing[0].id;
     }
 
@@ -84,7 +78,6 @@ export function useChatWidget() {
     if (error) throw error;
     setConversationId(newConv.id);
     setMessages([]);
-    setThreadId(null);
     return newConv.id;
   };
 
@@ -111,26 +104,18 @@ export function useChatWidget() {
         .update({ messages: updatedMessages } as any)
         .eq('id', convId);
 
-      // Call chatbot edge function with thread_id
+      // Call chatbot edge function
       const { data, error } = await supabase.functions.invoke('chatbot-respond', {
         body: { 
           messages: updatedMessages, 
           conversation_id: convId,
-          thread_id: threadId 
         },
       });
-
-      console.log('Chatbot response:', { data, error });
 
       if (error) throw error;
       if (!data || !data.response) {
         console.error('Invalid response from chatbot:', data);
         throw new Error('No response from chatbot');
-      }
-
-      // Store the thread_id for future messages
-      if (data.thread_id && data.thread_id !== threadId) {
-        setThreadId(data.thread_id);
       }
 
       const assistantMessage: ChatMessage = {

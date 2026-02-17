@@ -77,7 +77,7 @@ export function ChatbotWidget() {
             </div>
             <div>
               <h3 className="font-semibold text-sm">Dr. Romulus Assistant</h3>
-              <p className="text-xs opacity-80">Ask me anything</p>
+              <p className="text-xs opacity-80">Program Guidance</p>
             </div>
           </div>
           <Button
@@ -101,8 +101,7 @@ export function ChatbotWidget() {
                 </div>
                 <div className="bg-muted px-3 py-2 rounded-lg rounded-tl-none max-w-[85%]">
                   <p className="text-sm leading-relaxed">
-                    Hello! I'm here to help you with questions about business coaching, 
-                    consulting, and our programs. How can I assist you today?
+                    Welcome. I can help you understand which program may be the right fit. What brings you here today?
                   </p>
                 </div>
               </div>
