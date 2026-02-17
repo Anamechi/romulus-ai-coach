@@ -61,6 +61,8 @@ const IndexNow = lazy(() => import("./pages/admin/IndexNow"));
 const ContentClusterGenerator = lazy(() => import("./pages/admin/ContentClusterGenerator"));
 const AIToolsRegistry = lazy(() => import("./pages/admin/AIToolsRegistry"));
 const Translations = lazy(() => import("./pages/admin/Translations"));
+const DiagnosticKit = lazy(() => import("./pages/DiagnosticKit"));
+const DiagnosticKitThankYou = lazy(() => import("./pages/DiagnosticKitThankYou"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -107,6 +109,8 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/checklist" element={<Checklist />} />
               <Route path="/checklist/thank-you" element={<ChecklistThankYou />} />
+              <Route path="/diagnostickit" element={<DiagnosticKit />} />
+              <Route path="/diagnostickit-thank-you" element={<DiagnosticKitThankYou />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
