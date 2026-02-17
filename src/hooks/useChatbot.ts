@@ -64,7 +64,7 @@ export function useChatWidget() {
 
     if (existing && existing.length > 0) {
       setConversationId(existing[0].id);
-      setMessages((existing[0].messages as unknown as ChatMessage[]) || []);
+      setMessages((existing[0].messages as unknown as ChatMessage[]) ?? []);
       return existing[0].id;
     }
 
