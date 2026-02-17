@@ -11,7 +11,7 @@ import {
 
 const CHECKLIST_DOWNLOAD_URL = "#PASTE_CHECKLIST_LINK_HERE";
 const GUIDE_DOWNLOAD_URL = "#PASTE_GUIDE_LINK_HERE";
-const UPSELL_URL = "#PASTE_UPSELL_LINK_HERE";
+const UPSELL_URL = "/income-clarity-diagnostic";
 
 const DiagnosticKitThankYou = () => {
   return (
@@ -155,22 +155,22 @@ const DiagnosticKitThankYou = () => {
           </div>
         </section>
 
-        {/* ── INTERPRETATION SESSION ── */}
-        <section className="pb-20 md:pb-28">
+        {/* ── INCOME CLARITY DIAGNOSTIC UPSELL ── */}
+        <section className="pt-8 pb-20 md:pb-28">
           <div className="container mx-auto px-6 max-w-2xl">
             <div className="border border-amber-500/20 rounded-xl p-8 md:p-10 bg-slate-800/30">
               <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-4">
-                When You're Ready For Structured Clarity…
+                Want Expert Guidance Reviewing Your Results?
               </h2>
 
               <div className="space-y-4 text-slate-300 leading-relaxed mb-8">
                 <p>
-                  The Diagnostic Kit shows you{" "}
-                  <span className="text-white font-medium">what's happening</span>.
+                  The Diagnostic Kit gives you{" "}
+                  <span className="text-white font-medium">clarity</span>.
                 </p>
                 <p>
-                  The Interpretation Session determines{" "}
-                  <span className="text-white font-medium">what should happen next</span>.
+                  The Income Clarity Diagnostic provides{" "}
+                  <span className="text-white font-medium">structured review</span>.
                 </p>
               </div>
 
@@ -181,11 +181,11 @@ const DiagnosticKitThankYou = () => {
               <ul className="space-y-3 text-slate-300 mb-8">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-                  <span>Review your completed diagnostic</span>
+                  <span>Confirm your primary structural constraint</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-                  <span>Identify your primary structural constraint</span>
+                  <span>Identify your highest-leverage correction</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -193,12 +193,12 @@ const DiagnosticKitThankYou = () => {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-                  <span>Determine whether Systems Before Scale™ is appropriate</span>
+                  <span>Determine whether Systems Before Scale™ is the appropriate next step</span>
                 </li>
               </ul>
 
               <p className="text-slate-500 text-sm text-center mb-6">
-                This session is required before any deeper implementation work.
+                This is a focused evaluation session — not open coaching.
               </p>
 
               <div className="text-center space-y-4">
@@ -207,12 +207,12 @@ const DiagnosticKitThankYou = () => {
                 </p>
                 <Button variant="gold" size="lg" asChild>
                   <a href={UPSELL_URL}>
-                    Request My Interpretation Session
+                    Proceed to Diagnostic Booking
                     <ArrowRight className="w-4 h-4 ml-1" />
                   </a>
                 </Button>
                 <p className="text-slate-600 text-xs pt-2">
-                  Spots are limited to maintain focused review capacity.
+                  Limited weekly availability to ensure focused evaluation.
                 </p>
               </div>
             </div>

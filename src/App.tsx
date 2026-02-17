@@ -63,6 +63,7 @@ const AIToolsRegistry = lazy(() => import("./pages/admin/AIToolsRegistry"));
 const Translations = lazy(() => import("./pages/admin/Translations"));
 const DiagnosticKit = lazy(() => import("./pages/DiagnosticKit"));
 const DiagnosticKitThankYou = lazy(() => import("./pages/DiagnosticKitThankYou"));
+const IncomeClarityDiagnostic = lazy(() => import("./pages/IncomeClarityDiagnostic"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -111,6 +112,7 @@ const App = () => (
               <Route path="/checklist/thank-you" element={<ChecklistThankYou />} />
               <Route path="/diagnostickit" element={<DiagnosticKit />} />
               <Route path="/diagnostickit-thank-you" element={<DiagnosticKitThankYou />} />
+              <Route path="/income-clarity-diagnostic" element={<IncomeClarityDiagnostic />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
