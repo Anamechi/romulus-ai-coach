@@ -118,10 +118,14 @@ const IncomeClarityDiagnostic = () => {
             <h2 className="font-display text-2xl font-bold text-center mb-8">
               Schedule Your Session
             </h2>
-            <div className="bg-slate-800/50 rounded-xl p-12 md:p-16 border border-slate-700 text-center">
-              <p className="text-slate-500 text-sm">
-                [GHL CALENDAR EMBED CODE WILL BE INSERTED HERE]
-              </p>
+            <div className="rounded-xl overflow-hidden" style={{ height: '1400px' }}>
+              <iframe
+                src="https://link.drromulusmba.com/widget/booking/RI6rJkfYSIJgaYsVWJGP"
+                style={{ width: '100%', height: '100%', border: 'none', overflow: 'hidden' }}
+                scrolling="no"
+                id="RI6rJkfYSIJgaYsVWJGP_1771307168463"
+                title="Book Income Clarity Diagnostic Session"
+              />
             </div>
           </div>
         </section>
