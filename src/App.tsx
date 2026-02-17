@@ -15,7 +15,6 @@ import NotFound from "./pages/NotFound";
 const About = lazy(() => import("./pages/About"));
 const Programs = lazy(() => import("./pages/Programs"));
 const Diagnostic = lazy(() => import("./pages/Diagnostic"));
-const DiagnosticKit = lazy(() => import("./pages/DiagnosticKit"));
 const BlogIndex = lazy(() => import("./pages/BlogIndex"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -36,7 +35,6 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Checklist = lazy(() => import("./pages/Checklist"));
 const ChecklistThankYou = lazy(() => import("./pages/ChecklistThankYou"));
-const DiagnosticThankYou = lazy(() => import("./pages/DiagnosticThankYou"));
 
 // Lazy load admin pages (larger bundle, rarely needed by most users)
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
@@ -89,7 +87,6 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/programs" element={<Programs />} />
               <Route path="/diagnostic" element={<Diagnostic />} />
-              <Route path="/diagnostic-kit" element={<DiagnosticKit />} />
               <Route path="/blog" element={<BlogIndex />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<Contact />} />
@@ -110,7 +107,6 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/checklist" element={<Checklist />} />
               <Route path="/checklist/thank-you" element={<ChecklistThankYou />} />
-              <Route path="/diagnostic-thank-you" element={<DiagnosticThankYou />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
