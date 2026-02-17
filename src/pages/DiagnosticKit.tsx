@@ -10,7 +10,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const PAYMENT_URL = "#PASTE_GHL_PAYMENT_LINK_HERE";
+const PAYMENT_URL = "https://link.drromulusmba.com/payment-link/69939e59e6b9117c66e733dd";
 
 const DiagnosticKit = () => {
   return (
