@@ -24,8 +24,20 @@ import {
   RefreshCw,
   ArrowRight,
   Clock,
-  AlertCircle
+  AlertCircle,
+  Trash2
 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { 
   useContentClusters, 
   useContentCluster, 
@@ -34,6 +46,7 @@ import {
   useApproveClusterItem,
   useDiscardClusterItem,
   usePublishClusterItems,
+  useDeleteCluster,
   ClusterItem,
   ClusterInput 
 } from '@/hooks/useContentClusters';
@@ -79,6 +92,7 @@ export default function ContentClusterGenerator() {
   const approveItem = useApproveClusterItem();
   const discardItem = useDiscardClusterItem();
   const publishItems = usePublishClusterItems();
+  const deleteCluster = useDeleteCluster();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -276,17 +290,59 @@ export default function ContentClusterGenerator() {
                           <p className="font-medium text-sm line-clamp-2">
                             {cluster.cluster_topic}
                           </p>
-                          <Badge
-                            variant={
-                              cluster.status === 'completed' ? 'default' :
-                              cluster.status === 'failed' ? 'destructive' :
-                              cluster.status === 'generating' ? 'secondary' :
-                              'outline'
-                            }
-                            className="shrink-0 text-xs"
-                          >
-                            {cluster.status}
-                          </Badge>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <Badge
+                              variant={
+                                cluster.status === 'completed' ? 'default' :
+                                cluster.status === 'failed' ? 'destructive' :
+                                cluster.status === 'generating' ? 'secondary' :
+                                'outline'
+                              }
+                              className="text-xs"
+                            >
+                              {cluster.status}
+                            </Badge>
+                            {cluster.status === 'failed' && (
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <span
+                                    role="button"
+                                    tabIndex={0}
+                                    className="p-1 rounded hover:bg-destructive/10 text-destructive cursor-pointer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    onKeyDown={(e) => { if (e.key === 'Enter') e.stopPropagation(); }}
+                                  >
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </span>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>Delete failed cluster?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      This will permanently delete this cluster and any associated items. This action cannot be undone.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction
+                                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                      onClick={() => {
+                                        deleteCluster.mutate(cluster.id, {
+                                          onSuccess: () => {
+                                            if (selectedClusterId === cluster.id) {
+                                              setSelectedClusterId(null);
+                                            }
+                                          },
+                                        });
+                                      }}
+                                    >
+                                      Delete
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            )}
+                          </div>
                         </div>
                         <p className="text-xs text-muted-foreground mt-1">
                           {format(new Date(cluster.created_at), 'MMM d, yyyy')}
@@ -341,14 +397,44 @@ export default function ContentClusterGenerator() {
                   <p className="text-muted-foreground text-sm mt-2">
                     {selectedCluster.error_message || 'An error occurred during generation'}
                   </p>
-                  <Button
-                    variant="outline"
-                    className="mt-4"
-                    onClick={() => setSelectedClusterId(null)}
-                  >
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    Try Again
-                  </Button>
+                  <div className="flex gap-2 mt-4">
+                    <Button
+                      variant="outline"
+                      onClick={() => setSelectedClusterId(null)}
+                    >
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Try Again
+                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive">
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete Cluster
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete failed cluster?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This will permanently delete this cluster and any associated items. This action cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            onClick={() => {
+                              deleteCluster.mutate(selectedClusterId!, {
+                                onSuccess: () => setSelectedClusterId(null),
+                              });
+                            }}
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
                 </CardContent>
               </Card>
             ) : (
