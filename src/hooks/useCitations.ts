@@ -181,6 +181,68 @@ export function useRemoveBlogPostCitation() {
   });
 }
 
+// Q&A page citations
+export function useQAPageCitations(qaPageId: string) {
+  return useQuery({
+    queryKey: ['qa-page-citations', qaPageId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('qa_page_citations')
+        .select('*, citation:citations(*)')
+        .eq('qa_page_id', qaPageId)
+        .order('sort_order');
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!qaPageId,
+  });
+}
+
+export function useAddQAPageCitation() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ qaPageId, citationId, sortOrder = 0 }: { qaPageId: string; citationId: string; sortOrder?: number }) => {
+      const { data, error } = await supabase
+        .from('qa_page_citations')
+        .insert({ qa_page_id: qaPageId, citation_id: citationId, sort_order: sortOrder })
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['qa-page-citations', variables.qaPageId] });
+      toast({ title: 'Citation added to Q&A page' });
+    },
+    onError: (error) => {
+      toast({ title: 'Failed to add citation', description: error.message, variant: 'destructive' });
+    },
+  });
+}
+
+export function useRemoveQAPageCitation() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ qaPageId, citationId }: { qaPageId: string; citationId: string }) => {
+      const { error } = await supabase
+        .from('qa_page_citations')
+        .delete()
+        .eq('qa_page_id', qaPageId)
+        .eq('citation_id', citationId);
+      if (error) throw error;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['qa-page-citations', variables.qaPageId] });
+      toast({ title: 'Citation removed from Q&A page' });
+    },
+    onError: (error) => {
+      toast({ title: 'Failed to remove citation', description: error.message, variant: 'destructive' });
+    },
+  });
+}
+
 // FAQ citations
 export function useFaqCitations(faqId: string) {
   return useQuery({

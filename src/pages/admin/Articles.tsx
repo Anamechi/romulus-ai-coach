@@ -11,7 +11,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Pencil, Trash2, Eye, EyeOff, ExternalLink, RefreshCw, Loader2, History, AlertTriangle } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, EyeOff, ExternalLink, RefreshCw, Loader2, History, AlertTriangle, Link2 } from 'lucide-react';
+import { CitationPicker } from '@/components/admin/CitationPicker';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useBlogPosts, useCreateBlogPost, useUpdateBlogPost, useDeleteBlogPost, BlogPost, BlogPostInsert } from '@/hooks/useBlogPosts';
@@ -323,10 +324,16 @@ export default function ArticlesAdmin() {
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <Tabs defaultValue="content" className="w-full">
-                  <TabsList className="grid w-full grid-cols-4">
+                  <TabsList className={`grid w-full ${editingPost ? 'grid-cols-5' : 'grid-cols-3'}`}>
                     <TabsTrigger value="content">Content</TabsTrigger>
                     <TabsTrigger value="meta">SEO & Meta</TabsTrigger>
                     <TabsTrigger value="settings">Settings</TabsTrigger>
+                    {editingPost && (
+                      <TabsTrigger value="citations">
+                        <Link2 className="h-4 w-4 mr-1" />
+                        Citations
+                      </TabsTrigger>
+                    )}
                     {editingPost && (
                       <TabsTrigger value="history">
                         <History className="h-4 w-4 mr-1" />
@@ -565,6 +572,12 @@ export default function ArticlesAdmin() {
                       </div>
                     )}
                   </TabsContent>
+
+                  {editingPost && (
+                    <TabsContent value="citations" className="mt-4">
+                      <CitationPicker contentType="blog_post" contentId={editingPost.id} />
+                    </TabsContent>
+                  )}
 
                   {editingPost && (
                     <TabsContent value="history" className="mt-4">
