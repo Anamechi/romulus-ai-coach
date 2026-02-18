@@ -10,15 +10,19 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Plus, Pencil, Trash2, ExternalLink, Globe, Award } from 'lucide-react';
+import { Plus, Pencil, Trash2, ExternalLink, Globe, Award, Zap, Loader2 } from 'lucide-react';
 import { useCitations, useCreateCitation, useUpdateCitation, useDeleteCitation, Citation, CitationInsert } from '@/hooks/useCitations';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Citations() {
-  const { data: citations, isLoading } = useCitations();
+  const { data: citations, isLoading, refetch } = useCitations();
   const createCitation = useCreateCitation();
   const updateCitation = useUpdateCitation();
   const deleteCitation = useDeleteCitation();
+  const { toast } = useToast();
 
+  const [isBulkAttaching, setIsBulkAttaching] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCitation, setEditingCitation] = useState<Citation | null>(null);
   const [formData, setFormData] = useState<Partial<CitationInsert>>({
@@ -96,6 +100,28 @@ export default function Citations() {
     }
   };
 
+  const handleBulkAttach = async () => {
+    setIsBulkAttaching(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('bulk-attach-citations');
+      if (error) throw error;
+
+      toast({
+        title: 'Bulk attach complete',
+        description: `Seeded ${data.citations_seeded} citations. Attached ${data.total_attachments} links across ${data.blog_posts_processed} blog posts and ${data.qa_pages_processed} Q&A pages.`,
+      });
+      refetch();
+    } catch (err: any) {
+      toast({
+        title: 'Bulk attach failed',
+        description: err.message,
+        variant: 'destructive',
+      });
+    } finally {
+      setIsBulkAttaching(false);
+    }
+  };
+
   const getDomainAuthorityBadge = (da: number | null) => {
     if (!da) return null;
     if (da >= 70) return <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">DA {da}</Badge>;
@@ -111,6 +137,16 @@ export default function Citations() {
             <h1 className="text-3xl font-bold text-foreground">Citations</h1>
             <p className="text-muted-foreground mt-1">Manage citations for E-E-A-T credibility</p>
           </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={handleBulkAttach}
+              disabled={isBulkAttaching}
+              variant="outline"
+              className="gap-2"
+            >
+              {isBulkAttaching ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+              {isBulkAttaching ? 'Attaching...' : 'Bulk Attach to All Content'}
+            </Button>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={openCreateDialog} className="gap-2">
@@ -214,6 +250,7 @@ export default function Citations() {
               </form>
             </DialogContent>
           </Dialog>
+          </div>
         </div>
 
         <Card>
