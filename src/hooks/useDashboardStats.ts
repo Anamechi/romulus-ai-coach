@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface DashboardStats {
   blogPosts: { total: number; published: number };
   faqs: { total: number; published: number };
+  qaPages: { total: number; published: number };
   leads: { total: number; new: number };
   applications: { total: number; pending: number };
 }
@@ -12,15 +13,17 @@ export function useDashboardStats() {
   return useQuery({
     queryKey: ['dashboard-stats'],
     queryFn: async (): Promise<DashboardStats> => {
-      const [blogPostsRes, faqsRes, leadsRes, applicationsRes] = await Promise.all([
+      const [blogPostsRes, faqsRes, qaPagesRes, leadsRes, applicationsRes] = await Promise.all([
         supabase.from('blog_posts').select('id, published', { count: 'exact' }),
         supabase.from('faqs').select('id, status', { count: 'exact' }),
+        supabase.from('qa_pages').select('id, status', { count: 'exact' }),
         supabase.from('leads').select('id, status', { count: 'exact' }),
         supabase.from('applications').select('id, status', { count: 'exact' }),
       ]);
 
       const blogPosts = blogPostsRes.data || [];
       const faqs = faqsRes.data || [];
+      const qaPages = qaPagesRes.data || [];
       const leads = leadsRes.data || [];
       const applications = applicationsRes.data || [];
 
@@ -32,6 +35,10 @@ export function useDashboardStats() {
         faqs: {
           total: faqs.length,
           published: faqs.filter(f => f.status === 'published').length,
+        },
+        qaPages: {
+          total: qaPages.length,
+          published: qaPages.filter(q => q.status === 'published').length,
         },
         leads: {
           total: leads.length,

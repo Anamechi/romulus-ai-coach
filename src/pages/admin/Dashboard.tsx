@@ -92,17 +92,24 @@ export default function Dashboard() {
       href: '/admin/faqs',
     },
     {
+      title: 'Q&A Pages',
+      value: stats?.qaPages.total ?? 0,
+      subtitle: `${stats?.qaPages.published ?? 0} published`,
+      icon: MessageSquare,
+      href: '/admin/qa-pages',
+    },
+    {
       title: 'Leads',
       value: stats?.leads.total ?? 0,
       subtitle: `${stats?.leads.new ?? 0} new`,
-      icon: MessageSquare,
+      icon: Users,
       href: '/admin/leads',
     },
     {
       title: 'Applications',
       value: stats?.applications.total ?? 0,
       subtitle: `${stats?.applications.pending ?? 0} pending`,
-      icon: Users,
+      icon: AlertCircle,
       href: '/admin/applications',
     },
   ];
@@ -119,7 +126,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {statCards.map((stat) => (
             <Link key={stat.title} to={stat.href}>
               <Card className="hover:shadow-md transition-shadow cursor-pointer group">
@@ -244,7 +251,7 @@ export default function Dashboard() {
                 { phase: 'Phase 7', title: 'Internal Linking', status: 'complete', progress: 100 },
                 { phase: 'Phase 8', title: 'AI Cluster Generator', status: 'complete', progress: 100 },
                 { phase: 'Phase 9', title: 'Lead Capture + Intake', status: 'complete', progress: 100 },
-                { phase: 'Phase 10', title: 'SEO/Sitemap Hardening', status: 'next', progress: 0 },
+                { phase: 'Phase 10', title: 'SEO/Sitemap Hardening', status: 'complete', progress: 100 },
               ].map((phase) => (
                 <div key={phase.phase} className="space-y-2">
                   <div className="flex items-center justify-between">
