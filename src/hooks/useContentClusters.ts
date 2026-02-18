@@ -222,6 +222,37 @@ export function useDiscardClusterItem() {
   });
 }
 
+export function useDeleteCluster() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (clusterId: string) => {
+      // Delete cluster items first
+      const { error: itemsError } = await supabase
+        .from('cluster_items')
+        .delete()
+        .eq('cluster_id', clusterId);
+
+      if (itemsError) throw itemsError;
+
+      // Then delete the cluster
+      const { error: clusterError } = await supabase
+        .from('content_clusters')
+        .delete()
+        .eq('id', clusterId);
+
+      if (clusterError) throw clusterError;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['content-clusters'] });
+      toast.success('Cluster deleted');
+    },
+    onError: (error) => {
+      toast.error(`Failed to delete cluster: ${error.message}`);
+    },
+  });
+}
+
 export function usePublishClusterItems() {
   const queryClient = useQueryClient();
 
