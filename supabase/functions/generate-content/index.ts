@@ -207,11 +207,11 @@ Format: [{"title": "...", "excerpt": "...", "content": "## Introduction\\n\\nFir
 
     console.log("Raw AI response length:", content.length);
 
-    // Parse JSON from response (handle markdown code blocks)
+    // Parse JSON from response (handle markdown code blocks and bad escapes)
     let parsed;
     try {
-      // Remove markdown code blocks if present
       let cleanContent = content.trim();
+      // Remove markdown code blocks
       if (cleanContent.startsWith("```json")) {
         cleanContent = cleanContent.slice(7);
       } else if (cleanContent.startsWith("```")) {
@@ -221,19 +221,48 @@ Format: [{"title": "...", "excerpt": "...", "content": "## Introduction\\n\\nFir
         cleanContent = cleanContent.slice(0, -3);
       }
       cleanContent = cleanContent.trim();
-      
+
+      // Extract JSON array
+      const startIndex = cleanContent.indexOf("[");
+      const endIndex = cleanContent.lastIndexOf("]");
+      if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) {
+        throw new Error("No JSON array found in response");
+      }
+      let jsonStr = cleanContent.slice(startIndex, endIndex + 1);
+
       // Try direct parse first
-      if (cleanContent.startsWith("[")) {
-        parsed = JSON.parse(cleanContent);
-      } else {
-        // Find the JSON array in the content
-        const startIndex = cleanContent.indexOf("[");
-        const endIndex = cleanContent.lastIndexOf("]");
-        if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
-          const jsonStr = cleanContent.slice(startIndex, endIndex + 1);
+      try {
+        parsed = JSON.parse(jsonStr);
+      } catch (_directErr) {
+        // Fix common AI JSON issues: unescaped control chars inside string values
+        // Replace literal newlines/tabs inside JSON strings with escaped versions
+        jsonStr = jsonStr.replace(/(?<=:[\s]*"(?:[^"\\]|\\.)*)(\r?\n)(?=(?:[^"\\]|\\.)*")/g, '\\n');
+        
+        // Fallback: brute-force fix all unescaped control characters
+        try {
           parsed = JSON.parse(jsonStr);
-        } else {
-          throw new Error("No JSON array found in response");
+        } catch (_regexErr) {
+          // Last resort: manually walk and fix control chars
+          let fixed = '';
+          let inString = false;
+          let prevChar = '';
+          for (let i = 0; i < jsonStr.length; i++) {
+            const ch = jsonStr[i];
+            if (ch === '"' && prevChar !== '\\') {
+              inString = !inString;
+              fixed += ch;
+            } else if (inString && ch === '\n') {
+              fixed += '\\n';
+            } else if (inString && ch === '\r') {
+              fixed += '\\r';
+            } else if (inString && ch === '\t') {
+              fixed += '\\t';
+            } else {
+              fixed += ch;
+            }
+            prevChar = ch;
+          }
+          parsed = JSON.parse(fixed);
         }
       }
     } catch (parseError) {
