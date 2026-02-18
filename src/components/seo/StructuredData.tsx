@@ -279,11 +279,66 @@ export function PersonSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Dr. Deanna Romulus",
-    "jobTitle": "Business Consultant & MBA Coach",
-    "description": "Expert business consultant helping entrepreneurs build structured, credible, and scalable businesses",
+    "name": "Dr. Deanna Romulus, MBA",
+    "jobTitle": [
+      "Business Strategist",
+      "Educator",
+      "Automation Consultant",
+      "Systems Architect"
+    ],
+    "description": "Dr. Deanna Romulus, MBA is a business strategist, educator, and automation consultant with expertise in business structure, financial decision-making, adult learning, and scalable systems.",
     "url": `${BASE_URL}/about`,
     "image": `${BASE_URL}/dr-romulus.jpg`,
+    "knowsAbout": [
+      "Business Strategy",
+      "Automation Systems",
+      "Financial Self-Efficacy",
+      "Adult Learning",
+      "Entrepreneurship",
+      "Operational Efficiency",
+      "Business Fundability"
+    ],
+    "hasCredential": [
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Doctorate",
+        "name": "Doctor of Education (Ed.D.) in Educational Leadership"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Master's Degree",
+        "name": "International Master of Business Administration (MBA), Finance"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Certificate",
+        "name": "Adult Organizational Development"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Bachelor's Degree",
+        "name": "Bachelor of Science in Fashion Design and Marketing"
+      }
+    ],
+    "alumniOf": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "University of Phoenix"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "Keller Graduate School of Management"
+      }
+    ],
+    "hasOccupation": {
+      "@type": "Occupation",
+      "name": "Business Consultant",
+      "occupationLocation": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "description": "Helping entrepreneurs build structured, credible, and scalable businesses through strategy, automation, and coaching"
+    },
     "sameAs": [
       "https://www.linkedin.com/in/deannaromulusmba/"
     ],
