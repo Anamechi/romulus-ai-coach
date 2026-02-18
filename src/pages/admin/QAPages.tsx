@@ -15,7 +15,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Pencil, Trash2, Eye, EyeOff, AlertTriangle, History, Upload, Sparkles, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, AlertTriangle, History, Upload, Sparkles, Loader2, Link2 } from "lucide-react";
+import { CitationPicker } from '@/components/admin/CitationPicker';
 import { Label } from "@/components/ui/label";
 import { validateQAPageForPublish, ValidationResult } from "@/lib/validateContentForPublish";
 import { ValidationDisplay } from "@/components/admin/ValidationDisplay";
@@ -512,8 +513,12 @@ What is Y?||Y is...`}
               
               {editingQA ? (
                 <Tabs value={activeTab} onValueChange={setActiveTab}>
-                  <TabsList className="grid w-full grid-cols-2">
+                  <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="edit">Edit</TabsTrigger>
+                    <TabsTrigger value="citations" className="flex items-center gap-2">
+                      <Link2 className="h-4 w-4" />
+                      Citations
+                    </TabsTrigger>
                     <TabsTrigger value="history" className="flex items-center gap-2">
                       <History className="h-4 w-4" />
                       History
@@ -605,6 +610,10 @@ What is Y?||Y is...`}
                     <Button onClick={handleSubmit} disabled={!form.question || !form.slug || !form.answer} className="w-full">Update Q&A</Button>
                   </TabsContent>
                   
+                  <TabsContent value="citations" className="mt-4">
+                    <CitationPicker contentType="qa_page" contentId={editingQA.id} />
+                  </TabsContent>
+
                   <TabsContent value="history" className="mt-4">
                     <RevisionHistory
                       entityType="qa_page"

@@ -1117,6 +1117,45 @@ export type Database = {
         }
         Relationships: []
       }
+      qa_page_citations: {
+        Row: {
+          citation_id: string
+          created_at: string
+          id: string
+          qa_page_id: string
+          sort_order: number | null
+        }
+        Insert: {
+          citation_id: string
+          created_at?: string
+          id?: string
+          qa_page_id: string
+          sort_order?: number | null
+        }
+        Update: {
+          citation_id?: string
+          created_at?: string
+          id?: string
+          qa_page_id?: string
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qa_page_citations_citation_id_fkey"
+            columns: ["citation_id"]
+            isOneToOne: false
+            referencedRelation: "citations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qa_page_citations_qa_page_id_fkey"
+            columns: ["qa_page_id"]
+            isOneToOne: false
+            referencedRelation: "qa_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       qa_pages: {
         Row: {
           answer: string
