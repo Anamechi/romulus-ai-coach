@@ -49,6 +49,16 @@ const personSchema = {
       "name": "Bachelor of Science in Fashion Design and Marketing"
     }
   ],
+  "alumniOf": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "University of Phoenix"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "Keller Graduate School of Management"
+    }
+  ],
   "sameAs": [
     "https://www.linkedin.com/in/deannaromulusmba/"
   ]

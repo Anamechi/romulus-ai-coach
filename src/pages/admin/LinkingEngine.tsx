@@ -231,6 +231,17 @@ export default function LinkingEnginePage() {
                         FAQs
                       </Label>
                     </div>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id="qa_page"
+                        checked={contentTypes.includes('qa_page')}
+                        onCheckedChange={() => toggleContentType('qa_page')}
+                      />
+                      <Label htmlFor="qa_page" className="flex items-center gap-1 cursor-pointer">
+                        <FileText className="h-4 w-4" />
+                        Q&A Pages
+                      </Label>
+                    </div>
                   </div>
                 </div>
 

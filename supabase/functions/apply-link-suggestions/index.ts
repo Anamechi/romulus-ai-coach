@@ -21,7 +21,6 @@ serve(async (req) => {
 
     console.log('Applying link suggestions for items:', item_ids);
 
-    // Fetch the scan items
     const { data: items, error: fetchError } = await supabase
       .from('linking_scan_items')
       .select('*')
@@ -34,13 +33,13 @@ serve(async (req) => {
     for (const item of items || []) {
       if (item.applied) continue;
 
-      // Create internal_links records based on suggestions
       const internalLinks = [];
+      const sourceType = item.content_type; // 'blog_post', 'qa_page', or 'faq'
 
-      if (item.related_post_suggestion && item.content_type === 'blog_post') {
+      if (item.related_post_suggestion) {
         const suggestion = item.related_post_suggestion as any;
         internalLinks.push({
-          source_type: 'blog_post',
+          source_type: sourceType,
           source_id: item.content_id,
           target_type: 'blog_post',
           target_id: suggestion.id,
@@ -49,10 +48,10 @@ serve(async (req) => {
         });
       }
 
-      if (item.faq_suggestion && item.content_type === 'blog_post') {
+      if (item.faq_suggestion) {
         const suggestion = item.faq_suggestion as any;
         internalLinks.push({
-          source_type: 'blog_post',
+          source_type: sourceType,
           source_id: item.content_id,
           target_type: 'faq',
           target_id: suggestion.id,
@@ -61,9 +60,23 @@ serve(async (req) => {
         });
       }
 
-      // Insert internal links (if they don't already exist)
+      if (item.pillar_page_suggestion) {
+        const suggestion = item.pillar_page_suggestion as any;
+        // Only create internal_links record if target is a real content ID (not static pages)
+        if (suggestion.id && suggestion.target_type) {
+          internalLinks.push({
+            source_type: sourceType,
+            source_id: item.content_id,
+            target_type: suggestion.target_type,
+            target_id: suggestion.id,
+            link_text: suggestion.anchor_text,
+            is_active: true,
+          });
+        }
+      }
+
+      // Insert internal links (skip duplicates)
       for (const link of internalLinks) {
-        // Check if link already exists
         const { data: existing } = await supabase
           .from('internal_links')
           .select('id')
