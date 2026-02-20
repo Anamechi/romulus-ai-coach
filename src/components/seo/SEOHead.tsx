@@ -16,7 +16,7 @@ interface SEOHeadProps {
 }
 
 const SITE_NAME = "Dr. Romulus MBA";
-const DEFAULT_OG_IMAGE = "/og-image.png";
+const DEFAULT_OG_IMAGE = "/og-image.jpg";
 const BASE_URL = "https://drromulusmba.com";
 
 export function SEOHead({

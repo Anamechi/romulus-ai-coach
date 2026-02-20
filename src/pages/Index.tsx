@@ -68,10 +68,12 @@ const Index = () => {
   return (
     <Layout>
       <SEOHead
-        title="Dr. Romulus MBA | Business Strategy, Automation & Coaching"
-        description="Dr. Deanna Romulus helps entrepreneurs build businesses that are structured, credible, and scalable. Expert coaching in business strategy, fundability, and automation."
+        title="Dr. Deanna Romulus | Systems Before Scale™"
+        description="Architecting AI-enabled systems and fundable infrastructure for service-based founders ready to scale intelligently."
         canonicalUrl="/"
         ogType="website"
+        ogImage="https://drromulusmba.com/og-image.jpg"
+        ogImageAlt="Dr. Deanna Romulus - Systems Before Scale"
       />
       <OrganizationSchema />
       <WebSiteSchema />

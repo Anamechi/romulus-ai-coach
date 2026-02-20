@@ -8,6 +8,7 @@ export function OrganizationSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${BASE_URL}/#organization`,
     "name": SITE_NAME,
     "url": BASE_URL,
     "logo": `${BASE_URL}/logo.png`,
@@ -39,11 +40,13 @@ export function WebSiteSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${BASE_URL}/#website`,
     "name": SITE_NAME,
     "url": BASE_URL,
     "description": "Transform your business with expert MBA coaching and consulting services",
     "publisher": {
       "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
       "name": SITE_NAME
     },
     "potentialAction": {
@@ -279,6 +282,7 @@ export function PersonSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": `${BASE_URL}/#person`,
     "name": "Dr. Deanna Romulus, MBA",
     "jobTitle": [
       "Business Strategist",
@@ -344,6 +348,7 @@ export function PersonSchema() {
     ],
     "worksFor": {
       "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
       "name": SITE_NAME
     }
   };
