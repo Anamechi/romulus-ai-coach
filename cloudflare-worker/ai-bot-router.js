@@ -5,6 +5,8 @@
  * to the prerender edge function to serve full HTML content instead
  * of empty JavaScript shells.
  * 
+ * It also enforces www → non-www 301 redirects for canonical domain ownership.
+ * 
  * DEPLOYMENT INSTRUCTIONS:
  * 1. Go to Cloudflare Dashboard → Workers & Pages → Create Worker
  * 2. Paste this code
@@ -13,6 +15,9 @@
  * 5. Add route: drromulusmba.com/* → ai-bot-router
  * 6. Add route: www.drromulusmba.com/* → ai-bot-router
  */
+
+const CANONICAL_DOMAIN = 'drromulusmba.com';
+const CANONICAL_ORIGIN = `https://${CANONICAL_DOMAIN}`;
 
 // AI bot user agents to detect
 const AI_BOT_PATTERNS = [
@@ -78,6 +83,26 @@ const STATIC_EXTENSIONS = [
 const PRERENDER_URL = 'https://xxdbmkllubljncwvxkrl.supabase.co/functions/v1/prerender';
 
 /**
+ * Enforce canonical domain: redirect www → non-www with 301
+ */
+function getCanonicalRedirect(url) {
+  const host = url.hostname;
+  if (host === `www.${CANONICAL_DOMAIN}`) {
+    const canonical = new URL(url.toString());
+    canonical.hostname = CANONICAL_DOMAIN;
+    return Response.redirect(canonical.toString(), 301);
+  }
+  // Also enforce HTTPS
+  if (url.protocol === 'http:') {
+    const secure = new URL(url.toString());
+    secure.protocol = 'https:';
+    secure.hostname = CANONICAL_DOMAIN;
+    return Response.redirect(secure.toString(), 301);
+  }
+  return null;
+}
+
+/**
  * Check if the user agent is an AI bot
  */
 function isAIBot(userAgent) {
@@ -136,10 +161,17 @@ async function handleRequest(request) {
   const userAgent = request.headers.get('User-Agent') || '';
   const pathname = url.pathname;
   
+  // 1. Enforce canonical domain (www → non-www, http → https)
+  const redirect = getCanonicalRedirect(url);
+  if (redirect) {
+    console.log(`[AI-Router] Canonical redirect: ${url.hostname} → ${CANONICAL_DOMAIN}`);
+    return redirect;
+  }
+  
   // Log for debugging (visible in Cloudflare dashboard)
   console.log(`[AI-Router] Path: ${pathname}, UA: ${userAgent.substring(0, 50)}...`);
   
-  // Check if this is an AI bot requesting a prerenderable path
+  // 2. Check if this is an AI bot requesting a prerenderable path
   if (isAIBot(userAgent) && shouldPrerender(pathname)) {
     console.log(`[AI-Router] AI bot detected, routing to prerender`);
     
