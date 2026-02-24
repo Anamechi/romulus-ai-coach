@@ -254,7 +254,7 @@ const RevenueArchitectureSession = () => {
             </h2>
             <div className="rounded-xl overflow-hidden" style={{ height: "1400px" }}>
               <iframe
-                src="https://link.drromulusmba.com/widget/booking/RI6rJkfYSIJgaYsVWJGP"
+                src="https://link.drromulusmba.com/widget/booking/wlTCpuAi2QG0tn0BVVBG"
                 style={{ width: "100%", height: "100%", border: "none", overflow: "hidden" }}
                 scrolling="no"
                 title="Book Revenue Architecture Session"
