@@ -64,6 +64,7 @@ const Translations = lazy(() => import("./pages/admin/Translations"));
 const DiagnosticKit = lazy(() => import("./pages/DiagnosticKit"));
 const DiagnosticKitThankYou = lazy(() => import("./pages/DiagnosticKitThankYou"));
 const IncomeClarityDiagnostic = lazy(() => import("./pages/IncomeClarityDiagnostic"));
+const RevenueArchitectureSession = lazy(() => import("./pages/RevenueArchitectureSession"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -113,6 +114,7 @@ const App = () => (
               <Route path="/diagnostickit" element={<DiagnosticKit />} />
               <Route path="/diagnostickit-thank-you" element={<DiagnosticKitThankYou />} />
               <Route path="/income-clarity-diagnostic" element={<IncomeClarityDiagnostic />} />
+              <Route path="/revenue-architecture-session" element={<RevenueArchitectureSession />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
