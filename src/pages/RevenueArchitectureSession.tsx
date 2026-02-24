@@ -1,4 +1,3 @@
-import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ArrowRight, AlertTriangle, TrendingUp, Shield, Layers } from "lucide-react";
@@ -9,7 +8,7 @@ const scrollToBooking = () => {
 
 const RevenueArchitectureSession = () => {
   return (
-    <Layout>
+    <>
       <SEOHead
         title="Revenue Architecture for Service-Based Founders | Dr. Romulus"
         description="Book a $500 Revenue Architecture Session to map your authority positioning, offer clarity, revenue flow structure, and 30-day execution roadmap."
@@ -233,9 +232,7 @@ const RevenueArchitectureSession = () => {
               What Happens After the Session
             </h2>
             <p className="font-body text-lg text-cream/70 mb-4 leading-relaxed">
-              If alignment exists, the next step is a{" "}
-              <span className="text-gold font-medium">30-Day Authority Infrastructure Build</span>
-              —a hands-on engagement to install the systems mapped in your session.
+              If alignment exists after the session, we discuss next steps together.
             </p>
             <p className="font-body text-lg text-cream/70 mb-10 leading-relaxed">
               If not, you leave with a fully documented blueprint you can execute independently.
@@ -266,7 +263,13 @@ const RevenueArchitectureSession = () => {
           </div>
         </div>
       </section>
-    </Layout>
+      {/* FOOTER */}
+      <footer className="py-10 bg-background text-center">
+        <p className="text-muted-foreground text-xs font-body">
+          © {new Date().getFullYear()} Dr. Romulus MBA. All rights reserved.
+        </p>
+      </footer>
+    </>
   );
 };
 
