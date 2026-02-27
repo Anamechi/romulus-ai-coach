@@ -18,7 +18,7 @@ const personSchema = {
     "Systems Architect"
   ],
   "description": "Dr. Deanna Romulus, MBA is a business strategist, educator, and automation consultant with expertise in business structure, financial decision-making, adult learning, and scalable systems.",
-  "image": "https://xxdbmkllubljncwvxkrl.supabase.co/storage/v1/object/public/assets/dr-romulus.jpeg",
+  "image": "https://drromulusmba.com/dr-romulus.jpg",
   "knowsAbout": [
     "Business Strategy",
     "Automation Systems",
