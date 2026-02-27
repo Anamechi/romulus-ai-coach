@@ -51,7 +51,15 @@ const personSchema = {
     }
   ],
   "sameAs": [
-    "https://www.linkedin.com/in/deannaromulusmba/"
+    "https://www.instagram.com/dr.romulusmba/",
+    "https://www.tiktok.com/@dr.romulusmba",
+    "https://www.youtube.com/@Dr.DeannaRomulus",
+    "https://www.facebook.com/profile.php?id=61571295316337",
+    "https://www.threads.com/@dr.romulusmba",
+    "https://x.com/DRomulusMBA",
+    "https://www.pinterest.com/drromulusmba/",
+    "https://www.linkedin.com/in/deannaromulusmba/",
+    "https://bsky.app/profile/drromulusmba.bsky.social"
   ]
 };
 
