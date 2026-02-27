@@ -1,33 +1,76 @@
 
 
-## Regenerate PNG Favicon with Uppercase "DR"
+## Favicon and Identity Optimization
 
-### Goal
-Regenerate `public/favicon.png` as a clean 512x512 PNG with uppercase bold serif "DR" letters matching the SVG design exactly.
+### Overview
+Download the provided favicon source image, generate properly sized local copies, update all HTML and structured data references, and remove any legacy/default favicon declarations.
 
-### Approach
-Use the existing `generate-blog-image` edge function pattern to invoke the AI image generation model (`google/gemini-2.5-flash-image`) with a highly specific prompt, then save the result to `public/favicon.png`.
+### Important Note on OG Image
+The site already has a proper branded OG image (`og-image.jpg`) configured in `SEOHead.tsx` and `index.html`. Using a 64px favicon as the OG/Twitter image would significantly degrade social sharing quality (recommended minimum is 1200x630). The current `og-image.jpg` will be preserved. If you'd like a new full-size OG image, that can be handled separately.
 
-Since there's already a `generate-blog-image` edge function that handles image generation and storage, I'll create a small dedicated edge function (`generate-favicon`) that:
-1. Calls the AI gateway with a precise favicon prompt
-2. Returns the base64 PNG directly (no storage upload needed)
+### Step 1: Download and Generate Favicon Files
 
-Then I'll invoke it and save the resulting image to `public/favicon.png`.
+Fetch the source image from the provided Filesafe CDN URL and save locally as:
+- `public/favicon-32.png` (32x32)
+- `public/favicon-64.png` (64x64)
+- `public/apple-touch-icon.png` (180x180)
 
-### Steps
+The existing `public/favicon.png`, `public/favicon.svg`, and `public/favicon.ico` will be removed.
 
-1. **Create edge function** `supabase/functions/generate-favicon/index.ts` that generates the image with this prompt:
-   - "Create a simple 512x512 square icon. Dark navy background color #1a1a2e with slightly rounded corners. Centered bold serif uppercase letters 'DR' in metallic gold gradient from #D4AF37 to #B8860B. Clean, minimal design like a favicon or app icon. No other elements, no shadows, no 3D effects. The letters should be large, centered, and clearly uppercase."
+### Step 2: Update `index.html` Favicon References
 
-2. **Invoke the edge function** from the frontend or directly, retrieve the base64 PNG
+**Replace** lines 47-51 with:
 
-3. **Save the image** to `public/favicon.png`, overwriting the current file
+```html
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+```
 
-4. **No changes** to `index.html` or the SVG favicon
+This removes:
+- SVG favicon reference
+- Old PNG favicon reference
+- ICO favicon reference
+- Duplicate apple-touch-icon declaration
 
-### Technical Details
+### Step 3: Update Organization Schema Logo
 
-- Model: `google/gemini-2.5-flash-image` (or `google/gemini-3-pro-image-preview` for higher quality)
-- The edge function will be temporary/utility -- can be deleted after use
-- Uses existing `LOVABLE_API_KEY` secret (already configured)
+In `src/components/seo/StructuredData.tsx`, line 14, change:
+
+```typescript
+// FROM:
+"logo": `${BASE_URL}/logo.png`,
+// TO:
+"logo": `${BASE_URL}/favicon-64.png`,
+```
+
+### Step 4: Clean Up Old Favicon Files
+
+Delete:
+- `public/favicon.svg`
+- `public/favicon.ico`
+- `public/favicon.png`
+
+### Step 5: Verify
+
+After deployment, confirm:
+- `/favicon-32.png` loads
+- `/favicon-64.png` loads
+- `/apple-touch-icon.png` loads
+- No SVG/ICO/Lovable default favicon references remain
+- No Filesafe CDN references in code
+- Organization schema uses local favicon-64.png as logo
+
+### Files Changed
+| File | Action |
+|------|--------|
+| `public/favicon-32.png` | Create (from source) |
+| `public/favicon-64.png` | Create (from source) |
+| `public/apple-touch-icon.png` | Create (from source) |
+| `index.html` | Update favicon links |
+| `src/components/seo/StructuredData.tsx` | Update logo URL |
+| `public/favicon.svg` | Delete |
+| `public/favicon.ico` | Delete |
+| `public/favicon.png` | Delete |
 
