@@ -17,6 +17,7 @@ const personSchema = {
     "Automation Consultant",
     "Systems Architect"
   ],
+  "url": "https://drromulusmba.com",
   "description": "Dr. Deanna Romulus, MBA is a business strategist, educator, and automation consultant with expertise in business structure, financial decision-making, adult learning, and scalable systems.",
   "knowsAbout": [
     "Business Strategy",
@@ -68,8 +69,8 @@ const Index = () => {
   return (
     <Layout>
       <SEOHead
-        title="Dr. Deanna Romulus | Systems Before Scale™"
-        description="Architecting AI-enabled systems and fundable infrastructure for service-based founders ready to scale intelligently."
+        title="Dr. Deanna Romulus | AI-Ready Business Systems Strategist"
+        description="Helping service-based founders build fundable, automated revenue systems that generate consistent, predictable income."
         canonicalUrl="/"
         ogType="website"
         ogImage="https://drromulusmba.com/og-image.jpg"
