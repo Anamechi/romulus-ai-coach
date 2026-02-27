@@ -123,7 +123,7 @@ async function renderBlogPost(supabase: any, slug: string): Promise<string> {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png` },
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/favicon-64.png` },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
   };

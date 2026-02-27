@@ -11,7 +11,7 @@ export function OrganizationSchema() {
     "@id": `${BASE_URL}/#organization`,
     "name": SITE_NAME,
     "url": BASE_URL,
-    "logo": `${BASE_URL}/logo.png`,
+    "logo": `${BASE_URL}/favicon-64.png`,
     "description": "Business consulting and MBA coaching services by Dr. Deanna Romulus",
     "founder": {
       "@type": "Person",
@@ -111,7 +111,7 @@ export function ArticleSchema({
       "name": SITE_NAME,
       "logo": {
         "@type": "ImageObject",
-        "url": `${BASE_URL}/logo.png`
+        "url": `${BASE_URL}/favicon-64.png`
       }
     },
     "mainEntityOfPage": {
