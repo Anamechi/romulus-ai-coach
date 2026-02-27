@@ -4,64 +4,50 @@ import { AboutPreview } from "@/components/home/AboutPreview";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { CTASection } from "@/components/home/CTASection";
 import { SEOHead } from "@/components/seo/SEOHead";
-import { OrganizationSchema, WebSiteSchema, PersonSchema } from "@/components/seo/StructuredData";
 import { Helmet } from 'react-helmet-async';
 
-const personSchema = {
+const homepageSchema = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Dr. Deanna Romulus, MBA",
-  "jobTitle": [
-    "Business Strategist",
-    "Educator",
-    "Automation Consultant",
-    "Systems Architect"
-  ],
-  "url": "https://drromulusmba.com",
-  "description": "Dr. Deanna Romulus, MBA is a business strategist, educator, and automation consultant with expertise in business structure, financial decision-making, adult learning, and scalable systems.",
-  "knowsAbout": [
-    "Business Strategy",
-    "Automation Systems",
-    "Financial Self-Efficacy",
-    "Adult Learning",
-    "Entrepreneurship",
-    "Operational Efficiency",
-    "Business Fundability"
-  ],
-  "hasCredential": [
+  "@graph": [
     {
-      "@type": "EducationalOccupationalCredential",
-      "credentialCategory": "Doctorate",
-      "name": "Doctor of Education (Ed.D.) in Educational Leadership"
+      "@type": "Person",
+      "@id": "https://drromulusmba.com/#person",
+      "name": "Dr. Deanna Romulus",
+      "url": "https://drromulusmba.com",
+      "jobTitle": "AI-Ready Business Systems Strategist",
+      "image": "https://drromulusmba.com/favicon-64.png",
+      "description": "Dr. Deanna Romulus helps service-based founders build fundable, automated revenue systems that generate predictable income.",
+      "sameAs": [
+        "https://www.instagram.com/dr.romulusmba/",
+        "https://www.tiktok.com/@dr.romulusmba",
+        "https://www.youtube.com/@Dr.DeannaRomulus",
+        "https://www.facebook.com/profile.php?id=61571295316337",
+        "https://www.threads.com/@dr.romulusmba",
+        "https://x.com/DRomulusMBA",
+        "https://www.pinterest.com/drromulusmba/",
+        "https://www.linkedin.com/in/deannaromulusmba/",
+        "https://bsky.app/profile/drromulusmba.bsky.social"
+      ]
     },
     {
-      "@type": "EducationalOccupationalCredential",
-      "credentialCategory": "Master's Degree",
-      "name": "International Master of Business Administration (MBA), Finance"
+      "@type": "Organization",
+      "@id": "https://drromulusmba.com/#organization",
+      "name": "Dr. Deanna Romulus",
+      "url": "https://drromulusmba.com",
+      "logo": "https://drromulusmba.com/favicon-64.png",
+      "founder": {
+        "@id": "https://drromulusmba.com/#person"
+      }
     },
     {
-      "@type": "EducationalOccupationalCredential",
-      "credentialCategory": "Certificate",
-      "name": "Adult Organizational Development"
-    },
-    {
-      "@type": "EducationalOccupationalCredential",
-      "credentialCategory": "Bachelor's Degree",
-      "name": "Bachelor of Science in Fashion Design and Marketing"
+      "@type": "WebSite",
+      "@id": "https://drromulusmba.com/#website",
+      "url": "https://drromulusmba.com",
+      "name": "Dr. Deanna Romulus",
+      "publisher": {
+        "@id": "https://drromulusmba.com/#organization"
+      }
     }
-  ],
-  "alumniOf": [
-    {
-      "@type": "EducationalOrganization",
-      "name": "University of Phoenix"
-    },
-    {
-      "@type": "EducationalOrganization",
-      "name": "Keller Graduate School of Management"
-    }
-  ],
-  "sameAs": [
-    "https://www.linkedin.com/in/deannaromulusmba/"
   ]
 };
 
@@ -76,10 +62,8 @@ const Index = () => {
         ogImage="https://drromulusmba.com/og-image.jpg"
         ogImageAlt="Dr. Deanna Romulus - Systems Before Scale"
       />
-      <OrganizationSchema />
-      <WebSiteSchema />
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(homepageSchema)}</script>
       </Helmet>
       <HeroSection />
       <AboutPreview />
