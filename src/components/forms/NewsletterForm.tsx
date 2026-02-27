@@ -46,8 +46,9 @@ export function NewsletterForm({
 
       // Fire Pinterest signup conversion event
       if (typeof window !== 'undefined' && (window as any).pintrk) {
-        (window as any).pintrk('track', 'signup', {
-          event_id: 'eventId0001'
+        (window as any).pintrk('track', 'lead', {
+          event_id: 'eventId0001',
+          lead_type: 'Newsletter'
         });
       }
 
