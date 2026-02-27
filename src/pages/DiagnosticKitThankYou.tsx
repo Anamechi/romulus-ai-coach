@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,19 @@ const GUIDE_DOWNLOAD_URL = "#PASTE_GUIDE_LINK_HERE";
 const UPSELL_URL = "/income-clarity-diagnostic";
 
 const DiagnosticKitThankYou = () => {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).pintrk) {
+      (window as any).pintrk('track', 'checkout', {
+        event_id: 'eventId0001',
+        value: 27,
+        order_quantity: 1,
+        currency: 'USD',
+        lead_type: 'DiagnosticKit',
+        line_items: [{ product_price: 27 }]
+      });
+    }
+  }, []);
+
   return (
     <>
       <SEOHead
