@@ -15,7 +15,7 @@ interface SEOHeadProps {
   children?: React.ReactNode;
 }
 
-const SITE_NAME = "Dr. Romulus MBA";
+const SITE_NAME = "Dr. Deanna Romulus";
 const DEFAULT_OG_IMAGE = "/og-image.jpg";
 const BASE_URL = "https://drromulusmba.com";
 
