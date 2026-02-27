@@ -59,7 +59,7 @@ const Index = () => {
         description="Helping service-based founders build fundable, automated revenue systems that generate consistent, predictable income."
         canonicalUrl="/"
         ogType="website"
-        ogImage="https://drromulusmba.com/og-image.jpg"
+        ogImage="https://drromulusmba.com/og-dr-deanna-romulus.png"
         ogImageAlt="Dr. Deanna Romulus - Systems Before Scale"
       />
       <Helmet>
