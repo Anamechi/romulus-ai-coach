@@ -1,34 +1,19 @@
 
 
-## Add Delete Button for Failed Clusters
+## Generate a Proper PNG Favicon
 
-### What Changes
+### Goal
+Create a properly formatted PNG favicon image (the "DR" gold-on-navy design) and save it to `public/favicon.png` -- without changing the SVG or any `index.html` references. This PNG is for the user to download and use elsewhere.
 
-**1. `src/hooks/useContentClusters.ts` -- Add `useDeleteCluster` hook**
-- New mutation that deletes cluster items first (via `cluster_items` table where `cluster_id` matches), then deletes the cluster record from `content_clusters`
-- Invalidates the `content-clusters` query cache on success
-- Shows toast confirmation
+### Approach
+Use the Lovable AI image generation model (`google/gemini-2.5-flash-image`) via an edge function to generate a clean 512x512 PNG matching the existing SVG design:
+- Dark navy background (#1a1a2e) with rounded corners
+- Bold serif "DR" letters in gold gradient (#D4AF37 to #B8860B)
+- Square aspect ratio, no white bars or artifacts
 
-**2. `src/pages/admin/ContentClusterGenerator.tsx` -- Add delete UI in two places**
+### Steps
 
-**A. Failed cluster detail view (lines 336-353):**
-- Add a red "Delete Cluster" button next to the existing "Try Again" button
-- Uses an AlertDialog confirmation before deleting
-- After deletion, clears `selectedClusterId` so the detail panel resets
-
-**B. Cluster list sidebar (lines 265-295):**
-- Add a small trash icon button on failed cluster entries
-- Only visible when `cluster.status === 'failed'`
-- Also uses AlertDialog confirmation
-
-### New imports needed
-- `Trash2` icon from lucide-react
-- `AlertDialog` components for confirmation
-- `useDeleteCluster` from the hooks file
-
-### User Flow
-1. User sees a failed cluster in the sidebar list with a trash icon
-2. Clicking trash (or the "Delete Cluster" button in the detail view) opens a confirmation dialog
-3. Confirming deletes all associated cluster items and the cluster record
-4. The list refreshes and the detail panel resets
+1. **Generate the PNG** using AI image generation with a precise prompt describing the favicon design
+2. **Save to `public/favicon.png`** -- overwriting the current broken file
+3. **No changes to `index.html`** or the SVG favicon -- the PNG link already exists as a fallback and the user can grab the file for external use
 
