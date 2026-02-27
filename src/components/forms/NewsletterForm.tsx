@@ -44,6 +44,13 @@ export function NewsletterForm({
 
       if (error) throw error;
 
+      // Fire Pinterest signup conversion event
+      if (typeof window !== 'undefined' && (window as any).pintrk) {
+        (window as any).pintrk('track', 'signup', {
+          event_id: 'eventId0001'
+        });
+      }
+
       toast({
         title: "You're subscribed!",
         description: "You'll receive weekly insights on business growth and automation.",
