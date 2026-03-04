@@ -11,7 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from '@/hooks/use-toast';
-import { Loader2, Plus, UserCheck } from 'lucide-react';
+import { Loader2, Mail, UserCheck } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function PortalClients() {
@@ -36,42 +36,29 @@ export default function PortalClients() {
     },
   });
 
-  const createClient = useMutation({
+  const inviteClient = useMutation({
     mutationFn: async (form: typeof formData) => {
-      // Look up user by email in profiles table
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('id, email, full_name')
-        .eq('email', form.email)
-        .maybeSingle();
-
-      if (profileError) throw profileError;
-      if (!profile) throw new Error(`No user found with email: ${form.email}. The user must have an account first.`);
-
-      // Check if portal_client already exists for this user
-      const { data: existing } = await supabase
-        .from('portal_clients')
-        .select('id')
-        .eq('user_id', profile.id)
-        .maybeSingle();
-
-      if (existing) throw new Error('A portal client record already exists for this user.');
-
-      const { error } = await supabase.from('portal_clients').insert({
-        user_id: profile.id,
-        email: form.email,
-        name: form.name || profile.full_name || '',
-        tier: form.tier,
-        program_phase: form.program_phase,
-        onboarding_status: 'pending',
+      const { data, error } = await supabase.functions.invoke('invite-portal-client', {
+        body: {
+          email: form.email,
+          name: form.name,
+          tier: form.tier,
+          program_phase: form.program_phase,
+        },
       });
-      if (error) throw error;
+
+      if (error) throw new Error(error.message || 'Failed to invite client');
+      if (data?.error) throw new Error(data.error);
+      return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['admin-portal-clients'] });
       setOpen(false);
       setFormData({ email: '', name: '', tier: 'self_directed', program_phase: 'clarity' });
-      toast({ title: 'Client created', description: 'Portal client record created successfully.' });
+      toast({
+        title: data.existing_user ? 'Client added' : 'Invitation sent',
+        description: data.message,
+      });
     },
     onError: (err: Error) => {
       toast({ title: 'Error', description: err.message, variant: 'destructive' });
@@ -100,21 +87,24 @@ export default function PortalClients() {
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button><Plus className="h-4 w-4 mr-2" /> Add Client</Button>
+              <Button><Mail className="h-4 w-4 mr-2" /> Invite Client</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Create Portal Client</DialogTitle>
+                <DialogTitle>Invite Portal Client</DialogTitle>
               </DialogHeader>
+              <p className="text-sm text-muted-foreground">
+                Enter the client's email. They'll receive a login link to access their portal.
+              </p>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  createClient.mutate(formData);
+                  inviteClient.mutate(formData);
                 }}
                 className="space-y-4"
               >
                 <div className="space-y-2">
-                  <Label htmlFor="email">User Email (must have an existing account)</Label>
+                  <Label htmlFor="email">Client Email</Label>
                   <Input
                     id="email"
                     type="email"
@@ -161,9 +151,9 @@ export default function PortalClients() {
                     </SelectContent>
                   </Select>
                 </div>
-                <Button type="submit" className="w-full" disabled={createClient.isPending}>
-                  {createClient.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                  Create Client
+                <Button type="submit" className="w-full" disabled={inviteClient.isPending}>
+                  {inviteClient.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                  Send Invitation
                 </Button>
               </form>
             </DialogContent>
@@ -183,7 +173,7 @@ export default function PortalClients() {
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
               </div>
             ) : !clients?.length ? (
-              <p className="text-center text-muted-foreground py-8">No portal clients yet. Click "Add Client" to create one.</p>
+              <p className="text-center text-muted-foreground py-8">No portal clients yet. Click "Invite Client" to send an invitation.</p>
             ) : (
               <Table>
                 <TableHeader>
