@@ -64,48 +64,39 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Check if user already exists
-    const { data: existingUsers } = await adminClient.auth.admin.listUsers();
-    const existingUser = existingUsers?.users?.find(
-      (u) => u.email?.toLowerCase() === email.toLowerCase()
-    );
+    // Check if portal_client already exists for this email
+    const { data: existingClient } = await adminClient
+      .from("portal_clients")
+      .select("id")
+      .eq("email", email.toLowerCase())
+      .maybeSingle();
 
-    let userId: string;
-
-    if (existingUser) {
-      userId = existingUser.id;
-
-      // Check if portal_client already exists
-      const { data: existingClient } = await adminClient
-        .from("portal_clients")
-        .select("id")
-        .eq("user_id", userId)
-        .maybeSingle();
-
-      if (existingClient) {
-        return new Response(
-          JSON.stringify({ error: "A portal client record already exists for this user." }),
-          { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
-      }
-    } else {
-      // Invite new user — creates account and sends invite email
-      const { data: inviteData, error: inviteError } =
-        await adminClient.auth.admin.inviteUserByEmail(email, {
-          data: { full_name: name || "" },
-          redirectTo: `${supabaseUrl.replace('.supabase.co', '.lovable.app')}/auth`,
-        });
-
-      if (inviteError) {
-        console.error("Invite error:", inviteError);
-        return new Response(JSON.stringify({ error: inviteError.message }), {
-          status: 500,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-
-      userId = inviteData.user.id;
+    if (existingClient) {
+      return new Response(
+        JSON.stringify({ error: "A portal client record already exists for this email." }),
+        { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
+
+    // Invite user — creates account if new, or re-sends invite if existing
+    // Either way, sends an email with a login link
+    const redirectTo = `${supabaseUrl.replace('.supabase.co', '.lovable.app')}/auth`;
+    
+    const { data: inviteData, error: inviteError } =
+      await adminClient.auth.admin.inviteUserByEmail(email, {
+        data: { full_name: name || "" },
+        redirectTo,
+      });
+
+    if (inviteError) {
+      console.error("Invite error:", inviteError);
+      return new Response(JSON.stringify({ error: inviteError.message }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const userId = inviteData.user.id;
 
     // Create portal_clients record
     const { error: insertError } = await adminClient.from("portal_clients").insert({
@@ -129,10 +120,7 @@ Deno.serve(async (req) => {
       JSON.stringify({
         success: true,
         user_id: userId,
-        existing_user: !!existingUser,
-        message: existingUser
-          ? "Portal client created for existing user."
-          : "Invitation sent! The client will receive an email with a login link.",
+        message: "Invitation sent! The client will receive an email with a login link.",
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
