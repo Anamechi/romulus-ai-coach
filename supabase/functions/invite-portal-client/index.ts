@@ -78,25 +78,35 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Invite user — creates account if new, or re-sends invite if existing
-    // Either way, sends an email with a login link
-    const redirectTo = `${supabaseUrl.replace('.supabase.co', '.lovable.app')}/auth`;
-    
-    const { data: inviteData, error: inviteError } =
-      await adminClient.auth.admin.inviteUserByEmail(email, {
-        data: { full_name: name || "" },
-        redirectTo,
-      });
+    // Try to find existing user first
+    const { data: existingUsers } = await adminClient.auth.admin.listUsers();
+    const existingUser = existingUsers?.users?.find(
+      (u) => u.email?.toLowerCase() === email.toLowerCase()
+    );
 
-    if (inviteError) {
-      console.error("Invite error:", inviteError);
-      return new Response(JSON.stringify({ error: inviteError.message }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    let userId: string;
+
+    if (existingUser) {
+      userId = existingUser.id;
+    } else {
+      // Invite new user — creates account and sends invite email
+      const redirectTo = `${supabaseUrl.replace('.supabase.co', '.lovable.app')}/auth`;
+      const { data: inviteData, error: inviteError } =
+        await adminClient.auth.admin.inviteUserByEmail(email, {
+          data: { full_name: name || "" },
+          redirectTo,
+        });
+
+      if (inviteError) {
+        console.error("Invite error:", inviteError);
+        return new Response(JSON.stringify({ error: inviteError.message }), {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      userId = inviteData.user.id;
     }
-
-    const userId = inviteData.user.id;
 
     // Create portal_clients record
     const { error: insertError } = await adminClient.from("portal_clients").insert({
