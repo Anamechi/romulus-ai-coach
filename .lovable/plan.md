@@ -1,40 +1,32 @@
 
-# Phase 2: Portal Layout and Routes — COMPLETE ✅
 
-## What Was Created
+# Fix: Admin Portal Client Visibility
 
-### Portal Layout
-- `src/components/portal/PortalLayout.tsx` — Sidebar layout with auth guard + portal_clients check
-- `src/hooks/usePortalClient.ts` — Hook to fetch current user's portal_clients record
+## Problem
+Two issues prevent the admin from seeing/creating portal clients:
 
-### Portal Routes (8 pages)
-| Route | File | Purpose |
-|-------|------|---------|
-| `/portal` & `/portal/dashboard` | `PortalDashboard.tsx` | Overview dashboard |
-| `/portal/sessions` | `PortalSessions.tsx` | Coaching sessions |
-| `/portal/worksheets` | `PortalWorksheets.tsx` | Worksheets |
-| `/portal/wins` | `PortalWins.tsx` | Weekly reflections |
-| `/portal/milestones` | `PortalMilestones.tsx` | Achievements |
-| `/portal/resources` | `PortalResources.tsx` | Resource library |
-| `/portal/messages` | `PortalMessages.tsx` | Private messaging |
-| `/portal/progress` | `PortalProgress.tsx` | Scorecard |
+1. **Expired auth session** — console shows `Refresh Token Not Found`. User must re-login.
+2. **Profiles RLS blocks admin queries** — The `createClient` mutation queries `profiles` by email to find the user_id, but `profiles` only has a SELECT policy for `auth.uid() = id`. Admins cannot look up other users' profiles.
 
-### Admin Portal Routes (4 pages)
-| Route | File | Purpose |
-|-------|------|---------|
-| `/admin/portal/clients` | `PortalClients.tsx` | Manage clients |
-| `/admin/portal/resources` | `PortalResources.tsx` | Manage resources |
-| `/admin/portal/offers` | `PortalOffers.tsx` | Manage offers |
-| `/admin/portal/integrations` | `PortalIntegrations.tsx` | API keys |
+## Solution
 
-### Access Control
-- Portal requires authentication + active `portal_clients` record
-- Users without a portal_clients record see "Portal Access Pending" screen
-- Admin routes require admin role (existing AdminLayout guard)
+### Database Migration
+Add an RLS policy on `profiles` allowing admins to read all profiles:
 
-## What Was NOT Touched
-- No existing public pages modified
-- No existing admin pages modified
-- No existing routes changed
+```sql
+CREATE POLICY "Admins can view all profiles"
+  ON public.profiles
+  FOR SELECT
+  USING (has_role(auth.uid(), 'admin'::app_role));
+```
 
-## Next: Phase 3 — Core Features
+This is safe — admins already have full access to `portal_clients`, `user_roles`, etc. The `profiles` table only contains `id`, `email`, `full_name`, `avatar_url`.
+
+### No Code Changes Required
+The `PortalClients.tsx` component and query logic are correct. Once the RLS policy is added and the admin re-authenticates, everything will work.
+
+## What This Does NOT Touch
+- No existing RLS policies modified or removed
+- No existing pages, routes, or components changed
+- Only adds one new SELECT policy to `profiles`
+
