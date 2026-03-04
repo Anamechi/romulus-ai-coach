@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,15 +19,35 @@ export default function Auth() {
   const [signupPassword, setSignupPassword] = useState('');
   const [signupName, setSignupName] = useState('');
   
-  const { signIn, signUp, user, loading } = useAuth();
+  const { signIn, signUp, user, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
     if (!loading && user) {
+      routeAfterAuth(user.id);
+    }
+  }, [user, loading]);
+
+  const routeAfterAuth = async (userId: string) => {
+    // Admins go to admin dashboard
+    if (isAdmin) {
+      navigate('/admin');
+      return;
+    }
+    // Check for portal client record
+    const { data: portalClient } = await supabase
+      .from('portal_clients')
+      .select('id')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (portalClient) {
+      navigate('/portal/dashboard');
+    } else {
       navigate('/');
     }
-  }, [user, loading, navigate]);
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,15 +63,14 @@ export default function Auth() {
           ? 'Invalid email or password. Please try again.'
           : error.message,
       });
+      setIsLoading(false);
     } else {
       toast({
         title: 'Welcome back!',
         description: 'You have successfully signed in.',
       });
-      navigate('/');
+      // Routing handled by useEffect
     }
-    
-    setIsLoading(false);
   };
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -77,15 +97,15 @@ export default function Auth() {
           ? 'This email is already registered. Please sign in instead.'
           : error.message,
       });
+      setIsLoading(false);
     } else {
       toast({
         title: 'Account created!',
-        description: 'Welcome to Dr. Romulus MBA.',
+        description: 'Please check your email to verify your account before signing in.',
+        duration: 8000,
       });
-      navigate('/');
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   if (loading) {
