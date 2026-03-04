@@ -38,6 +38,10 @@ import {
   Layers,
   Wrench,
   Languages,
+  UserCheck,
+  Package,
+  DollarSign,
+  Plug,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -59,6 +63,13 @@ const managementNavItems = [
   { title: 'Leads', url: '/admin/leads', icon: MessageSquare },
   { title: 'Applications', url: '/admin/applications', icon: FileText },
   { title: 'Chatbot', url: '/admin/chatbot-conversations', icon: Bot },
+];
+
+const portalAdminNavItems = [
+  { title: 'Portal Clients', url: '/admin/portal/clients', icon: UserCheck },
+  { title: 'Portal Resources', url: '/admin/portal/resources', icon: Package },
+  { title: 'Portal Offers', url: '/admin/portal/offers', icon: DollarSign },
+  { title: 'Integrations', url: '/admin/portal/integrations', icon: Plug },
 ];
 
 const systemNavItems = [
@@ -153,6 +164,29 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {managementNavItems.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={location.pathname === item.url}
+                      >
+                        <Link to={item.url} className="flex items-center gap-3">
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+
+            <SidebarGroup className="mt-4">
+              <SidebarGroupLabel className="text-sidebar-foreground/50 px-2">
+                Client Portal
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {portalAdminNavItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
                         asChild

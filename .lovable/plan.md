@@ -1,44 +1,40 @@
 
-# Phase 1: Client Portal Database Migration — COMPLETE ✅
+# Phase 2: Portal Layout and Routes — COMPLETE ✅
 
 ## What Was Created
 
-### Enums
-- `client_tier`: `self_directed`, `strategic_coaching`, `private_consulting`
-- `program_phase`: `clarity`, `systems`, `expansion`
+### Portal Layout
+- `src/components/portal/PortalLayout.tsx` — Sidebar layout with auth guard + portal_clients check
+- `src/hooks/usePortalClient.ts` — Hook to fetch current user's portal_clients record
 
-### 12 Tables (all with RLS enabled)
+### Portal Routes (8 pages)
+| Route | File | Purpose |
+|-------|------|---------|
+| `/portal` & `/portal/dashboard` | `PortalDashboard.tsx` | Overview dashboard |
+| `/portal/sessions` | `PortalSessions.tsx` | Coaching sessions |
+| `/portal/worksheets` | `PortalWorksheets.tsx` | Worksheets |
+| `/portal/wins` | `PortalWins.tsx` | Weekly reflections |
+| `/portal/milestones` | `PortalMilestones.tsx` | Achievements |
+| `/portal/resources` | `PortalResources.tsx` | Resource library |
+| `/portal/messages` | `PortalMessages.tsx` | Private messaging |
+| `/portal/progress` | `PortalProgress.tsx` | Scorecard |
 
-| # | Table | Key Relationships | RLS |
-|---|-------|-------------------|-----|
-| 1 | `portal_clients` | user_id → auth.users (CASCADE) | Admin ALL; client SELECT own |
-| 2 | `client_sessions` | client_id → portal_clients (CASCADE) | Admin ALL; client SELECT own |
-| 3 | `client_worksheets` | client_id → portal_clients (CASCADE) | Admin ALL; client SELECT/UPDATE own |
-| 4 | `client_wins` | client_id → portal_clients (CASCADE) | Admin ALL; client SELECT/INSERT own |
-| 5 | `client_milestones` | client_id → portal_clients (CASCADE) | Admin ALL; client SELECT/INSERT own |
-| 6 | `portal_resources` | — | Admin ALL; authenticated SELECT |
-| 7 | `client_resource_access` | client_id → portal_clients, resource_id → portal_resources (CASCADE) | Admin ALL; client SELECT own |
-| 8 | `client_messages` | client_id → portal_clients (CASCADE) | Admin ALL; client SELECT/INSERT own |
-| 9 | `portal_offers` | — | Admin ALL; authenticated SELECT |
-| 10 | `client_progress` | client_id → portal_clients (UNIQUE, CASCADE) | Admin ALL; client SELECT own |
-| 11 | `client_onboarding` | client_id → portal_clients (CASCADE) | Admin ALL; client SELECT/UPDATE own |
-| 12 | `portal_integrations` | — | Admin ALL only |
+### Admin Portal Routes (4 pages)
+| Route | File | Purpose |
+|-------|------|---------|
+| `/admin/portal/clients` | `PortalClients.tsx` | Manage clients |
+| `/admin/portal/resources` | `PortalResources.tsx` | Manage resources |
+| `/admin/portal/offers` | `PortalOffers.tsx` | Manage offers |
+| `/admin/portal/integrations` | `PortalIntegrations.tsx` | API keys |
 
-### Triggers
-- `update_updated_at_column()` on: portal_clients, client_progress, portal_integrations
-
-### Realtime
-- `client_messages` added to supabase_realtime publication
-
-### Storage
-- `client-files` private bucket created
-- Admin: full access
-- Clients: read/upload under `{user_id}/` prefix
+### Access Control
+- Portal requires authentication + active `portal_clients` record
+- Users without a portal_clients record see "Portal Access Pending" screen
+- Admin routes require admin role (existing AdminLayout guard)
 
 ## What Was NOT Touched
-- No existing tables modified
+- No existing public pages modified
+- No existing admin pages modified
 - No existing routes changed
-- No existing components replaced
-- Nothing visible on the website changed
 
-## Next: Phase 2 — Portal Layout and Routes
+## Next: Phase 3 — Core Features

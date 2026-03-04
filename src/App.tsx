@@ -61,9 +61,23 @@ const IndexNow = lazy(() => import("./pages/admin/IndexNow"));
 const ContentClusterGenerator = lazy(() => import("./pages/admin/ContentClusterGenerator"));
 const AIToolsRegistry = lazy(() => import("./pages/admin/AIToolsRegistry"));
 const Translations = lazy(() => import("./pages/admin/Translations"));
+const PortalClientsAdmin = lazy(() => import("./pages/admin/PortalClients"));
+const PortalResourcesAdmin = lazy(() => import("./pages/admin/PortalResources"));
+const PortalOffersAdmin = lazy(() => import("./pages/admin/PortalOffers"));
+const PortalIntegrationsAdmin = lazy(() => import("./pages/admin/PortalIntegrations"));
 const DiagnosticKit = lazy(() => import("./pages/DiagnosticKit"));
 const DiagnosticKitThankYou = lazy(() => import("./pages/DiagnosticKitThankYou"));
 const IncomeClarityDiagnostic = lazy(() => import("./pages/IncomeClarityDiagnostic"));
+
+// Portal pages
+const PortalDashboard = lazy(() => import("./pages/portal/PortalDashboard"));
+const PortalSessions = lazy(() => import("./pages/portal/PortalSessions"));
+const PortalWorksheets = lazy(() => import("./pages/portal/PortalWorksheets"));
+const PortalWins = lazy(() => import("./pages/portal/PortalWins"));
+const PortalMilestones = lazy(() => import("./pages/portal/PortalMilestones"));
+const PortalResources = lazy(() => import("./pages/portal/PortalResources"));
+const PortalMessages = lazy(() => import("./pages/portal/PortalMessages"));
+const PortalProgress = lazy(() => import("./pages/portal/PortalProgress"));
 const RevenueArchitectureSession = lazy(() => import("./pages/RevenueArchitectureSession"));
 
 const queryClient = new QueryClient({
@@ -141,6 +155,21 @@ const App = () => (
               <Route path="/admin/content-cluster-generator" element={<ContentClusterGenerator />} />
               <Route path="/admin/ai-tools" element={<AIToolsRegistry />} />
               <Route path="/admin/translations" element={<Translations />} />
+              <Route path="/admin/portal/clients" element={<PortalClientsAdmin />} />
+              <Route path="/admin/portal/resources" element={<PortalResourcesAdmin />} />
+              <Route path="/admin/portal/offers" element={<PortalOffersAdmin />} />
+              <Route path="/admin/portal/integrations" element={<PortalIntegrationsAdmin />} />
+
+              {/* Portal Routes */}
+              <Route path="/portal" element={<PortalDashboard />} />
+              <Route path="/portal/dashboard" element={<PortalDashboard />} />
+              <Route path="/portal/sessions" element={<PortalSessions />} />
+              <Route path="/portal/worksheets" element={<PortalWorksheets />} />
+              <Route path="/portal/wins" element={<PortalWins />} />
+              <Route path="/portal/milestones" element={<PortalMilestones />} />
+              <Route path="/portal/resources" element={<PortalResources />} />
+              <Route path="/portal/messages" element={<PortalMessages />} />
+              <Route path="/portal/progress" element={<PortalProgress />} />
               
               {/* Catch-all */}
               <Route path="*" element={<NotFound />} />
