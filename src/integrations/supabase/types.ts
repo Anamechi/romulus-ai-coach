@@ -444,6 +444,311 @@ export type Database = {
         }
         Relationships: []
       }
+      client_messages: {
+        Row: {
+          attachment_file_url: string | null
+          client_id: string
+          created_at: string
+          id: string
+          message_text: string
+          sender: string
+        }
+        Insert: {
+          attachment_file_url?: string | null
+          client_id: string
+          created_at?: string
+          id?: string
+          message_text: string
+          sender: string
+        }
+        Update: {
+          attachment_file_url?: string | null
+          client_id?: string
+          created_at?: string
+          id?: string
+          message_text?: string
+          sender?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_messages_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "portal_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_milestones: {
+        Row: {
+          client_id: string
+          created_at: string
+          date: string | null
+          description: string | null
+          id: string
+          milestone_type: string | null
+          video_file_url: string | null
+          video_link: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          date?: string | null
+          description?: string | null
+          id?: string
+          milestone_type?: string | null
+          video_file_url?: string | null
+          video_link?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          date?: string | null
+          description?: string | null
+          id?: string
+          milestone_type?: string | null
+          video_file_url?: string | null
+          video_link?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_milestones_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "portal_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_onboarding: {
+        Row: {
+          client_id: string
+          completed: boolean | null
+          completed_at: string | null
+          id: string
+          step_name: string
+        }
+        Insert: {
+          client_id: string
+          completed?: boolean | null
+          completed_at?: string | null
+          id?: string
+          step_name: string
+        }
+        Update: {
+          client_id?: string
+          completed?: boolean | null
+          completed_at?: string | null
+          id?: string
+          step_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_onboarding_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "portal_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_progress: {
+        Row: {
+          acquisition_score: number | null
+          authority_score: number | null
+          automation_score: number | null
+          client_id: string
+          id: string
+          revenue_score: number | null
+          updated_at: string
+        }
+        Insert: {
+          acquisition_score?: number | null
+          authority_score?: number | null
+          automation_score?: number | null
+          client_id: string
+          id?: string
+          revenue_score?: number | null
+          updated_at?: string
+        }
+        Update: {
+          acquisition_score?: number | null
+          authority_score?: number | null
+          automation_score?: number | null
+          client_id?: string
+          id?: string
+          revenue_score?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_progress_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: true
+            referencedRelation: "portal_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_resource_access: {
+        Row: {
+          access_status: string | null
+          client_id: string
+          id: string
+          resource_id: string
+        }
+        Insert: {
+          access_status?: string | null
+          client_id: string
+          id?: string
+          resource_id: string
+        }
+        Update: {
+          access_status?: string | null
+          client_id?: string
+          id?: string
+          resource_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_resource_access_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "portal_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_resource_access_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "portal_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_sessions: {
+        Row: {
+          action_items: Json | null
+          client_id: string
+          created_at: string
+          id: string
+          recording_file_url: string | null
+          recording_link: string | null
+          session_date: string | null
+          session_notes: string | null
+        }
+        Insert: {
+          action_items?: Json | null
+          client_id: string
+          created_at?: string
+          id?: string
+          recording_file_url?: string | null
+          recording_link?: string | null
+          session_date?: string | null
+          session_notes?: string | null
+        }
+        Update: {
+          action_items?: Json | null
+          client_id?: string
+          created_at?: string
+          id?: string
+          recording_file_url?: string | null
+          recording_link?: string | null
+          session_date?: string | null
+          session_notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_sessions_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "portal_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_wins: {
+        Row: {
+          application_text: string | null
+          client_id: string
+          created_at: string
+          id: string
+          reflection_text: string | null
+          testimonial_permission: boolean | null
+          video_file_url: string | null
+          video_link: string | null
+        }
+        Insert: {
+          application_text?: string | null
+          client_id: string
+          created_at?: string
+          id?: string
+          reflection_text?: string | null
+          testimonial_permission?: boolean | null
+          video_file_url?: string | null
+          video_link?: string | null
+        }
+        Update: {
+          application_text?: string | null
+          client_id?: string
+          created_at?: string
+          id?: string
+          reflection_text?: string | null
+          testimonial_permission?: boolean | null
+          video_file_url?: string | null
+          video_link?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_wins_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "portal_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_worksheets: {
+        Row: {
+          client_id: string
+          completion_date: string | null
+          created_at: string
+          file_url: string | null
+          id: string
+          pdf_download_link: string | null
+          responses_json: Json | null
+          worksheet_name: string | null
+        }
+        Insert: {
+          client_id: string
+          completion_date?: string | null
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          pdf_download_link?: string | null
+          responses_json?: Json | null
+          worksheet_name?: string | null
+        }
+        Update: {
+          client_id?: string
+          completion_date?: string | null
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          pdf_download_link?: string | null
+          responses_json?: Json | null
+          worksheet_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_worksheets_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "portal_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cluster_items: {
         Row: {
           cluster_id: string
@@ -1090,6 +1395,129 @@ export type Database = {
         }
         Relationships: []
       }
+      portal_clients: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          onboarding_status: string | null
+          program_phase: Database["public"]["Enums"]["program_phase"] | null
+          stripe_customer_id: string | null
+          tier: Database["public"]["Enums"]["client_tier"] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          onboarding_status?: string | null
+          program_phase?: Database["public"]["Enums"]["program_phase"] | null
+          stripe_customer_id?: string | null
+          tier?: Database["public"]["Enums"]["client_tier"] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          onboarding_status?: string | null
+          program_phase?: Database["public"]["Enums"]["program_phase"] | null
+          stripe_customer_id?: string | null
+          tier?: Database["public"]["Enums"]["client_tier"] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      portal_integrations: {
+        Row: {
+          api_key: string | null
+          id: string
+          service_name: string
+          updated_at: string
+          webhook_url: string | null
+        }
+        Insert: {
+          api_key?: string | null
+          id?: string
+          service_name: string
+          updated_at?: string
+          webhook_url?: string | null
+        }
+        Update: {
+          api_key?: string | null
+          id?: string
+          service_name?: string
+          updated_at?: string
+          webhook_url?: string | null
+        }
+        Relationships: []
+      }
+      portal_offers: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          link: string | null
+          price: number | null
+          title: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          link?: string | null
+          price?: number | null
+          title?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          link?: string | null
+          price?: number | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      portal_resources: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          file_url: string | null
+          id: string
+          resource_link: string | null
+          title: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          resource_link?: string | null
+          title?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          resource_link?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -1413,9 +1841,11 @@ export type Database = {
         | "Data_Research"
         | "Tech_Security"
         | "Explainers"
+      client_tier: "self_directed" | "strategic_coaching" | "private_consulting"
       funnel_stage: "TOFU" | "MOFU" | "BOFU"
       linking_scan_mode: "report_only" | "auto_apply"
       linking_scan_status: "pending" | "running" | "completed" | "failed"
+      program_phase: "clarity" | "systems" | "expansion"
       trust_level: "Primary" | "Secondary"
     }
     CompositeTypes: {
@@ -1553,9 +1983,15 @@ export const Constants = {
         "Tech_Security",
         "Explainers",
       ],
+      client_tier: [
+        "self_directed",
+        "strategic_coaching",
+        "private_consulting",
+      ],
       funnel_stage: ["TOFU", "MOFU", "BOFU"],
       linking_scan_mode: ["report_only", "auto_apply"],
       linking_scan_status: ["pending", "running", "completed", "failed"],
+      program_phase: ["clarity", "systems", "expansion"],
       trust_level: ["Primary", "Secondary"],
     },
   },
