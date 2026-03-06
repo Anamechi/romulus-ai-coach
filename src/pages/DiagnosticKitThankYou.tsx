@@ -130,12 +130,9 @@ const DiagnosticKitThankYou = () => {
                 </span>
                 <Headphones className="w-5 h-5 text-slate-400" />
               </div>
-              <h2 className="font-display text-xl font-semibold mb-2">
-                Listen To The Private Audio
+              <h2 className="font-display text-xl font-semibold mb-5">
+                Founder Briefing: Why Effort Isn't the Problem — Structure Is
               </h2>
-              <p className="text-slate-400 text-sm mb-5">
-                Why effort isn't the problem — structure is.
-              </p>
               <div className="bg-slate-700/50 rounded-lg p-4 flex items-center justify-center border border-slate-600 h-20">
                 <p className="text-slate-500 text-sm">
                   Audio embed placeholder
