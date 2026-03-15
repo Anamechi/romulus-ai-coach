@@ -1,14 +1,7 @@
 import { useState } from "react";
 import { SEOHead } from "@/components/seo/SEOHead";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
-import { ArrowRight, CheckCircle2, ChevronRight, Download } from "lucide-react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Progress } from "@/components/ui/progress";
-import drRomulus from "@/assets/dr-romulus.jpeg";
 import DDSHeroSection from "@/components/dds/DDSHeroSection";
 import DDSFrameworkOverview from "@/components/dds/DDSFrameworkOverview";
 import DDSLearnSection from "@/components/dds/DDSLearnSection";
@@ -34,7 +27,6 @@ const DDSFramework = () => {
 
     setLoading(true);
     try {
-      // Store in admin dashboard
       const { error } = await supabase.from("leads").insert({
         full_name: formData.firstName.trim(),
         email: formData.email.trim(),
@@ -44,7 +36,6 @@ const DDSFramework = () => {
       });
       if (error) throw error;
 
-      // Send to GHL
       supabase.functions.invoke("ghl-dds-webhook", {
         body: {
           firstName: formData.firstName.trim(),
@@ -103,7 +94,6 @@ const DDSFramework = () => {
 
         <DDSNextStepOffer diagnosticKitUrl={DIAGNOSTIC_KIT_URL} />
 
-        {/* Minimal Footer */}
         <footer className="py-8 border-t border-[hsl(var(--gold)/0.1)]">
           <div className="container mx-auto px-6 text-center text-sm" style={{ color: "hsl(220 15% 45%)" }}>
             © {new Date().getFullYear()} Dr. Deanna Romulus, MBA. All rights reserved.
