@@ -1,71 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { CheckCircle } from "lucide-react";
 
 export default function Checklist() {
-  const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const trimmedName = formData.name.trim();
-    const trimmedEmail = formData.email.trim().toLowerCase();
-
-    if (!trimmedName || !trimmedEmail) {
-      toast({
-        title: "Please fill in all fields",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!trimmedEmail.includes("@")) {
-      toast({
-        title: "Please enter a valid email",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // Save to leads table
-      const { error } = await supabase.from("leads").insert({
-        full_name: trimmedName,
-        email: trimmedEmail,
-        source: "Fundability & Systems Checklist",
-        status: "new",
-      });
-
-      if (error) throw error;
-
-      // Redirect to thank-you page
-      navigate("/checklist/thank-you");
-    } catch (error) {
-      console.error("Submission error:", error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again or contact us directly.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const benefits = [
     "A clear view of where your business lacks structure",
     "Insight into why income feels harder than it should",
