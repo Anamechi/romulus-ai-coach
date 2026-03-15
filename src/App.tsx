@@ -130,6 +130,7 @@ const App = () => (
               <Route path="/diagnostickit-thank-you" element={<DiagnosticKitThankYou />} />
               <Route path="/income-clarity-diagnostic" element={<IncomeClarityDiagnostic />} />
               <Route path="/revenue-architecture-session" element={<RevenueArchitectureSession />} />
+              <Route path="/dds-framework" element={<DDSFramework />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
