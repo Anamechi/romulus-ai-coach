@@ -79,6 +79,7 @@ const PortalResources = lazy(() => import("./pages/portal/PortalResources"));
 const PortalMessages = lazy(() => import("./pages/portal/PortalMessages"));
 const PortalProgress = lazy(() => import("./pages/portal/PortalProgress"));
 const RevenueArchitectureSession = lazy(() => import("./pages/RevenueArchitectureSession"));
+const DDSFramework = lazy(() => import("./pages/DDSFramework"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
