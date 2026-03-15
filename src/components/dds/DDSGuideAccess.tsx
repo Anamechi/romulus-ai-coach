@@ -1,7 +1,7 @@
 import { CheckCircle2, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const DDS_GUIDE_URL = "#"; // Replace with actual guide PDF URL
+const DDS_GUIDE_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69b722d45b89c79fcba9d910.pdf";
 
 const DDSGuideAccess = () => (
   <section className="py-20 md:py-28 bg-[hsl(var(--slate-medium))]">
