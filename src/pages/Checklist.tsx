@@ -131,61 +131,19 @@ export default function Checklist() {
               </div>
             </div>
 
-            {/* Right Column - Form */}
-            <div className="bg-card border border-border rounded-xl p-8 shadow-lg">
-              <h3 className="font-display text-xl font-semibold text-foreground mb-6 text-center">
+            {/* Right Column - CTA */}
+            <div className="bg-card border border-border rounded-xl p-8 shadow-lg flex flex-col items-center justify-center text-center">
+              <h3 className="font-display text-xl font-semibold text-foreground mb-6">
                 Get the Fundability & Systems Checklist
               </h3>
-
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-foreground">
-                    Your Name
-                  </Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="First and Last Name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    required
-                    className="bg-background"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-foreground">
-                    Email Address
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    required
-                    className="bg-background"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  variant="gold"
-                  size="lg"
-                  className="w-full"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Sending..." : "Get the Checklist"}
-                </Button>
-
-                <p className="text-xs text-muted-foreground text-center">
-                  Your information is secure and will never be shared.
-                </p>
-              </form>
+              <p className="text-muted-foreground mb-8">
+                Start identifying the structural gaps holding your revenue back.
+              </p>
+              <Button variant="gold" size="lg" asChild>
+                <a href="https://checklist.drromulusmba.com/" target="_blank" rel="noopener noreferrer">
+                  Get the Checklist
+                </a>
+              </Button>
             </div>
           </div>
         </div>
