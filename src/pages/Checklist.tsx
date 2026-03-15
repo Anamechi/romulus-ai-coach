@@ -1,71 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { CheckCircle } from "lucide-react";
 
 export default function Checklist() {
-  const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const trimmedName = formData.name.trim();
-    const trimmedEmail = formData.email.trim().toLowerCase();
-
-    if (!trimmedName || !trimmedEmail) {
-      toast({
-        title: "Please fill in all fields",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!trimmedEmail.includes("@")) {
-      toast({
-        title: "Please enter a valid email",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // Save to leads table
-      const { error } = await supabase.from("leads").insert({
-        full_name: trimmedName,
-        email: trimmedEmail,
-        source: "Fundability & Systems Checklist",
-        status: "new",
-      });
-
-      if (error) throw error;
-
-      // Redirect to thank-you page
-      navigate("/checklist/thank-you");
-    } catch (error) {
-      console.error("Submission error:", error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again or contact us directly.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const benefits = [
     "A clear view of where your business lacks structure",
     "Insight into why income feels harder than it should",
@@ -131,61 +69,19 @@ export default function Checklist() {
               </div>
             </div>
 
-            {/* Right Column - Form */}
-            <div className="bg-card border border-border rounded-xl p-8 shadow-lg">
-              <h3 className="font-display text-xl font-semibold text-foreground mb-6 text-center">
+            {/* Right Column - CTA */}
+            <div className="bg-card border border-border rounded-xl p-8 shadow-lg flex flex-col items-center justify-center text-center">
+              <h3 className="font-display text-xl font-semibold text-foreground mb-6">
                 Get the Fundability & Systems Checklist
               </h3>
-
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-foreground">
-                    Your Name
-                  </Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="First and Last Name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    required
-                    className="bg-background"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-foreground">
-                    Email Address
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    required
-                    className="bg-background"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  variant="gold"
-                  size="lg"
-                  className="w-full"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Sending..." : "Get the Checklist"}
-                </Button>
-
-                <p className="text-xs text-muted-foreground text-center">
-                  Your information is secure and will never be shared.
-                </p>
-              </form>
+              <p className="text-muted-foreground mb-8">
+                Start identifying the structural gaps holding your revenue back.
+              </p>
+              <Button variant="gold" size="lg" asChild>
+                <a href="https://checklist.drromulusmba.com/" target="_blank" rel="noopener noreferrer">
+                  Get the Checklist
+                </a>
+              </Button>
             </div>
           </div>
         </div>
