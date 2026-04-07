@@ -108,29 +108,29 @@ const DiagnosticKit = () => {
         <section className="py-20 md:py-24 bg-slate-800/50">
           <div className="container mx-auto px-6 max-w-4xl">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-14">
-              Inside The Complete Diagnostic Kit™
+              Inside The Income Systems Diagnostic Kit™ — Powered by the DDS Framework™
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
                   icon: ClipboardCheck,
                   title: "Income Systems Diagnostic Checklist",
-                  desc: "A structured self-assessment that identifies the exact revenue bottlenecks hiding inside your business operations.",
+                  desc: "A structured self-assessment that surfaces the exact structural constraint causing your revenue instability — not symptoms, the source.",
                 },
                 {
                   icon: PlayCircle,
-                  title: "20-Minute Walkthrough Video",
-                  desc: "Step-by-step guidance on interpreting your results and avoiding common misdiagnosis that leads to wasted effort.",
+                  title: "10-Minute Walkthrough Video",
+                  desc: "A guided walkthrough of your diagnostic results so you sequence the repair correctly — and don't fix the wrong thing first.",
                 },
                 {
                   icon: BookOpen,
                   title: "Diagnostic Results Interpretation Guide",
-                  desc: "Clear instructions on what to fix first, what can wait, and how to prioritize for the fastest path to stability.",
+                  desc: "A domain-by-domain interpretation guide that tells you where your dominant constraint lives and what to address first, second, and not yet.",
                 },
                 {
                   icon: Headphones,
                   title: "Private Audio Training",
-                  desc: "Why effort isn't the problem — structure is. A focused training on shifting from activity-based to systems-based growth.",
+                  desc: "A private audio training on why working harder is not stabilization — and what structural continuity actually requires.",
                 },
               ].map(({ icon: Icon, title, desc }) => (
                 <div
