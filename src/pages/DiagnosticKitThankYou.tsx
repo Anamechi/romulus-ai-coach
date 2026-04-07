@@ -10,8 +10,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const CHECKLIST_DOWNLOAD_URL = "#PASTE_CHECKLIST_LINK_HERE";
-const GUIDE_DOWNLOAD_URL = "#PASTE_GUIDE_LINK_HERE";
+const CHECKLIST_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d57f3c84c045c274db1529.docx";
+const GUIDE_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d57f3c200ae21bdf83c0fe.docx";
 const UPSELL_URL = "/income-clarity-diagnostic";
 
 const DiagnosticKitThankYou = () => {
