@@ -90,14 +90,21 @@ const DiagnosticKitThankYou = () => {
                 Watch The Walkthrough Video
               </h2>
               <p className="text-slate-400 text-sm mb-5">
-                This 20-minute video walks you through interpreting your
+                This 10-minute video walks you through interpreting your
                 results.
               </p>
-              <div className="aspect-video bg-slate-700/50 rounded-lg flex items-center justify-center border border-slate-600">
-                <p className="text-slate-500 text-sm">
-                  Video embed placeholder
-                </p>
-              </div>
+              <video
+                className="aspect-video w-full rounded-lg border border-slate-600"
+                controls
+                preload="metadata"
+                poster=""
+              >
+                <source
+                  src="https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d56d55478d55a7cd044325.mp4"
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
             </div>
 
             {/* Step 3 */}
