@@ -141,11 +141,17 @@ const DiagnosticKitThankYou = () => {
               <h2 className="font-display text-xl font-semibold mb-5">
                 Founder Briefing: Why Effort Isn't the Problem — Structure Is
               </h2>
-              <div className="bg-slate-700/50 rounded-lg p-4 flex items-center justify-center border border-slate-600 h-20">
-                <p className="text-slate-500 text-sm">
-                  Audio embed placeholder
-                </p>
-              </div>
+              <audio
+                className="w-full"
+                controls
+                preload="metadata"
+              >
+                <source
+                  src={AUDIO_URL}
+                  type="audio/mpeg"
+                />
+                Your browser does not support the audio element.
+              </audio>
             </div>
           </div>
         </section>
