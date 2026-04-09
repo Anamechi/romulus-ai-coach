@@ -80,6 +80,7 @@ const PortalMessages = lazy(() => import("./pages/portal/PortalMessages"));
 const PortalProgress = lazy(() => import("./pages/portal/PortalProgress"));
 const RevenueArchitectureSession = lazy(() => import("./pages/RevenueArchitectureSession"));
 const DDSFramework = lazy(() => import("./pages/DDSFramework"));
+const DDSScorecard = lazy(() => import("./pages/DDSScorecard"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -131,6 +132,7 @@ const App = () => (
               <Route path="/income-clarity-diagnostic" element={<IncomeClarityDiagnostic />} />
               <Route path="/revenue-architecture-session" element={<RevenueArchitectureSession />} />
               <Route path="/dds-framework" element={<DDSFramework />} />
+              <Route path="/dds-scorecard" element={<DDSScorecard />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
