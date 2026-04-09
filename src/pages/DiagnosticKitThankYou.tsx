@@ -10,8 +10,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const CHECKLIST_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d57f3c84c045c274db1529.docx";
-const GUIDE_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d57f3c200ae21bdf83c0fe.docx";
+const CHECKLIST_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d582a9f5ebf27de32824a5.pdf";
+const GUIDE_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d582a9a64a04ba15c23fc6.pdf";
+const AUDIO_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d67350eaae8b1b71d51e41.mp3";
 const UPSELL_URL = "/income-clarity-diagnostic";
 
 const DiagnosticKitThankYou = () => {
