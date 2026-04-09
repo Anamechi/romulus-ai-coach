@@ -10,8 +10,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const CHECKLIST_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d57f3c84c045c274db1529.docx";
-const GUIDE_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d57f3c200ae21bdf83c0fe.docx";
+const CHECKLIST_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d582a9f5ebf27de32824a5.pdf";
+const GUIDE_DOWNLOAD_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d582a9a64a04ba15c23fc6.pdf";
+const AUDIO_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69d67350eaae8b1b71d51e41.mp3";
 const UPSELL_URL = "/income-clarity-diagnostic";
 
 const DiagnosticKitThankYou = () => {
@@ -140,11 +141,17 @@ const DiagnosticKitThankYou = () => {
               <h2 className="font-display text-xl font-semibold mb-5">
                 Founder Briefing: Why Effort Isn't the Problem — Structure Is
               </h2>
-              <div className="bg-slate-700/50 rounded-lg p-4 flex items-center justify-center border border-slate-600 h-20">
-                <p className="text-slate-500 text-sm">
-                  Audio embed placeholder
-                </p>
-              </div>
+              <audio
+                className="w-full"
+                controls
+                preload="metadata"
+              >
+                <source
+                  src={AUDIO_URL}
+                  type="audio/mpeg"
+                />
+                Your browser does not support the audio element.
+              </audio>
             </div>
           </div>
         </section>
