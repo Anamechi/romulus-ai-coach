@@ -11,6 +11,7 @@ interface DDSLeadPayload {
   phone: string;
   quizScore?: number;
   quizStage?: string;
+  recommendedOffer?: string;
 }
 
 serve(async (req: Request) => {
@@ -20,7 +21,7 @@ serve(async (req: Request) => {
 
   try {
     const payload: DDSLeadPayload = await req.json();
-    const { firstName, email, phone, quizScore, quizStage } = payload;
+    const { firstName, email, phone, quizScore, quizStage, recommendedOffer } = payload;
 
     if (!email || !email.includes("@")) {
       return new Response(
@@ -60,6 +61,7 @@ serve(async (req: Request) => {
         entry_point: "DDS Framework Landing Page",
         dds_quiz_score: quizScore?.toString() ?? "",
         dds_quiz_stage: quizStage ?? "",
+        recommended_offer: recommendedOffer ?? "",
         submission_timestamp: new Date().toISOString(),
       },
       // Pipeline placement

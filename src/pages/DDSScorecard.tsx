@@ -8,8 +8,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight, CheckCircle } from "lucide-react";
-
-const DIAGNOSTIC_KIT_URL = "https://link.drromulusmba.com/payment-link/69939e59e6b9117c66e733dd";
+import { Link } from "react-router-dom";
 
 const QUESTIONS = [
   "Do you have a clearly defined primary offer?",
@@ -44,22 +43,31 @@ function getOptionsForQuestion(index: number) {
 function getResult(score: number) {
   if (score <= 3) {
     return {
-      stage: "Awareness or Diagnosis",
-      message: "Your business likely has foundational structural revenue gaps.",
-      cta: "Identify your primary constraint using the Complete Income Systems Diagnostic Kit™",
+      stage: "Diagnose",
+      message: "Your business has foundational gaps. Before you scale, you need to identify what's actually broken.",
+      cta: "Identify your primary constraint",
+      url: "/diagnostickit",
+      buttonLabel: "Get the Diagnostic Kit — $27",
+      recommendedOffer: "Diagnostic Kit",
     };
   }
   if (score <= 7) {
     return {
-      stage: "Clarity or Architecture",
-      message: "Your business has some structure but may be missing key revenue architecture components.",
-      cta: "Use the diagnostic kit to identify the next structural upgrade.",
+      stage: "Design",
+      message: "Your business has some structure, but something is misaligned. Fixing the right constraint will unlock your next level of growth.",
+      cta: "Fix your next constraint",
+      url: "/content-clarity-diagnostic",
+      buttonLabel: "Book Your Content Clarity Diagnostic — $297",
+      recommendedOffer: "Content Clarity Diagnostic",
     };
   }
   return {
-    stage: "Systems or Scale",
-    message: "Your business shows strong structural foundations.",
-    cta: "Use the diagnostic kit to optimize your revenue architecture.",
+    stage: "Scale",
+    message: "You've built a strong foundation. Now it's time to refine your revenue architecture and scale with precision.",
+    cta: "Build your revenue blueprint",
+    url: "/revenue-architecture-session",
+    buttonLabel: "Book Your Revenue Architecture Session — $500+",
+    recommendedOffer: "Revenue Architecture Session",
   };
 }
 
@@ -129,6 +137,7 @@ const DDSScorecard = () => {
         phone: formData.phone.trim(),
         quizScore: score,
         quizStage: result.stage,
+        recommendedOffer: result.recommendedOffer,
       },
     }).catch((err) => console.error("GHL quiz update error:", err));
 
@@ -329,10 +338,10 @@ const DDSScorecard = () => {
                       {result.cta}
                     </p>
                     <Button variant="gold" size="lg" asChild>
-                      <a href={DIAGNOSTIC_KIT_URL} target="_blank" rel="noopener noreferrer">
-                        Get the Diagnostic Kit — $27
+                      <Link to={result.url}>
+                        {result.buttonLabel}
                         <ArrowRight className="ml-2 h-5 w-5" />
-                      </a>
+                      </Link>
                     </Button>
                   </div>
                 </div>

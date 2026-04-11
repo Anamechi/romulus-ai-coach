@@ -68,6 +68,8 @@ const PortalIntegrationsAdmin = lazy(() => import("./pages/admin/PortalIntegrati
 const DiagnosticKit = lazy(() => import("./pages/DiagnosticKit"));
 const DiagnosticKitThankYou = lazy(() => import("./pages/DiagnosticKitThankYou"));
 const IncomeClarityDiagnostic = lazy(() => import("./pages/IncomeClarityDiagnostic"));
+const ContentClarityDiagnostic = lazy(() => import("./pages/ContentClarityDiagnostic"));
+const IncomeSystemsDiagnostic = lazy(() => import("./pages/IncomeSystemsDiagnostic"));
 
 // Portal pages
 const PortalDashboard = lazy(() => import("./pages/portal/PortalDashboard"));
