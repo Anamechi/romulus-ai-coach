@@ -135,6 +135,8 @@ const App = () => (
               <Route path="/revenue-architecture-session" element={<RevenueArchitectureSession />} />
               <Route path="/dds-framework" element={<DDSFramework />} />
               <Route path="/dds-scorecard" element={<DDSScorecard />} />
+              <Route path="/content-clarity-diagnostic" element={<ContentClarityDiagnostic />} />
+              <Route path="/income-systems-diagnostic" element={<IncomeSystemsDiagnostic />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<Dashboard />} />
