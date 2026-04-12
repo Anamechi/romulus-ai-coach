@@ -57,8 +57,8 @@ function getResult(score: number) {
       message: "Your business has some structure, but something is misaligned. Fixing the right constraint will unlock your next level of growth.",
       cta: "Fix your next constraint",
       url: "/content-clarity-diagnostic",
-      buttonLabel: "Book Your Content Clarity Diagnostic — $297",
-      recommendedOffer: "Content Clarity Diagnostic",
+      buttonLabel: "Get the 7-Day Content-to-Cash Setup — $297",
+      recommendedOffer: "7-Day Content-to-Cash Setup",
     };
   }
   return {
