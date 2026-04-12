@@ -8,7 +8,7 @@ const ContentClarityDiagnostic = () => {
       <SEOHead
         title="7-Day Content-to-Cash Setup™ | Dr. Deanna Romulus"
         description="Build a working content → lead → conversion system in 7 days. Follow a step-by-step system to turn your content into leads and revenue."
-        canonicalUrl="/content-clarity-diagnostic"
+        canonicalUrl="/content-to-cash"
         ogType="website"
       />
 
