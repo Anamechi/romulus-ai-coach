@@ -55,7 +55,7 @@ function getResult(score: number) {
       stage: "Design",
       message: "Your business has some structure, but something is misaligned. Fixing the right constraint will unlock your next level of growth.",
       cta: "Fix your next constraint",
-      url: "/content-clarity-diagnostic",
+      url: "/content-to-cash",
       buttonLabel: "Get the 7-Day Content-to-Cash Setup — $297",
       recommendedOffer: "7-Day Content-to-Cash Setup",
     };
