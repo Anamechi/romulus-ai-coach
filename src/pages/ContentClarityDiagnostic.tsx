@@ -1,13 +1,13 @@
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, XCircle, ArrowRight, Target, Compass, MessageSquare, Zap } from "lucide-react";
+import { CheckCircle2, XCircle, ArrowRight, Target, Compass, Zap, Calendar } from "lucide-react";
 
 const ContentClarityDiagnostic = () => {
   return (
     <>
       <SEOHead
-        title="Content Clarity Diagnostic™ | Dr. Deanna Romulus"
-        description="Fix the one thing blocking your content from converting. Get clear direction on what to post and what to fix first. $297 diagnostic session."
+        title="7-Day Content-to-Cash Setup™ | Dr. Deanna Romulus"
+        description="Build a working content → lead → conversion system in 7 days. Follow a step-by-step system to turn your content into leads and revenue."
         canonicalUrl="/content-clarity-diagnostic"
         ogType="website"
       />
@@ -26,20 +26,20 @@ const ContentClarityDiagnostic = () => {
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-6 max-w-3xl text-center">
             <span className="inline-block px-4 py-2 rounded-full bg-[hsl(var(--gold)/0.1)] text-[hsl(var(--gold))] font-body text-sm font-medium mb-6">
-              Content Clarity Diagnostic™
+              7-Day Content-to-Cash Setup™
             </span>
             <h1 className="font-display text-3xl md:text-5xl font-bold mb-6 leading-tight">
-              Fix the One Thing Blocking Your Content from Converting
+              Build a Content-to-Cash System in 7 Days
             </h1>
             <p className="text-lg md:text-xl mb-8" style={{ color: "hsl(220 15% 70%)" }}>
-              Stop guessing what to post. Get clear direction on what's not working—and what to fix first.
+              Stop guessing what to post. Follow a step-by-step system to turn your content into leads and revenue.
             </p>
             <Button
               variant="gold"
               size="lg"
               onClick={() => document.getElementById("cta-section")?.scrollIntoView({ behavior: "smooth" })}
             >
-              Book Your Diagnostic — $297
+              Get the 7-Day Content-to-Cash Setup — $297
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
@@ -53,9 +53,9 @@ const ContentClarityDiagnostic = () => {
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                { icon: MessageSquare, text: "Posting content but not generating leads" },
-                { icon: Compass, text: "Unsure what content converts" },
-                { icon: Target, text: "Feels misaligned but can't identify why" },
+                { icon: Compass, text: "Posting content but not generating leads" },
+                { icon: Target, text: "Unsure what content converts" },
+                { icon: Calendar, text: "Ready to implement a proven content system" },
               ].map(({ icon: Icon, text }, i) => (
                 <div
                   key={i}
@@ -77,10 +77,10 @@ const ContentClarityDiagnostic = () => {
             </h2>
             <div className="space-y-5">
               {[
-                "Identification of your #1 constraint",
-                "Clear direction on what to post",
-                "Messaging + platform alignment",
-                "Immediate next step",
+                "A 7-day step-by-step implementation system",
+                "Content workflow templates and frameworks",
+                "Lead capture sequence setup guide",
+                "Daily action checklists to maintain momentum",
               ].map((item, i) => (
                 <div
                   key={i}
@@ -102,9 +102,9 @@ const ContentClarityDiagnostic = () => {
             </h2>
             <div className="space-y-4">
               {[
-                "Not a full business audit",
-                "Not ongoing coaching",
-                "Not implementation",
+                "Not a diagnostic or audit",
+                "Not personalized feedback or coaching",
+                "Not a live session or consultation",
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4">
                   <XCircle className="h-5 w-5 flex-shrink-0" style={{ color: "hsl(220 15% 50%)" }} />
@@ -121,22 +121,17 @@ const ContentClarityDiagnostic = () => {
             <div className="bg-[hsl(var(--slate-medium))] border border-[hsl(var(--gold)/0.2)] rounded-2xl p-8 md:p-12">
               <Zap className="h-10 w-10 text-[hsl(var(--gold))] mx-auto mb-6" />
               <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">
-                Book Your Content Clarity Diagnostic
+                Get the 7-Day Content-to-Cash Setup
               </h2>
               <p className="text-lg mb-2 text-[hsl(var(--gold))] font-semibold">$297</p>
               <p className="mb-8" style={{ color: "hsl(220 15% 65%)" }}>
-                One focused session to uncover what's blocking your content from converting.
+                A structured system to build your content → lead → conversion workflow in 7 days.
               </p>
-              {/* Placeholder CTA — replace with booking calendar or payment link */}
               <Button variant="gold" size="lg">
-                Book Your Content Clarity Diagnostic — $297
+                Get the 7-Day Content-to-Cash Setup — $297
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
-
-            <p className="mt-8 text-sm italic" style={{ color: "hsl(220 15% 50%)" }}>
-              "If deeper structural issues are identified, next steps will be outlined for a Revenue Architecture Session."
-            </p>
           </div>
         </section>
 
