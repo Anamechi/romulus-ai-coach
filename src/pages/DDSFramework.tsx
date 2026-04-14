@@ -45,6 +45,9 @@ const DDSFramework = () => {
       }).catch((err) => console.error("GHL webhook error:", err));
 
       setSubmitted(true);
+      setTimeout(() => {
+        document.getElementById("dds-guide-access")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     } catch {
       toast({
         title: "Something went wrong",
