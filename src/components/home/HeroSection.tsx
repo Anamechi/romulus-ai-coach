@@ -58,25 +58,25 @@ export function HeroSection() {
           </div>
 
           {/* Image Side */}
-          <div className="relative hidden lg:block animate-fade-up delay-200">
-            <div className="relative">
-              {/* Main Image */}
-              <div className="aspect-[4/5] max-w-md mx-auto rounded-2xl overflow-hidden shadow-elevated border border-cream/10">
-                <img 
-                  src={drRomulusDesk} 
-                  alt="Dr. Deanna Romulus, MBA - Business Strategist"
-                  className="w-full h-full object-cover object-top"
-                />
-                {/* Subtle overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
-              </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gold/20 rounded-full blur-2xl" />
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gold/15 rounded-full blur-xl" />
-              
+          <div className="relative hidden lg:flex items-end justify-center animate-fade-up delay-200">
+            <div className="relative w-full max-w-lg">
+              {/* Ambient gold glow behind subject */}
+              <div className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-radial from-gold/20 via-gold/5 to-transparent blur-3xl" />
+              <div className="absolute top-10 right-10 w-72 h-72 bg-gold/15 rounded-full blur-3xl" />
+              <div className="absolute bottom-20 left-0 w-56 h-56 bg-gold/10 rounded-full blur-3xl" />
+
+              {/* Subtle pedestal accent */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-32 bg-gradient-to-t from-gold/10 to-transparent rounded-[50%] blur-2xl" />
+
+              {/* Main portrait — transparent PNG, no frame */}
+              <img
+                src={drRomulusDesk}
+                alt="Dr. Deanna Romulus, MBA - Business Strategist & Empowerment Architect"
+                className="relative z-10 w-full h-auto object-contain drop-shadow-2xl"
+              />
+
               {/* Floating credential card */}
-              <div className="absolute -bottom-4 -left-4 bg-card/90 backdrop-blur-sm p-4 rounded-xl shadow-elevated border border-border">
+              <div className="absolute bottom-12 -left-4 z-20 bg-card/95 backdrop-blur-sm p-4 rounded-xl shadow-elevated border border-gold/20 animate-fade-up delay-500">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
                     <Star className="w-5 h-5 fill-gold text-gold" />
@@ -86,6 +86,12 @@ export function HeroSection() {
                     <div className="font-body text-xs text-muted-foreground">Business Strategist</div>
                   </div>
                 </div>
+              </div>
+
+              {/* Floating accolade card — top right */}
+              <div className="absolute top-16 -right-2 z-20 bg-card/95 backdrop-blur-sm px-4 py-3 rounded-xl shadow-elevated border border-gold/20 animate-fade-up delay-700">
+                <div className="font-display text-xs font-semibold text-gold uppercase tracking-wider">Trusted Strategist</div>
+                <div className="font-body text-xs text-muted-foreground mt-0.5">For Founders Worldwide</div>
               </div>
             </div>
           </div>
