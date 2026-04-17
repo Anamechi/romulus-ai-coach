@@ -72,8 +72,15 @@ export function HeroSection() {
               <img
                 src={drRomulusDesk}
                 alt="Dr. Deanna Romulus, MBA - Business Strategist & Empowerment Architect"
-                className="relative z-10 w-full h-auto object-contain drop-shadow-2xl"
+                width={1088}
+                height={1446}
+                loading="eager"
+                decoding="sync"
+                fetchPriority="high"
+                className="relative z-10 w-full h-auto object-contain [filter:drop-shadow(0_25px_35px_rgb(0_0_0/0.35))]"
+                style={{ imageRendering: 'auto' }}
               />
+
 
               {/* Floating credential card */}
               <div className="absolute bottom-12 -left-4 z-20 bg-card/95 backdrop-blur-sm p-4 rounded-xl shadow-elevated border border-gold/20 animate-fade-up delay-500">
