@@ -58,33 +58,38 @@ export function HeroSection() {
           </div>
 
           {/* Image Side */}
-          <div className="relative hidden lg:block animate-fade-up delay-200">
-            <div className="relative">
-              {/* Main Image */}
-              <div className="aspect-[4/5] max-w-md mx-auto rounded-2xl overflow-hidden shadow-elevated border border-cream/10">
-                <img 
-                  src={drRomulusDesk} 
-                  alt="Dr. Deanna Romulus, MBA - Business Strategist"
-                  className="w-full h-full object-cover object-top"
-                />
-                {/* Subtle overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
-              </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gold/20 rounded-full blur-2xl" />
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gold/15 rounded-full blur-xl" />
-              
-              {/* Floating credential card */}
-              <div className="absolute -bottom-4 -left-4 bg-card/90 backdrop-blur-sm p-4 rounded-xl shadow-elevated border border-border">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Star className="w-5 h-5 fill-gold text-gold" />
-                  </div>
-                  <div>
-                    <div className="font-display text-sm font-semibold text-foreground">Ed.D. & MBA</div>
-                    <div className="font-body text-xs text-muted-foreground">Business Strategist</div>
-                  </div>
+          <div className="relative hidden lg:flex items-end justify-center animate-fade-up delay-200 min-h-[600px]">
+            {/* Ambient glow behind subject */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[420px] h-[420px] rounded-full bg-gold/20 blur-[100px]" />
+            </div>
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[380px] h-[380px] rounded-full bg-gold/10 blur-3xl pointer-events-none" />
+
+            {/* Subtle radial spotlight */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(circle at 50% 60%, hsl(var(--gold) / 0.08) 0%, transparent 60%)",
+              }}
+            />
+
+            {/* Portrait — transparent PNG, no frame */}
+            <img
+              src={drRomulusDesk}
+              alt="Dr. Deanna Romulus, MBA - Business Strategist"
+              className="relative z-10 w-full max-w-lg h-auto object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.5)]"
+            />
+
+            {/* Floating credential card */}
+            <div className="absolute bottom-8 right-0 z-20 bg-card/90 backdrop-blur-md p-4 rounded-xl shadow-elevated border border-gold/20">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Star className="w-5 h-5 fill-gold text-gold" />
+                </div>
+                <div>
+                  <div className="font-display text-sm font-semibold text-foreground">Ed.D. & MBA</div>
+                  <div className="font-body text-xs text-muted-foreground">Business Strategist</div>
                 </div>
               </div>
             </div>
