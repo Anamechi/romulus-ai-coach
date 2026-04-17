@@ -156,20 +156,24 @@ export default function About() {
 
             {/* Visual */}
             <div className="relative">
-              <div className="aspect-[4/5] rounded-2xl bg-hero-gradient overflow-hidden relative">
-                <div className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-radial from-gold/20 via-gold/5 to-transparent blur-3xl" />
-                <div className="absolute top-10 right-10 w-56 h-56 bg-gold/15 rounded-full blur-3xl" />
+              <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-muted via-cream/40 to-muted/60 relative overflow-hidden">
+                {/* Ambient gold glow */}
+                <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-radial from-gold/15 via-gold/5 to-transparent blur-3xl" />
+                <div className="absolute top-10 right-10 w-56 h-56 bg-gold/10 rounded-full blur-3xl" />
+                {/* Pedestal accent */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-24 bg-gradient-to-t from-gold/15 to-transparent rounded-[50%] blur-2xl" />
+
                 <img 
                   src={drRomulusPhoto} 
                   alt="Dr. Deanna Romulus, MBA - Visionary Strategist and Empowerment Architect"
                   loading="eager"
                   decoding="sync"
-                  className="relative z-10 w-full h-full object-contain object-bottom [filter:drop-shadow(0_20px_30px_rgb(0_0_0/0.35))]"
+                  className="absolute inset-x-0 bottom-0 mx-auto h-[95%] w-auto object-contain [filter:drop-shadow(0_20px_30px_rgb(0_0_0/0.25))]"
                 />
               </div>
               
               {/* Credentials Card */}
-              <div className="absolute -bottom-6 -left-6 bg-card p-4 rounded-xl shadow-elevated border border-border">
+              <div className="absolute -bottom-6 -left-6 z-20 bg-card p-4 rounded-xl shadow-elevated border border-border">
                 <div className="flex items-center gap-3">
                   <GraduationCap className="w-8 h-8 text-gold" />
                   <div>
@@ -180,7 +184,7 @@ export default function About() {
               </div>
               
               {/* Experience Card */}
-              <div className="absolute -top-4 -right-4 bg-card p-4 rounded-xl shadow-elevated border border-border">
+              <div className="absolute -top-4 -right-4 z-20 bg-card p-4 rounded-xl shadow-elevated border border-border">
                 <div className="flex items-center gap-3">
                   <Target className="w-8 h-8 text-gold" />
                   <div>
