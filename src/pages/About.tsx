@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Building, CheckCircle, GraduationCap, Heart, Lightbulb, Target, Users } from "lucide-react";
 import { ChecklistCTA } from "@/components/content/ChecklistCTA";
-import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
+import drRomulusPhoto from "@/assets/dr-romulus-about-hero.png";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { PersonSchema, BreadcrumbSchema } from "@/components/seo/StructuredData";
 
@@ -156,11 +156,15 @@ export default function About() {
 
             {/* Visual */}
             <div className="relative">
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated">
+              <div className="aspect-[4/5] rounded-2xl bg-hero-gradient overflow-hidden relative">
+                <div className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-radial from-gold/20 via-gold/5 to-transparent blur-3xl" />
+                <div className="absolute top-10 right-10 w-56 h-56 bg-gold/15 rounded-full blur-3xl" />
                 <img 
                   src={drRomulusPhoto} 
                   alt="Dr. Deanna Romulus, MBA - Visionary Strategist and Empowerment Architect"
-                  className="w-full h-full object-cover object-top"
+                  loading="eager"
+                  decoding="sync"
+                  className="relative z-10 w-full h-full object-contain object-bottom [filter:drop-shadow(0_20px_30px_rgb(0_0_0/0.35))]"
                 />
               </div>
               
