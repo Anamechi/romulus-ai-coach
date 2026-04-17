@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
-import drRomulusDesk from "@/assets/dr-romulus-desk.png";
+import drRomulusDesk from "@/assets/dr-romulus-hero.png";
 
 export function HeroSection() {
   return (
