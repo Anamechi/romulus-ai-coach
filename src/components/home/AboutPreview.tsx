@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Target, Lightbulb, Zap } from "lucide-react";
-import drRomulusPhoto from "@/assets/dr-romulus.jpeg";
+import drRomulusPhoto from "@/assets/dr-romulus-about.png";
 
 const approach = [
   {
