@@ -60,27 +60,29 @@ export function HeroSection() {
           {/* Image Side */}
           <div className="relative hidden lg:flex items-end justify-center animate-fade-up delay-200">
             <div className="relative w-full max-w-lg">
-              {/* Ambient gold glow behind subject */}
-              <div className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-radial from-gold/20 via-gold/5 to-transparent blur-3xl" />
-              <div className="absolute top-10 right-10 w-72 h-72 bg-gold/15 rounded-full blur-3xl" />
-              <div className="absolute bottom-20 left-0 w-56 h-56 bg-gold/10 rounded-full blur-3xl" />
+              {/* Framed portrait container — light backdrop prevents dark hero bleed */}
+              <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-cream via-cream/80 to-muted/60 relative overflow-hidden shadow-elevated">
+                {/* Ambient gold glows contained within frame */}
+                <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-radial from-gold/20 via-gold/5 to-transparent blur-3xl" />
+                <div className="absolute top-10 right-10 w-56 h-56 bg-gold/15 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 left-0 w-40 h-40 bg-gold/10 rounded-full blur-3xl" />
 
-              {/* Subtle pedestal accent */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-32 bg-gradient-to-t from-gold/10 to-transparent rounded-[50%] blur-2xl" />
+                {/* Pedestal accent */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-24 bg-gradient-to-t from-gold/15 to-transparent rounded-[50%] blur-2xl" />
 
-              {/* Main portrait — transparent PNG, no frame */}
-              <img
-                src={drRomulusDesk}
-                alt="Dr. Deanna Romulus, MBA - Business Strategist & Empowerment Architect"
-                width={1088}
-                height={1446}
-                loading="eager"
-                decoding="sync"
-                fetchPriority="high"
-                className="relative z-10 w-full h-auto object-contain [filter:drop-shadow(0_25px_35px_rgb(0_0_0/0.35))]"
-                style={{ imageRendering: 'auto' }}
-              />
-
+                {/* Main portrait */}
+                <img
+                  src={drRomulusDesk}
+                  alt="Dr. Deanna Romulus, MBA - Business Strategist & Empowerment Architect"
+                  width={1088}
+                  height={1446}
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
+                  className="absolute inset-x-0 bottom-0 mx-auto h-[95%] w-auto object-contain [filter:drop-shadow(0_20px_30px_rgb(0_0_0/0.25))]"
+                  style={{ imageRendering: 'auto' }}
+                />
+              </div>
 
               {/* Floating credential card */}
               <div className="absolute bottom-12 -left-4 z-20 bg-card/95 backdrop-blur-sm p-4 rounded-xl shadow-elevated border border-gold/20 animate-fade-up delay-500">
