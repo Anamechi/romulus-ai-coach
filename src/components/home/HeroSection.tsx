@@ -36,10 +36,8 @@ export function HeroSection() {
             </div>
 
             {/* Headline */}
-            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-bold text-cream leading-[1.05] tracking-tight mb-8 animate-fade-up delay-100">
-              Inconsistent Income
-              <br />
-              Is a{" "}
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-cream leading-[1.08] tracking-tight mb-8 animate-fade-up delay-100">
+              Inconsistent Income Is a{" "}
               <span className="relative inline-block">
                 <span className="text-gradient-gold">Systems Problem</span>
                 <span className="absolute -bottom-2 left-0 right-0 h-[3px] bg-gradient-to-r from-gold/0 via-gold to-gold/0" />
