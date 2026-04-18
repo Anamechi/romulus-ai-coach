@@ -128,8 +128,8 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* Floating accolade card — moved to bottom-right so it doesn't cover her face */}
-              <div className="absolute -bottom-4 -right-6 z-20 bg-card/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-elevated border border-gold/30 animate-fade-up delay-700">
+              {/* Floating accolade card — top-right, sitting outside the frame edge */}
+              <div className="absolute -top-4 -right-6 z-20 bg-card/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-elevated border border-gold/30 animate-fade-up delay-700">
                 <div className="flex items-center gap-2 mb-1">
                   <Sparkles className="w-3.5 h-3.5 text-gold" />
                   <div className="font-display text-[11px] font-semibold text-gold uppercase tracking-[0.15em]">Trusted Strategist</div>
