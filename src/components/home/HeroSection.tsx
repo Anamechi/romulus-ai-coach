@@ -115,8 +115,8 @@ export function HeroSection() {
                 <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-gold/40 rounded-br-lg z-30" />
               </div>
 
-              {/* Floating credential card */}
-              <div className="absolute bottom-10 -left-6 z-20 bg-card/95 backdrop-blur-md p-4 rounded-xl shadow-elevated border border-gold/30 animate-fade-up delay-500">
+              {/* Floating credential card — bottom left */}
+              <div className="absolute -bottom-4 -left-6 z-20 bg-card/95 backdrop-blur-md p-4 rounded-xl shadow-elevated border border-gold/30 animate-fade-up delay-500">
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center ring-1 ring-gold/30">
                     <Award className="w-5 h-5 text-gold" />
