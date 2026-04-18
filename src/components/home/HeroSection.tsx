@@ -115,8 +115,8 @@ export function HeroSection() {
                 <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-gold/40 rounded-br-lg z-30" />
               </div>
 
-              {/* Floating credential card */}
-              <div className="absolute bottom-10 -left-6 z-20 bg-card/95 backdrop-blur-md p-4 rounded-xl shadow-elevated border border-gold/30 animate-fade-up delay-500">
+              {/* Floating credential card — bottom left */}
+              <div className="absolute -bottom-4 -left-6 z-20 bg-card/95 backdrop-blur-md p-4 rounded-xl shadow-elevated border border-gold/30 animate-fade-up delay-500">
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center ring-1 ring-gold/30">
                     <Award className="w-5 h-5 text-gold" />
@@ -128,8 +128,8 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* Floating accolade card — top right */}
-              <div className="absolute top-12 -right-6 z-20 bg-card/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-elevated border border-gold/30 animate-fade-up delay-700">
+              {/* Floating accolade card — moved to bottom-right so it doesn't cover her face */}
+              <div className="absolute -bottom-4 -right-6 z-20 bg-card/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-elevated border border-gold/30 animate-fade-up delay-700">
                 <div className="flex items-center gap-2 mb-1">
                   <Sparkles className="w-3.5 h-3.5 text-gold" />
                   <div className="font-display text-[11px] font-semibold text-gold uppercase tracking-[0.15em]">Trusted Strategist</div>
