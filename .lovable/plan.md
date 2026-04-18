@@ -1,78 +1,48 @@
 
+The user is referring to a purple/dark gradient still showing on the home page hero section. Looking at HeroSection.tsx, the section uses `bg-hero-gradient` which is the dark slate/charcoal background. The "purple" they're seeing is likely the dark hero background behind the transparent PNG portrait.
 
-## Plan: Reposition Content Clarity Diagnostic → 7-Day Content-to-Cash Setup™
+Looking at the current HeroSection:
+- Section background: `bg-hero-gradient` (dark slate)
+- The transparent PNG sits directly on this dark background
+- No container/frame around the image — just floats on the dark hero
 
-### Summary
-Update the messaging and positioning of the existing `/content-clarity-diagnostic` offer from a **diagnostic** to a **guided implementation mini course**. Only text/copy changes—no layout or structural modifications.
+On the About page we already fixed this by giving the image a lighter `bg-gradient-to-br from-muted via-cream/40 to-muted/60` container with rounded frame.
 
-### Changes Required
+The home hero, however, is intentionally dark (matches the headline "Inconsistent Income Is a Systems Problem" in cream text on dark). The user's "purple" complaint is likely about the dark backdrop bleeding behind the portrait making it look out of place — OR specifically the gold/purple-toned glows behind the figure.
 
-#### 1. Update Landing Page (`src/pages/ContentClarityDiagnostic.tsx`)
+Two reasonable interpretations:
+1. They want the image area itself lifted into a lighter framed container (like About page)
+2. They want the dark hero gradient itself replaced/lightened
 
-**SEO & Header:**
-- Title: `"7-Day Content-to-Cash Setup™ | Dr. Deanna Romulus"`
-- Description: `"Build a working content → lead → conversion system in 7 days. Follow a step-by-step system to turn your content into leads and revenue."`
-- Badge label: `"7-Day Content-to-Cash Setup™"`
+Given recent feedback pattern (About page got a light cream frame around portrait), the most likely fix is: **wrap the home hero portrait in the same light cream rounded frame** so the portrait reads cleanly without the dark backdrop showing through.
 
-**Hero Section:**
-- Headline: `"Build a Content-to-Cash System in 7 Days"`
-- Subheadline: `"Stop guessing what to post. Follow a step-by-step system to turn your content into leads and revenue."`
-- CTA: `"Get the 7-Day Content-to-Cash Setup — $297"`
+I'll propose option 1 as primary, with a quick clarifier only if needed. Actually — the user said "the purple is still there" implying we already attempted a fix. Let me just propose the cleanest fix: give the home hero portrait the same light framed treatment the About page received, eliminating the dark/purple bleed behind the figure.
 
-**Who This Is For** (remove diagnostic language):
-- "Posting content but not generating leads" → keep
-- "Unsure what content converts" → keep  
-- "Feels misaligned but can't identify why" → "Ready to implement a proven content system"
+## Plan: Remove Dark Backdrop Behind Home Hero Portrait
 
-**What You Get** (implementation-focused):
-- "A 7-day step-by-step implementation system"
-- "Content workflow templates and frameworks"
-- "Lead capture sequence setup guide"
-- "Daily action checklists to maintain momentum"
+**Problem**: The transparent PNG portrait on the home hero floats directly on the dark `bg-hero-gradient`, causing the dark slate/purple tone to show through behind Dr. Romulus and around her silhouette edges.
 
-**What This Is NOT** (clarify non-diagnostic nature):
-- "Not a diagnostic or audit" (NEW)
-- "Not personalized feedback or coaching" (NEW)
-- "Not a live session or consultation" (NEW)
-- Remove: "Not a full business audit", "Not ongoing coaching", "Not implementation"
+**Fix**: Apply the same premium light-framed container used on the About page so the portrait sits in a clean cream/muted frame instead of bleeding into the dark hero background.
 
-**CTA Section:**
-- Headline: `"Get the 7-Day Content-to-Cash Setup"`
-- Description: `"A structured system to build your content → lead → conversion workflow in 7 days."`
-- Button: `"Get the 7-Day Content-to-Cash Setup — $297"`
+### Changes to `src/components/home/HeroSection.tsx`
 
-**Footer Note:**
-- Remove the RAS upsell reference entirely (or update to general next-step language if preferred)
+1. **Wrap the portrait** in a framed container:
+   - `aspect-[4/5]` rounded container
+   - Background: `bg-gradient-to-br from-cream via-cream/80 to-muted/60`
+   - `rounded-2xl overflow-hidden` to crop cleanly
+   - Keep the gold ambient glows inside the frame (not bleeding into hero)
 
----
+2. **Reposition the portrait** inside the frame:
+   - `absolute inset-x-0 bottom-0 mx-auto h-[95%] w-auto object-contain`
+   - Matches About page treatment
 
-#### 2. Update Scorecard Result Logic (`src/pages/DDSScorecard.tsx` + `src/components/dds/DDSQuiz.tsx`)
+3. **Keep floating credential cards** outside the frame with `z-20` so they overlap the frame edges for the editorial look.
 
-**Score 4–7 (Design Stage) Updates:**
+4. **Preserve** the dark hero gradient on the rest of the section (headline side stays dark cream-on-slate — that's correct brand).
 
-```typescript
-// Button label change:
-"Get the 7-Day Content-to-Cash Setup — $297"
+### Result
+- Left side: dark hero with cream headline + gold CTA (unchanged)
+- Right side: Dr. Romulus in a clean light-cream rounded frame, no purple/dark bleeding through behind her
+- Floating cards still pop off the frame edges
 
-// Recommended offer for GHL webhook:
-"7-Day Content-to-Cash Setup"
-```
-
-**Note:** URL remains `/content-clarity-diagnostic` (no routing change required). The `message` and `cta` fields in the score result can stay as-is since they describe the business stage, not the specific offer.
-
----
-
-### What Will NOT Change
-- Page layout, colors, spacing, or visual structure
-- URL (`/content-clarity-diagnostic`)
-- Score ranges (0–3, 4–7, 8–10)
-- Routing logic (still routes to same URL)
-- Any other offers or pages
-
----
-
-### Files to Edit
-1. `src/pages/ContentClarityDiagnostic.tsx` — Full copy rewrite per specifications
-2. `src/pages/DDSScorecard.tsx` — Update `buttonLabel` and `recommendedOffer` for score 4–7
-3. `src/components/dds/DDSQuiz.tsx` — Same updates as DDSScorecard
-
+No other files need changes. No memory updates needed.
