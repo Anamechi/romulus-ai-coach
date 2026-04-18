@@ -5,24 +5,25 @@ import drRomulusDesk from "@/assets/dr-romulus-hero.png";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[95vh] flex items-center bg-hero-gradient overflow-hidden">
+    <section className="relative min-h-[95vh] flex items-center overflow-hidden bg-[hsl(220_30%_8%)]">
+      {/* Rich layered background — deep navy with warm gold accent */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(220_28%_14%)_0%,hsl(220_32%_7%)_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(38_70%_20%/0.25)_0%,transparent_55%)]" />
+
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.04]">
+      <div className="absolute inset-0 opacity-[0.05]">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--gold)) 1px, transparent 0)`,
           backgroundSize: '44px 44px'
         }} />
       </div>
 
-      {/* Subtle vignette overlay for depth */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(var(--background)/0.4)_100%)] pointer-events-none" />
-
       {/* Gradient Orbs */}
-      <div className="absolute top-20 right-1/4 w-[28rem] h-[28rem] bg-gold/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-gold/5 rounded-full blur-3xl" />
+      <div className="absolute top-20 right-[10%] w-[32rem] h-[32rem] bg-gold/15 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-[5%] w-80 h-80 bg-gold/8 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 py-24 relative z-10">
-        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center max-w-7xl mx-auto">
           {/* Content Side */}
           <div className="text-center lg:text-left">
             {/* Premium Eyebrow Label */}
