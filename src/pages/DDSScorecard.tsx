@@ -54,11 +54,12 @@ function getResult(score: number) {
   if (score <= 7) {
     return {
       stage: "Design",
-      message: "Your business has some structure, but something is misaligned. Fixing the right constraint will unlock your next level of growth.",
-      cta: "Fix your next constraint",
-      url: "/content-to-cash",
-      buttonLabel: "Get the 7-Day Content-to-Cash Setup — $297",
-      recommendedOffer: "7-Day Content-to-Cash Setup",
+      headline: "Your system has gaps, and we know where to look.",
+      message: "You've built something. But revenue is inconsistent because there's a structural constraint somewhere in your system — and right now, you're likely guessing which one.\n\nThe next step isn't a strategy session. It's a diagnosis.\n\nStart with the Complete Income Systems Diagnostic Kit™ — $27. It walks you through pinpointing the #1 bottleneck in your income system before you spend a dollar on fixing the wrong thing.\n\nOnce your constraint is confirmed, you'll be invited to the Income Clarity Diagnostic™ — a live $297 session where we fix that one constraint, completely.",
+      cta: "Start with the diagnosis",
+      url: "https://drromulusmba.com/diagnostickit",
+      buttonLabel: "Get the Diagnostic Kit — $27",
+      recommendedOffer: "Diagnostic Kit + Income Clarity Diagnostic",
     };
   }
   return {
@@ -329,7 +330,12 @@ const DDSScorecard = () => {
                   <p className="text-[hsl(var(--gold-light))] font-medium text-lg mb-4">
                     Stage: {result.stage}
                   </p>
-                  <p className="text-lg mb-8" style={{ color: "hsl(220 15% 70%)" }}>
+                  {("headline" in result) && (result as any).headline && (
+                    <h3 className="font-display text-2xl md:text-3xl font-bold mb-4 text-[hsl(var(--cream))]">
+                      {(result as any).headline}
+                    </h3>
+                  )}
+                  <p className="text-lg mb-8 whitespace-pre-line" style={{ color: "hsl(220 15% 70%)" }}>
                     {result.message}
                   </p>
 
@@ -338,10 +344,17 @@ const DDSScorecard = () => {
                       {result.cta}
                     </p>
                     <Button variant="gold" size="lg" asChild>
-                      <Link to={result.url}>
-                        {result.buttonLabel}
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </Link>
+                      {result.url.startsWith("http") ? (
+                        <a href={result.url}>
+                          {result.buttonLabel}
+                          <ArrowRight className="ml-2 h-5 w-5" />
+                        </a>
+                      ) : (
+                        <Link to={result.url}>
+                          {result.buttonLabel}
+                          <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                      )}
                     </Button>
                   </div>
                 </div>
