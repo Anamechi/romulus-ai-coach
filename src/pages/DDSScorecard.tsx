@@ -55,7 +55,7 @@ function getResult(score: number) {
     return {
       stage: "Design",
       headline: "Your system has gaps, and we know where to look.",
-      message: "You've built something. But revenue is inconsistent because there's a structural constraint somewhere in your system — and right now, you're likely guessing which one.\n\nThe next step isn't a strategy session. It's a diagnosis.\n\nStart with the Complete Income Systems Diagnostic Kit™ — $27. It walks you through pinpointing the #1 bottleneck in your income system before you spend a dollar on fixing the wrong thing.\n\nOnce your constraint is confirmed, you'll be invited to the Income Clarity Diagnostic™ — a live $297 session where we fix that one constraint, completely.",
+      message: "You've built something. But revenue is inconsistent because there's a structural constraint somewhere in your system — and right now, you're likely guessing which one.\n\nThe next step isn't a strategy session. It's a diagnosis.\n\nStart with the Complete Income Systems Diagnostic Kit™ — $27. It walks you through pinpointing the #1 bottleneck in your income system — or determining whether the constraint you identified is actually the one you should fix first.",
       cta: "Start with the diagnosis",
       url: "https://drromulusmba.com/diagnostickit",
       buttonLabel: "Get the Diagnostic Kit — $27",
