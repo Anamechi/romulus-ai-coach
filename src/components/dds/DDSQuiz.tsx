@@ -201,7 +201,12 @@ const DDSQuiz = ({ leadEmail, leadFirstName, leadPhone }: Props) => {
               <p className="text-[hsl(var(--gold-light))] font-medium text-lg mb-4">
                 Stage: {result.stage}
               </p>
-              <p className="text-lg mb-8" style={{ color: "hsl(220 15% 70%)" }}>
+              {("headline" in result) && (result as any).headline && (
+                <h3 className="font-display text-2xl md:text-3xl font-bold mb-4 text-[hsl(var(--cream))]">
+                  {(result as any).headline}
+                </h3>
+              )}
+              <p className="text-lg mb-8 whitespace-pre-line" style={{ color: "hsl(220 15% 70%)" }}>
                 {result.message}
               </p>
 
@@ -210,10 +215,17 @@ const DDSQuiz = ({ leadEmail, leadFirstName, leadPhone }: Props) => {
                   {result.cta}
                 </p>
                 <Button variant="gold" size="lg" asChild>
-                  <Link to={result.url}>
-                    {result.buttonLabel}
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+                  {result.url.startsWith("http") ? (
+                    <a href={result.url}>
+                      {result.buttonLabel}
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </a>
+                  ) : (
+                    <Link to={result.url}>
+                      {result.buttonLabel}
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  )}
                 </Button>
               </div>
             </div>
