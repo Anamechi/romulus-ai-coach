@@ -28,7 +28,7 @@ export const EditorialHero = () => {
             className="text-primary font-normal leading-[1.05] mb-8"
             style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)", letterSpacing: "-0.01em" }}
           >
-            Dr. Romulus<span className="text-accent">.</span>
+            Dr<span className="text-accent">.</span> Romulus
           </h1>
           <div className="h-px bg-accent w-3/5 mb-8" aria-hidden="true" />
           <p
