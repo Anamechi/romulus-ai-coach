@@ -37,9 +37,9 @@ export function ValidationDisplay({ validation, className = '' }: ValidationDisp
         </Alert>
       )}
       {validation.warnings.length > 0 && (
-        <Alert className="border-yellow-500/50 bg-yellow-500/10">
-          <AlertTriangle className="h-4 w-4 text-yellow-600" />
-          <AlertDescription className="text-yellow-700 dark:text-yellow-300">
+        <Alert className="border-accent/50 bg-accent/10">
+          <AlertTriangle className="h-4 w-4 text-accent" />
+          <AlertDescription className="text-accent dark:text-accent">
             <strong>Warnings (recommended to fix):</strong>
             <ul className="list-disc list-inside mt-1">
               {validation.warnings.map((warn, i) => (

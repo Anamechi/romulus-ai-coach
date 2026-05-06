@@ -56,9 +56,9 @@ export function PublishGateModal({
               </>
             ) : hasWarnings ? (
               <>
-                <AlertTriangle className="h-8 w-8 text-amber-500" />
+                <AlertTriangle className="h-8 w-8 text-accent" />
                 <div>
-                  <p className="font-semibold text-amber-600">Warnings Detected</p>
+                  <p className="font-semibold text-accent">Warnings Detected</p>
                   <p className="text-sm text-muted-foreground">
                     {validation.warnings.length} warning(s) - you can still publish
                   </p>
@@ -101,7 +101,7 @@ export function PublishGateModal({
           {/* Warnings */}
           {hasWarnings && (
             <div className="space-y-2">
-              <h4 className="font-medium text-amber-600 flex items-center gap-2">
+              <h4 className="font-medium text-accent flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
                 Warnings (Recommended)
               </h4>
@@ -109,7 +109,7 @@ export function PublishGateModal({
                 {validation.warnings.map((warning, idx) => (
                   <div
                     key={`warning-${idx}`}
-                    className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg"
+                    className="flex items-start gap-3 p-3 bg-accent/10 border border-accent/20 rounded-lg"
                   >
                     <Badge variant="secondary" className="shrink-0">{warning.field}</Badge>
                     <p className="text-sm">{warning.message}</p>

@@ -54,7 +54,7 @@ type Application = {
 };
 
 const statusColors: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  pending: "bg-accent text-accent border-accent",
   reviewing: "bg-blue-100 text-blue-700 border-blue-200",
   interview: "bg-purple-100 text-purple-700 border-purple-200",
   accepted: "bg-green-100 text-green-700 border-green-200",
@@ -157,7 +157,7 @@ export default function Applications() {
           </Card>
           <Card>
             <CardContent className="p-4">
-              <div className="text-2xl font-bold text-yellow-600">{stats.pending}</div>
+              <div className="text-2xl font-bold text-accent">{stats.pending}</div>
               <div className="text-sm text-muted-foreground">Pending Review</div>
             </CardContent>
           </Card>

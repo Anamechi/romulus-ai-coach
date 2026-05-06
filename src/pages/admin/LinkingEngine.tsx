@@ -430,7 +430,7 @@ export default function LinkingEnginePage() {
                                   </TableCell>
                                   <TableCell>
                                     {item.warnings?.length > 0 && (
-                                      <Badge variant="secondary" className="text-amber-600">
+                                      <Badge variant="secondary" className="text-accent">
                                         <AlertTriangle className="h-3 w-3 mr-1" />
                                         {item.warnings.length}
                                       </Badge>
@@ -562,7 +562,7 @@ export default function LinkingEnginePage() {
                 {/* Warnings */}
                 {detailsItem.warnings?.length > 0 && (
                   <div>
-                    <h4 className="font-medium mb-2 flex items-center gap-2 text-amber-600">
+                    <h4 className="font-medium mb-2 flex items-center gap-2 text-accent">
                       <AlertTriangle className="h-4 w-4" />
                       Warnings
                     </h4>

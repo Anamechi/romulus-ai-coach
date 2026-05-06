@@ -161,8 +161,8 @@ export default function EditorialPolicy() {
             <Card className="bg-muted/50 border-muted">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-amber-500/10">
-                    <Shield className="h-6 w-6 text-amber-500" />
+                  <div className="p-3 rounded-lg bg-accent/10">
+                    <Shield className="h-6 w-6 text-accent" />
                   </div>
                   <div>
                     <h2 className="text-xl font-semibold mb-3">Important Disclaimer</h2>

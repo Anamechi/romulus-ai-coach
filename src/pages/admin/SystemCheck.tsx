@@ -297,12 +297,12 @@ export default function SystemCheck() {
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-500" />
+                <AlertTriangle className="h-4 w-4 text-accent" />
                 Warnings
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-amber-500">{warnings.length}</div>
+              <div className="text-3xl font-bold text-accent">{warnings.length}</div>
             </CardContent>
           </Card>
           <Card>
@@ -388,7 +388,7 @@ export default function SystemCheck() {
                       {issue.severity === "error" ? (
                         <XCircle className="h-5 w-5 text-destructive flex-shrink-0" />
                       ) : (
-                        <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0" />
+                        <AlertTriangle className="h-5 w-5 text-accent flex-shrink-0" />
                       )}
                       <div className="flex-1 min-w-0">
                         <p className="font-medium truncate">{issue.title}</p>

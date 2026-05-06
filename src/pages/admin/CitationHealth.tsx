@@ -9,7 +9,7 @@ import { format } from "date-fns";
 
 const statusConfig = {
   healthy: { color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle },
-  warning: { color: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200", icon: AlertTriangle },
+  warning: { color: "bg-secondary text-amber-800 dark:bg-amber-900 dark:text-accent", icon: AlertTriangle },
   dead: { color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: XCircle },
   pending: { color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200", icon: RefreshCw },
 };
@@ -64,12 +64,12 @@ export default function CitationHealth() {
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-500" />
+                <AlertTriangle className="h-4 w-4 text-accent" />
                 Warnings
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-amber-500">{stats?.warning || 0}</div>
+              <div className="text-3xl font-bold text-accent">{stats?.warning || 0}</div>
             </CardContent>
           </Card>
           <Card>

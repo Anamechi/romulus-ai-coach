@@ -48,7 +48,7 @@ type Lead = {
 
 const statusColors: Record<string, string> = {
   new: "bg-blue-100 text-blue-700 border-blue-200",
-  contacted: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  contacted: "bg-accent text-accent border-accent",
   qualified: "bg-green-100 text-green-700 border-green-200",
   converted: "bg-purple-100 text-purple-700 border-purple-200",
   closed: "bg-gray-100 text-gray-700 border-gray-200",
@@ -150,7 +150,7 @@ export default function Leads() {
           </Card>
           <Card>
             <CardContent className="p-4">
-              <div className="text-2xl font-bold text-yellow-600">{stats.contacted}</div>
+              <div className="text-2xl font-bold text-accent">{stats.contacted}</div>
               <div className="text-sm text-muted-foreground">Contacted</div>
             </CardContent>
           </Card>

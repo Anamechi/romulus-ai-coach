@@ -125,8 +125,8 @@ export default function Citations() {
   const getDomainAuthorityBadge = (da: number | null) => {
     if (!da) return null;
     if (da >= 70) return <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">DA {da}</Badge>;
-    if (da >= 40) return <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">DA {da}</Badge>;
-    return <Badge className="bg-slate-500/20 text-slate-400 border-slate-500/30">DA {da}</Badge>;
+    if (da >= 40) return <Badge className="bg-accent/20 text-accent border-accent/30">DA {da}</Badge>;
+    return <Badge className="bg-slate-500/20 text-muted-foreground border-slate-500/30">DA {da}</Badge>;
   };
 
   return (
