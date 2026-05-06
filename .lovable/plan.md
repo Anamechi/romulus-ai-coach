@@ -1,45 +1,61 @@
 ## Goal
-Remove the word "founder/founders" from all visible page copy and replace with "service-based business owner(s)" — varying phrasing for readability where context already establishes "service-based".
+Replace the homepage hero's right-column portrait with a refined, editorial architectural background (cream-toned column + steps) anchored to the right side. The background must whisper, never shout — text hierarchy stays: Dr. Romulus → Systems Before Scale → environment.
 
-## What WILL change (display copy only)
+## Mobile-first principle
+Per your direction, the design starts at mobile and scales up. The image must never compromise text legibility on small screens.
 
-**Homepage & meta**
-- `index.html` — meta description, OG description, Twitter description (3 occurrences of "service-based founders")
-- `src/pages/Index.tsx` — page description string + SEOHead description
-- `src/components/home/editorial/EditorialHero.tsx` — body copy "Helping service-based founders build…"
-- `src/components/home/editorial/AuthoritySection.tsx` — image alt text "working with founders…"
-- `src/components/home/editorial/MethodSection.tsx` — "Most founders are solving the wrong problem"
+## Implementation
 
-**DDS pages (copy only — product names preserved)**
-- `src/components/dds/DDSFrameworkOverview.tsx` — "helps founders build…"
-- `src/components/dds/DDSHeroSection.tsx` — "shows founders how to…" + "Built for service-based founders"
-- `src/components/dds/DDSLearnSection.tsx` — "Why most founders struggle…"
-- `src/components/dds/DDSNextStepOffer.tsx` — bullet "Founder diagnostic checklist" → "Service-based business owner diagnostic checklist"
-- `src/pages/DDSFramework.tsx` — SEO description "Learn how founders build…"
+### 1. Generate the background image
+Use AI image generation (`premium` quality) to produce a **wide 1920×1080** PNG saved to `src/assets/hero-architecture.png`.
 
-**Other pages**
-- `src/pages/Diagnostic.tsx` — bullet "Founders ready to understand…"
-- `src/pages/Programs.tsx` — "For founders ready to scale…"
-- `src/pages/RevenueArchitectureSession.tsx` — page title, hero copy, who-it's-for list, exclusion line, quote ("Most founders hit a ceiling…") — 5 occurrences
-- `src/pages/Trust.tsx` — "Our founder holds an MBA…" and "Learn about our founder" → reframe as "Dr. Romulus holds…" / "Learn about Dr. Romulus" (the company-founder meaning is different but user confirmed inclusion)
-- `src/pages/DiagnosticKitThankYou.tsx` — section title "Founder Briefing: Why Effort Isn't the Problem"
+**Prompt direction:**
+- Single fluted classical stone column (Doric/Ionic, no capital visible) rising from a tiered stone base/steps, anchored on the **right** side of the frame
+- Composition leaves the **left 60% empty** — soft, slightly out-of-focus cream wall
+- Palette: cream `#F5F5F0`, soft warm off-white, very pale stone neutrals — no greys, no shadows darker than ~15%
+- Matte limestone finish, soft natural daylight, very subtle film grain
+- Background falls off softly toward the center (gentle falloff so text area is essentially flat cream)
+- No people, no modern architecture, no glass, no dramatic chiaroscuro, no gradients
+- Slight grounding shadow under the steps for realism — nothing harsh
 
-## What will NOT change (preserved as branded product names / technical keys)
-- `DDS Founder Score™` and `DDS Founder Scorecard` everywhere they appear (DDSQuiz.tsx, DDSScorecard.tsx)
-- Schema.org JSON-LD `"founder"` property keys in `StructuredData.tsx` and `Index.tsx` (required Schema.org vocabulary, not user-visible)
-- `.lovable/plan.md` (internal scratch file)
+QA the rendered image: confirm right-side composition, confirm left 60% is near-uniform cream, confirm no harsh contrast. Regenerate if it returns a centered or symmetrical comp.
 
-## Phrasing approach
-- Default: `founders` → `service-based business owners`, `founder` → `service-based business owner`
-- Where "service-based" already appears earlier in the same sentence/paragraph, shorten the second mention to `business owners` to avoid repetition (e.g., RAS hero, DDS hero badge).
-- Trust.tsx "our founder" (referring to Dr. Romulus as company founder) → rewrite as "Dr. Romulus" rather than awkward literal substitution.
-- "Founder Briefing" section heading on the thank-you page → "Service-Based Business Owner Briefing".
+### 2. Restructure `EditorialHero.tsx`
+Convert from a 12-column grid to a **single full-bleed section with the architectural image as a CSS background** layered behind the text. Text sits in a constrained left column.
 
-## Verification
-- After edits, re-run `grep -rin '\bfounders\?\b' src index.html` and confirm only preserved branded names + JSON-LD keys remain.
-- Spot-check homepage and RAS page in preview to ensure copy reads naturally.
+```text
+Mobile (<640):  text only, no image (background: cream)
+Tablet (≥640):  image visible, anchored hard-right, 35% width, opacity ~85%
+Desktop (≥1024): image visible, anchored hard-right, 45-50% width, opacity 100%
+```
 
-## Out of scope
-- No database/content edits (existing blog posts, FAQs, Q&A bodies stored in DB are not touched).
-- No design, layout, or component structure changes.
-- No memory file updates (memory references to "$150K+ founders" are internal notes, not user-visible).
+**Approach:** Use a `<div aria-hidden>` absolutely positioned to the right with the image as `background-image`, `background-position: right center`, `background-repeat: no-repeat`, `background-size: contain` (or `cover` with right anchor). The image div is `hidden sm:block` so mobile gets pure cream + text. Add a **left-to-right cream fade overlay** (`bg-gradient-to-r from-background via-background/95 to-transparent`) behind the text column to guarantee navy headline contrast even if the image's left edge brightens.
+
+Section becomes `relative overflow-hidden bg-background`. Text content keeps existing typography exactly as-is, just contained in `relative z-10 max-w-2xl` instead of a grid column.
+
+### 3. Relocate the portrait
+Move `dr-romulus-hero.png` (the current hero portrait) to `AuthoritySection.tsx`, replacing the `dr-romulus-about.png` currently shown there. Rationale: the hero portrait is the stronger headshot and pairs naturally with the "structure problem" statement. The displaced `dr-romulus-about.png` stays in `src/assets/` (used by About page elsewhere — no deletions).
+
+Update the alt text to remain accurate to Dr. Romulus.
+
+### 4. Responsive verification
+After implementation, screenshot at 375px, 768px, 1024px, and 1294px to confirm:
+- Mobile: clean cream, no image, text fully legible
+- Tablet: column visible on right, text breathing on left, no overlap
+- Desktop: full architectural composition, headline reads first
+
+## Files touched
+- **New**: `src/assets/hero-architecture.png` (AI-generated)
+- **Edited**: `src/components/home/editorial/EditorialHero.tsx` (layout swap, no copy changes)
+- **Edited**: `src/components/home/editorial/AuthoritySection.tsx` (swap image import + alt)
+
+## What will NOT change
+- Hero copy (eyebrow, H1, "Systems Before Scale", body, both CTAs) — pixel-identical
+- Brand tokens, font, navy/gold/cream palette — no new colors
+- All other sections, routes, components
+- The displaced `dr-romulus-about.png` file (kept; just unreferenced in this section)
+
+## Risks & mitigations
+- **AI image returns wrong composition** → regenerate with stricter right-anchor language; fallback is to use the uploaded reference directly via `code--copy`.
+- **Image bleeds under text on tablet** → cream gradient overlay on the text column eliminates contrast risk regardless of image content.
+- **Mobile performance** → image is `hidden sm:block` on the background div, so mobile users never download/render it (use a CSS `@media` rule via Tailwind `sm:` background utility, not just `display:none` on a downloaded `<img>`).
