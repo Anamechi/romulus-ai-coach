@@ -197,7 +197,7 @@ const DDSScorecard = () => {
                       placeholder="Your first name"
                       value={formData.firstName}
                       onChange={(e) => setFormData((p) => ({ ...p, firstName: e.target.value }))}
-                      className="mt-1.5 bg-[hsl(var(--slate-deep))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-[hsl(220,15%,45%)]"
+                      className="mt-1.5 bg-[hsl(var(--slate-deep))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-muted-foreground"
                     />
                   </div>
                   <div>
@@ -210,7 +210,7 @@ const DDSScorecard = () => {
                       placeholder="you@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
-                      className="mt-1.5 bg-[hsl(var(--slate-deep))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-[hsl(220,15%,45%)]"
+                      className="mt-1.5 bg-[hsl(var(--slate-deep))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-muted-foreground"
                     />
                   </div>
                   <div>
@@ -223,7 +223,7 @@ const DDSScorecard = () => {
                       placeholder="(555) 123-4567"
                       value={formData.phone}
                       onChange={(e) => setFormData((p) => ({ ...p, phone: e.target.value }))}
-                      className="mt-1.5 bg-[hsl(var(--slate-deep))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-[hsl(220,15%,45%)]"
+                      className="mt-1.5 bg-[hsl(var(--slate-deep))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-muted-foreground"
                     />
                   </div>
 
