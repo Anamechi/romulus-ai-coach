@@ -32,7 +32,7 @@ export const AuthoritySection = () => {
           <div>
             <img
               src={aboutImage}
-              alt="Dr. Romulus working with founders on business systems"
+              alt="Dr. Romulus working with service-based business owners on business systems"
               className="w-full h-auto object-cover"
               loading="lazy"
             />

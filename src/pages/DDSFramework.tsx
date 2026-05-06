@@ -67,7 +67,7 @@ const DDSFramework = () => {
     <>
       <SEOHead
         title="DDS Framework™ Breakdown Guide | Dr. Deanna Romulus"
-        description="Discover the DDS Framework™ — Diagnose, Design, Scale. Learn how founders build predictable revenue by fixing structural problems first."
+        description="Discover the DDS Framework™ — Diagnose, Design, Scale. Learn how service-based business owners build predictable revenue by fixing structural problems first."
         canonicalUrl="/dds-framework"
       />
 

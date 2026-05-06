@@ -21,7 +21,7 @@ const approaches = [
   {
     icon: Building2,
     title: "Business Foundation",
-    whoFor: "For founders ready to scale but lacking structure",
+    whoFor: "For service-based business owners ready to scale but lacking structure",
     problem: "Your business isn't set up to access capital or partnerships",
     outcome: "Create a credible, fundable business structure that opens doors",
   },

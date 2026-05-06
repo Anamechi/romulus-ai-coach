@@ -24,7 +24,7 @@ const RevenueArchitectureSession = () => {
   return (
     <>
       <SEOHead
-        title="Revenue Architecture for Service-Based Founders | Dr. Romulus"
+        title="Revenue Architecture for Service-Based Business Owners | Dr. Romulus"
         description="Book a $500 Revenue Architecture Session to map your authority positioning, offer clarity, revenue flow structure, and 30-day execution roadmap."
         canonicalUrl="/revenue-architecture-session"
         ogType="website"
@@ -52,7 +52,7 @@ const RevenueArchitectureSession = () => {
               <span className="text-gradient-gold">Your Business Actually Needs</span>
             </h1>
             <p className="font-body text-lg md:text-xl text-cream/70 max-w-2xl mx-auto mb-10">
-              For service-based founders earning six figures who are ready to stabilize, scale,
+              For service-based business owners earning six figures who are ready to stabilize, scale,
               and systemize income using AI-ready infrastructure.
             </p>
             <Button variant="gold" size="xl" onClick={scrollToBooking}>
@@ -172,7 +172,7 @@ const RevenueArchitectureSession = () => {
                 "Coaches",
                 "Fractional Executives",
                 "Agency Owners",
-                "Service-Based Founders earning $150K+",
+                "Service-Based Business Owners earning $150K+",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border">
                   <CheckCircle2 className="w-5 h-5 text-gold shrink-0" />
@@ -182,7 +182,7 @@ const RevenueArchitectureSession = () => {
             </div>
 
             <p className="font-body text-sm text-muted-foreground text-center italic">
-              Not for early-stage founders or hobby businesses.
+              Not for early-stage business owners or hobby businesses.
             </p>
           </div>
         </div>
@@ -206,7 +206,7 @@ const RevenueArchitectureSession = () => {
                 {
                   title: "Expansion Gap",
                   description:
-                    "Most founders hit a ceiling not because of demand, but because their business structure cannot absorb growth. Scaling without systems creates collapse.",
+                    "Most service-based business owners hit a ceiling not because of demand, but because their business structure cannot absorb growth. Scaling without systems creates collapse.",
                 },
                 {
                   title: "Structural Risk vs. Scalable Authority",
