@@ -17,7 +17,7 @@ const homepageSchema = {
       "url": "https://drromulusmba.com",
       "jobTitle": "AI-Ready Business Systems Strategist",
       "image": "https://drromulusmba.com/favicon-64.png",
-      "description": "Dr. Deanna Romulus helps service-based founders build fundable, automated revenue systems that generate predictable income.",
+      "description": "Dr. Deanna Romulus helps service-based business owners build fundable, automated revenue systems that generate predictable income.",
       "sameAs": [
         "https://www.instagram.com/dr.romulusmba/",
         "https://www.tiktok.com/@dr.romulusmba",
@@ -57,7 +57,7 @@ const Index = () => {
     <Layout>
       <SEOHead
         title="Dr. Deanna Romulus | AI-Ready Business Systems Strategist"
-        description="Helping service-based founders build fundable, automated revenue systems that generate consistent, predictable income."
+        description="Helping service-based business owners build fundable, automated revenue systems that generate consistent, predictable income."
         canonicalUrl="/"
         ogType="website"
         ogImage="https://drromulusmba.com/og-dr-deanna-romulus.png"

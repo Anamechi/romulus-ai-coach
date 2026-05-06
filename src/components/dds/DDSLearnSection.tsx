@@ -1,7 +1,7 @@
 import { CheckCircle2 } from "lucide-react";
 
 const LEARN_POINTS = [
-  "Why most founders struggle with inconsistent revenue",
+  "Why most service-based business owners struggle with inconsistent revenue",
   "The six stages of the DDS Framework™",
   "The difference between effort and architecture in business growth",
   "How structural problems create income instability",

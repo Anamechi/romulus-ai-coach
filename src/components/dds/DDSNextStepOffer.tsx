@@ -21,7 +21,7 @@ const DDSNextStepOffer = ({ diagnosticKitUrl }: Props) => (
 
         <ul className="space-y-3 mb-8">
           {[
-            "Founder diagnostic checklist",
+            "Service-based business owner diagnostic checklist",
             "Walkthrough training video",
             "Results interpretation guide",
             "Audio explanation from Dr. Romulus",

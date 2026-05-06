@@ -36,9 +36,9 @@ export default function Trust() {
     {
       icon: Award,
       title: 'Expert Credentials',
-      description: 'Our founder holds an MBA and brings years of hands-on experience in business consulting and automation.',
+      description: 'Dr. Romulus holds an MBA and brings years of hands-on experience in business consulting and automation.',
       link: '/about',
-      linkText: 'Learn about our founder',
+      linkText: 'Learn about Dr. Romulus',
     },
     {
       icon: Users,

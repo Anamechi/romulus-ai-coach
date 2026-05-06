@@ -19,7 +19,7 @@ const DDSHeroSection = ({ onCTAClick }: Props) => (
         If you commented "DDS" on social media, you're in the right place.
       </p>
       <p className="text-[hsl(var(--muted-foreground))] text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto" >
-        The DDS Framework™ shows founders how to diagnose structural problems in their business, design the correct revenue architecture, and build predictable income systems.
+        The DDS Framework™ shows service-based business owners how to diagnose structural problems in their business, design the correct revenue architecture, and build predictable income systems.
       </p>
 
       <Button variant="gold" size="xl" onClick={onCTAClick}>
@@ -29,7 +29,7 @@ const DDSHeroSection = ({ onCTAClick }: Props) => (
 
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-sm" >
         <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Free breakdown guide</span>
-        <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Built for service-based founders</span>
+        <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Built for service-based business owners</span>
         <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Takes less than 5 minutes to understand</span>
       </div>
     </div>

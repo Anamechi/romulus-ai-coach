@@ -25,7 +25,7 @@ const benefits = [
 const whoThisIsFor = [
   "Service-based business owners tired of income rollercoasters",
   "Entrepreneurs who've tried tactics that didn't stick",
-  "Founders ready to understand why revenue stays inconsistent",
+  "Service-based business owners ready to understand why revenue stays inconsistent",
   "Business owners who want clarity before committing to solutions",
 ];
 

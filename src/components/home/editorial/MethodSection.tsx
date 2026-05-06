@@ -3,7 +3,7 @@ const steps = [
     number: "01",
     name: "Diagnose",
     description:
-      "Identify the single structural constraint preventing predictable revenue. Most founders are solving the wrong problem.",
+      "Identify the single structural constraint preventing predictable revenue. Most service-based business owners are solving the wrong problem.",
   },
   {
     number: "02",

@@ -18,7 +18,7 @@ const DDSFrameworkOverview = () => (
           The DDS Framework™
         </h2>
         <p className="text-lg leading-relaxed max-w-2xl mx-auto" >
-          The DDS Framework™ helps founders build predictable revenue by diagnosing structural problems, designing the correct business architecture, and scaling responsibly.
+          The DDS Framework™ helps service-based business owners build predictable revenue by diagnosing structural problems, designing the correct business architecture, and scaling responsibly.
         </p>
       </div>
 

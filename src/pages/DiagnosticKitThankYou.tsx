@@ -139,7 +139,7 @@ const DiagnosticKitThankYou = () => {
                 <Headphones className="w-5 h-5 text-muted-foreground" />
               </div>
               <h2 className="font-display text-xl font-semibold mb-5">
-                Founder Briefing: Why Effort Isn't the Problem — Structure Is
+                Briefing: Why Effort Isn't the Problem — Structure Is
               </h2>
               <audio
                 className="w-full"

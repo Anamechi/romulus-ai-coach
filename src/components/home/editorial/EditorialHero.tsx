@@ -21,7 +21,7 @@ export const EditorialHero = () => {
               Systems Before Scale
             </p>
             <p className="text-primary/80 text-lg lg:text-xl leading-relaxed mb-12 max-w-xl">
-              Helping service-based founders build structural businesses that generate
+              Helping service-based business owners build structural businesses that generate
               consistent, predictable revenue.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
