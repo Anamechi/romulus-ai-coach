@@ -1,8 +1,9 @@
 import { Layout } from "@/components/layout/Layout";
-import { HeroSection } from "@/components/home/HeroSection";
-import { AboutPreview } from "@/components/home/AboutPreview";
-import { TestimonialsSection } from "@/components/home/TestimonialsSection";
-import { CTASection } from "@/components/home/CTASection";
+import { EditorialHero } from "@/components/home/editorial/EditorialHero";
+import { AuthoritySection } from "@/components/home/editorial/AuthoritySection";
+import { MethodSection } from "@/components/home/editorial/MethodSection";
+import { BookSection } from "@/components/home/editorial/BookSection";
+import { ClosingCTA } from "@/components/home/editorial/ClosingCTA";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Helmet } from 'react-helmet-async';
 
@@ -65,10 +66,11 @@ const Index = () => {
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(homepageSchema)}</script>
       </Helmet>
-      <HeroSection />
-      <AboutPreview />
-      <TestimonialsSection />
-      <CTASection />
+      <EditorialHero />
+      <AuthoritySection />
+      <MethodSection />
+      <BookSection />
+      <ClosingCTA />
     </Layout>
   );
 };
