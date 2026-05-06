@@ -168,7 +168,7 @@ export default function TopicPage() {
                   {mofuPosts.length > 0 && (
                     <div>
                       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <Badge className="bg-secondary text-amber-800 dark:bg-amber-900 dark:text-accent">
+                        <Badge className="bg-secondary text-accent dark:bg-primary dark:text-accent">
                           MOFU
                         </Badge>
                         Consideration Stage

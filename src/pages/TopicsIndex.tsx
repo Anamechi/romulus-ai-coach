@@ -17,7 +17,7 @@ export default function TopicsIndex() {
 
   const funnelStageColors: Record<string, string> = {
     TOFU: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-    MOFU: "bg-secondary text-amber-800 dark:bg-amber-900 dark:text-accent",
+    MOFU: "bg-secondary text-accent dark:bg-primary dark:text-accent",
     BOFU: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
   };
 

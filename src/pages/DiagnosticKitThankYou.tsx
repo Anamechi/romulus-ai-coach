@@ -95,7 +95,7 @@ const DiagnosticKitThankYou = () => {
                 results.
               </p>
               <video
-                className="aspect-video w-full rounded-lg border border-slate-600"
+                className="aspect-video w-full rounded-lg border border-border"
                 controls
                 preload="metadata"
                 poster=""

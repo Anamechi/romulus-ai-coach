@@ -118,9 +118,9 @@ const IncomeClarityDiagnostic = () => {
             </p>
             <div className="flex items-center justify-center gap-6 text-muted-foreground text-sm">
               <span>One-time session</span>
-              <span className="w-1 h-1 rounded-full bg-slate-600" />
+              <span className="w-1 h-1 rounded-full bg-muted" />
               <span>No subscription</span>
-              <span className="w-1 h-1 rounded-full bg-slate-600" />
+              <span className="w-1 h-1 rounded-full bg-muted" />
               <span>Focused evaluation</span>
             </div>
           </div>

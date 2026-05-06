@@ -9,7 +9,7 @@ import { format } from "date-fns";
 
 const statusConfig = {
   healthy: { color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle },
-  warning: { color: "bg-secondary text-amber-800 dark:bg-amber-900 dark:text-accent", icon: AlertTriangle },
+  warning: { color: "bg-secondary text-accent dark:bg-primary dark:text-accent", icon: AlertTriangle },
   dead: { color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: XCircle },
   pending: { color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200", icon: RefreshCw },
 };
