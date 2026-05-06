@@ -32,7 +32,7 @@ export const MethodSection = () => {
             className="text-primary font-normal leading-[1.15]"
             style={{ fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)", letterSpacing: "-0.005em" }}
           >
-            Diagnose. Design. Scale.
+            Diagnose<span className="text-accent">.</span> Design<span className="text-accent">.</span> Scale<span className="text-accent">.</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0 max-w-5xl mx-auto">
