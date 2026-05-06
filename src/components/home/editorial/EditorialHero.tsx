@@ -61,7 +61,7 @@ export const EditorialHero = () => {
               size="lg"
               className="rounded-none h-auto px-8 py-4 text-base"
             >
-              <a href="/contact">Work With Me</a>
+              <a href="/revenue-architecture-session">Work With Me</a>
             </Button>
           </div>
         </div>
