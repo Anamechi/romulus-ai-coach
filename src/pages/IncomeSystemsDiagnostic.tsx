@@ -31,7 +31,7 @@ const IncomeSystemsDiagnostic = () => {
             <h1 className="font-display text-3xl md:text-5xl font-bold mb-6 leading-tight">
               Get Expert Insight on What's Missing in Your Business
             </h1>
-            <p className="text-lg md:text-xl mb-8" style={{ color: "hsl(220 15% 70%)" }}>
+            <p className="text-lg md:text-xl mb-8" >
               You've identified your gaps—now let's make sure you're focusing on the right ones.
             </p>
             <Button
@@ -107,8 +107,8 @@ const IncomeSystemsDiagnostic = () => {
                 "Not ongoing coaching",
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <XCircle className="h-5 w-5 flex-shrink-0" style={{ color: "hsl(220 15% 50%)" }} />
-                  <p style={{ color: "hsl(220 15% 65%)" }}>{item}</p>
+                  <XCircle className="h-5 w-5 flex-shrink-0"  />
+                  <p >{item}</p>
                 </div>
               ))}
             </div>
@@ -124,7 +124,7 @@ const IncomeSystemsDiagnostic = () => {
                 Submit Your Diagnostic for Review
               </h2>
               <p className="text-lg mb-2 text-[hsl(var(--gold))] font-semibold">$79</p>
-              <p className="mb-8" style={{ color: "hsl(220 15% 65%)" }}>
+              <p className="mb-8" >
                 Get personalized expert feedback on your diagnostic results within 48 hours.
               </p>
               {/* Placeholder CTA — replace with payment link */}
@@ -134,7 +134,7 @@ const IncomeSystemsDiagnostic = () => {
               </Button>
             </div>
 
-            <p className="mt-8 text-sm italic" style={{ color: "hsl(220 15% 50%)" }}>
+            <p className="mt-8 text-sm italic" >
               "If deeper issues are identified, next steps may include a Content Clarity Diagnostic or Revenue Architecture Session."
             </p>
           </div>
@@ -142,7 +142,7 @@ const IncomeSystemsDiagnostic = () => {
 
         {/* Footer */}
         <footer className="py-8 border-t border-[hsl(var(--gold)/0.1)]">
-          <div className="container mx-auto px-6 text-center text-sm" style={{ color: "hsl(220 15% 45%)" }}>
+          <div className="container mx-auto px-6 text-center text-sm" >
             © {new Date().getFullYear()} Dr. Deanna Romulus, MBA. All rights reserved.
           </div>
         </footer>

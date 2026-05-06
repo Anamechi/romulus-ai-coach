@@ -15,10 +15,10 @@ const DDSHeroSection = ({ onCTAClick }: Props) => (
       <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
         You Asked for the DDS Framework™
       </h1>
-      <p className="text-sm italic mb-6" style={{ color: "hsl(220 15% 70%)" }}>
+      <p className="text-sm italic mb-6" >
         If you commented "DDS" on social media, you're in the right place.
       </p>
-      <p className="text-[hsl(var(--muted-foreground))] text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "hsl(220 15% 70%)" }}>
+      <p className="text-[hsl(var(--muted-foreground))] text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto" >
         The DDS Framework™ shows founders how to diagnose structural problems in their business, design the correct revenue architecture, and build predictable income systems.
       </p>
 
@@ -27,7 +27,7 @@ const DDSHeroSection = ({ onCTAClick }: Props) => (
         <ArrowRight className="ml-2 h-5 w-5" />
       </Button>
 
-      <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-sm" style={{ color: "hsl(220 15% 65%)" }}>
+      <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-sm" >
         <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Free breakdown guide</span>
         <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Built for service-based founders</span>
         <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Takes less than 5 minutes to understand</span>

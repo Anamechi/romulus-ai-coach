@@ -18,7 +18,7 @@ const DDSLearnSection = () => (
         {LEARN_POINTS.map((point) => (
           <li key={point} className="flex items-start gap-3">
             <CheckCircle2 className="h-5 w-5 text-[hsl(var(--gold))] mt-0.5 shrink-0" />
-            <span className="text-lg" style={{ color: "hsl(220 15% 75%)" }}>{point}</span>
+            <span className="text-lg" >{point}</span>
           </li>
         ))}
       </ul>

@@ -12,7 +12,7 @@ const DDSGuideAccess = () => (
       <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
         Your DDS Framework Guide Is Ready
       </h2>
-      <p className="text-lg mb-8" style={{ color: "hsl(220 15% 70%)" }}>
+      <p className="text-lg mb-8" >
         Your guide has also been sent to your email and phone.
       </p>
 

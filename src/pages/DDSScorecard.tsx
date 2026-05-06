@@ -177,13 +177,13 @@ const DDSScorecard = () => {
                 <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">
                   Discover Your DDS Founder Score™
                 </h1>
-                <p className="text-lg" style={{ color: "hsl(220 15% 70%)" }}>
+                <p className="text-lg" >
                   Answer 5 quick questions to see how structurally prepared your business is for predictable revenue.
                 </p>
               </div>
 
               <div className="bg-[hsl(var(--slate-medium))] border border-[hsl(var(--gold)/0.2)] rounded-2xl p-8 md:p-10">
-                <p className="text-center text-sm mb-6" style={{ color: "hsl(220 15% 60%)" }}>
+                <p className="text-center text-sm mb-6" >
                   Enter your information to access the scorecard.
                 </p>
 
@@ -231,7 +231,7 @@ const DDSScorecard = () => {
                     {loading ? "Loading…" : "Start the Scorecard"}
                   </Button>
 
-                  <p className="text-center text-xs mt-3" style={{ color: "hsl(220 15% 50%)" }}>
+                  <p className="text-center text-xs mt-3" >
                     No spam. Your information is kept private.
                   </p>
                 </form>
@@ -252,14 +252,14 @@ const DDSScorecard = () => {
                 <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">
                   Your DDS Founder Scorecard
                 </h1>
-                <p className="text-lg" style={{ color: "hsl(220 15% 70%)" }}>
+                <p className="text-lg" >
                   Answer each question honestly for the most accurate result.
                 </p>
               </div>
 
               <div className="space-y-8">
                 <div className="mb-6">
-                  <div className="flex justify-between text-sm mb-2" style={{ color: "hsl(220 15% 60%)" }}>
+                  <div className="flex justify-between text-sm mb-2" >
                     <span>{answeredCount} of {QUESTIONS.length} answered</span>
                     <span>{Math.round((answeredCount / QUESTIONS.length) * 100)}%</span>
                   </div>
@@ -335,12 +335,12 @@ const DDSScorecard = () => {
                       {(result as any).headline}
                     </h3>
                   )}
-                  <p className="text-lg mb-8 whitespace-pre-line" style={{ color: "hsl(220 15% 70%)" }}>
+                  <p className="text-lg mb-8 whitespace-pre-line" >
                     {result.message}
                   </p>
 
                   <div className="border-t border-[hsl(var(--gold)/0.15)] pt-6">
-                    <p className="text-sm mb-4" style={{ color: "hsl(220 15% 60%)" }}>
+                    <p className="text-sm mb-4" >
                       {result.cta}
                     </p>
                     <Button variant="gold" size="lg" asChild>
@@ -365,7 +365,7 @@ const DDSScorecard = () => {
 
         {/* Footer */}
         <footer className="py-8 border-t border-[hsl(var(--gold)/0.1)]">
-          <div className="container mx-auto px-6 text-center text-sm" style={{ color: "hsl(220 15% 45%)" }}>
+          <div className="container mx-auto px-6 text-center text-sm" >
             © {new Date().getFullYear()} Dr. Deanna Romulus, MBA. All rights reserved.
           </div>
         </footer>

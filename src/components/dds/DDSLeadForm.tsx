@@ -20,7 +20,7 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
           <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-3">
             Get the DDS Framework Breakdown Guide
           </h2>
-          <p className="text-center text-sm mb-8" style={{ color: "hsl(220 15% 60%)" }}>
+          <p className="text-center text-sm mb-8" >
             Enter your information below and we'll send you the DDS Framework Breakdown Guide.
           </p>
 
@@ -68,7 +68,7 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
               {loading ? "Sending…" : "Send Me the DDS Guide"}
             </Button>
 
-            <p className="text-center text-xs mt-3" style={{ color: "hsl(220 15% 50%)" }}>
+            <p className="text-center text-xs mt-3" >
               No spam. Just the DDS Framework guide.
             </p>
           </form>

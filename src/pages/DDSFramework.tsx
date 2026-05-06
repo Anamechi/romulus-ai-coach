@@ -98,7 +98,7 @@ const DDSFramework = () => {
         <DDSNextStepOffer diagnosticKitUrl={DIAGNOSTIC_KIT_URL} />
 
         <footer className="py-8 border-t border-[hsl(var(--gold)/0.1)]">
-          <div className="container mx-auto px-6 text-center text-sm" style={{ color: "hsl(220 15% 45%)" }}>
+          <div className="container mx-auto px-6 text-center text-sm" >
             © {new Date().getFullYear()} Dr. Deanna Romulus, MBA. All rights reserved.
           </div>
         </footer>

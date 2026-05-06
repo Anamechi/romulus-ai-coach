@@ -15,7 +15,7 @@ const DDSNextStepOffer = ({ diagnosticKitUrl }: Props) => (
         <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">
           Identify Your Primary Income Constraint
         </h2>
-        <p className="mb-6" style={{ color: "hsl(220 15% 65%)" }}>
+        <p className="mb-6" >
           The Complete Income Systems Diagnostic Kit™ reveals the structural issue currently blocking predictable revenue in your business. This is the natural next step after reviewing the DDS Framework Guide.
         </p>
 
@@ -28,7 +28,7 @@ const DDSNextStepOffer = ({ diagnosticKitUrl }: Props) => (
           ].map((item) => (
             <li key={item} className="flex items-center gap-2.5">
               <CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))] shrink-0" />
-              <span style={{ color: "hsl(220 15% 70%)" }}>{item}</span>
+              <span >{item}</span>
             </li>
           ))}
         </ul>

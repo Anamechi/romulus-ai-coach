@@ -17,7 +17,7 @@ const DDSFrameworkOverview = () => (
         <h2 className="font-display text-3xl md:text-4xl font-bold mb-5">
           The DDS Framework™
         </h2>
-        <p className="text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: "hsl(220 15% 70%)" }}>
+        <p className="text-lg leading-relaxed max-w-2xl mx-auto" >
           The DDS Framework™ helps founders build predictable revenue by diagnosing structural problems, designing the correct business architecture, and scaling responsibly.
         </p>
       </div>
@@ -40,7 +40,7 @@ const DDSFrameworkOverview = () => (
           <div key={stage.label} className="border border-[hsl(var(--gold)/0.2)] rounded-lg p-5 bg-[hsl(var(--slate-deep)/0.5)]">
             <span className="text-[hsl(var(--gold))] font-mono text-sm mb-1 block">0{i + 1}</span>
             <h3 className="font-display text-lg font-semibold mb-1">{stage.label}</h3>
-            <p className="text-sm" style={{ color: "hsl(220 15% 60%)" }}>{stage.desc}</p>
+            <p className="text-sm" >{stage.desc}</p>
           </div>
         ))}
       </div>
@@ -55,7 +55,7 @@ const DDSFrameworkOverview = () => (
         />
         <div className="text-center sm:text-left">
           <p className="font-display font-semibold">Dr. Deanna Romulus, MBA</p>
-          <p className="text-sm" style={{ color: "hsl(220 15% 60%)" }}>Business Consultant & Revenue Architect</p>
+          <p className="text-sm" >Business Consultant & Revenue Architect</p>
         </div>
       </div>
     </div>
