@@ -13,7 +13,7 @@ const actionColors: Record<string, string> = {
   update: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
   delete: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
   publish: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-  unpublish: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200",
+  unpublish: "bg-secondary text-accent dark:bg-primary dark:text-accent",
 };
 
 export default function AuditLog() {

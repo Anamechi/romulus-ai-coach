@@ -5,10 +5,10 @@ import drRomulusDesk from "@/assets/dr-romulus-hero.png";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[95vh] flex items-center overflow-hidden bg-[hsl(220_30%_8%)]">
+    <section className="relative min-h-[95vh] flex items-center overflow-hidden bg-[hsl(var(--slate-deep))]">
       {/* Rich layered background — deep navy with warm gold accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(220_28%_14%)_0%,hsl(220_32%_7%)_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(38_70%_20%/0.25)_0%,transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--brand-navy))_0%,hsl(var(--brand-navy-deep))_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(var(--brand-gold)/0.18)_0%,transparent_55%)]" />
 
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-[0.05]">

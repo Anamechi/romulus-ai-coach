@@ -61,7 +61,7 @@ const LANGUAGES = [
 
 const FUNNEL_STAGE_COLORS = {
   TOFU: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
-  MOFU: 'bg-amber-500/10 text-amber-600 border-amber-500/20',
+  MOFU: 'bg-accent/10 text-accent border-accent/20',
   BOFU: 'bg-green-500/10 text-green-600 border-green-500/20',
 };
 

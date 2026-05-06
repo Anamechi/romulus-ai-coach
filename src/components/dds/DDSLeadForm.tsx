@@ -20,7 +20,7 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
           <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-3">
             Get the DDS Framework Breakdown Guide
           </h2>
-          <p className="text-center text-sm mb-8" style={{ color: "hsl(220 15% 60%)" }}>
+          <p className="text-center text-sm mb-8" >
             Enter your information below and we'll send you the DDS Framework Breakdown Guide.
           </p>
 
@@ -34,7 +34,7 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
                 placeholder="Your first name"
                 value={formData.firstName}
                 onChange={(e) => setFormData((p) => ({ ...p, firstName: e.target.value }))}
-                className="mt-1.5 bg-[hsl(var(--slate-medium))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-[hsl(220,15%,45%)]"
+                className="mt-1.5 bg-[hsl(var(--slate-medium))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-muted-foreground"
               />
             </div>
             <div>
@@ -47,7 +47,7 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
                 placeholder="you@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
-                className="mt-1.5 bg-[hsl(var(--slate-medium))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-[hsl(220,15%,45%)]"
+                className="mt-1.5 bg-[hsl(var(--slate-medium))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-muted-foreground"
               />
             </div>
             <div>
@@ -60,7 +60,7 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
                 placeholder="(555) 123-4567"
                 value={formData.phone}
                 onChange={(e) => setFormData((p) => ({ ...p, phone: e.target.value }))}
-                className="mt-1.5 bg-[hsl(var(--slate-medium))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-[hsl(220,15%,45%)]"
+                className="mt-1.5 bg-[hsl(var(--slate-medium))] border-[hsl(var(--gold)/0.2)] text-[hsl(var(--cream))] placeholder:text-muted-foreground"
               />
             </div>
 
@@ -68,7 +68,7 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
               {loading ? "Sending…" : "Send Me the DDS Guide"}
             </Button>
 
-            <p className="text-center text-xs mt-3" style={{ color: "hsl(220 15% 50%)" }}>
+            <p className="text-center text-xs mt-3" >
               No spam. Just the DDS Framework guide.
             </p>
           </form>

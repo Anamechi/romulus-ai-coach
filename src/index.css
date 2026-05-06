@@ -2,106 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+/* ---------------------------------------------------------------
+   DrRomulusMBA — Brand theme refresh
+   All colors stored as HSL triplets for Tailwind compatibility.
+   Brand palette (hex → HSL):
+     #1A1A2E navy primary       240 28% 14%
+     #0F0F1F navy deep (footer) 240 35% 9%
+     #2A2A40 navy body text     240 21% 21%
+     #C9A84C gold accent        43 55% 54%
+     #F5F5F0 cream bg           60 17% 95%
+     #F9F9F6 cream alt          60 23% 97%
+     #FFFFFF white              0 0% 100%
+     #E5E5DC border             54 18% 88%
+     #E8E8E0 divider light      60 17% 90%
+     #888899 muted              240 8% 57%
+     #666680 footer muted       240 11% 45%
+     #555570 footer fineprint   240 13% 39%
+     #9999B8 disabled           240 19% 66%
+   Typography: Georgia sitewide.
+--------------------------------------------------------------- */
 
 @layer base {
   :root {
-    /* Sophisticated Executive Palette */
-    --background: 220 20% 97%;
-    --foreground: 220 25% 10%;
+    /* Brand source-of-truth tokens */
+    --brand-navy: 240 28% 14%;
+    --brand-navy-deep: 240 35% 9%;
+    --brand-navy-body: 240 21% 21%;
+    --brand-gold: 43 55% 54%;
+    --brand-cream: 60 17% 95%;
+    --brand-cream-alt: 60 23% 97%;
+    --brand-white: 0 0% 100%;
+    --brand-border: 54 18% 88%;
+    --brand-divider-light: 60 17% 90%;
+    --brand-muted: 240 8% 57%;
+    --brand-footer-muted: 240 11% 45%;
+    --brand-footer-fineprint: 240 13% 39%;
+    --brand-disabled: 240 19% 66%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    /* Semantic tokens — names preserved so existing components inherit automatically */
+    --background: var(--brand-cream);
+    --foreground: var(--brand-navy-body);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --card: var(--brand-white);
+    --card-foreground: var(--brand-navy-body);
 
-    /* Deep Slate Primary */
-    --primary: 220 25% 15%;
-    --primary-foreground: 45 100% 96%;
+    --popover: var(--brand-white);
+    --popover-foreground: var(--brand-navy-body);
 
-    /* Warm Amber Accent */
-    --secondary: 38 92% 50%;
-    --secondary-foreground: 220 25% 10%;
+    --primary: var(--brand-navy);
+    --primary-foreground: var(--brand-gold);
 
-    --muted: 220 15% 92%;
-    --muted-foreground: 220 15% 45%;
+    --secondary: var(--brand-cream-alt);
+    --secondary-foreground: var(--brand-navy-body);
 
-    /* Gold Accent */
-    --accent: 38 92% 50%;
-    --accent-foreground: 220 25% 10%;
+    --muted: var(--brand-divider-light);
+    --muted-foreground: var(--brand-muted);
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --accent: var(--brand-gold);
+    --accent-foreground: var(--brand-navy);
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 38 92% 50%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: var(--brand-white);
 
-    --radius: 0.75rem;
+    --border: var(--brand-border);
+    --input: var(--brand-border);
+    --ring: var(--brand-gold);
 
-    /* Custom tokens */
-    --gold: 38 92% 50%;
-    --gold-light: 43 96% 56%;
-    --gold-dark: 35 88% 42%;
-    --slate-deep: 220 25% 12%;
-    --slate-medium: 220 20% 25%;
-    --cream: 45 100% 96%;
-    --warm-gray: 30 10% 50%;
+    --radius: 0.5rem;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(220 25% 12%) 0%, hsl(220 20% 20%) 50%, hsl(220 25% 15%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(43 96% 56%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 20% 98%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(220 20% 97%) 0%, hsl(220 15% 94%) 100%);
+    /* Legacy named tokens (kept so all existing components keep working) */
+    --gold: var(--brand-gold);
+    --gold-light: var(--brand-gold);
+    --gold-dark: var(--brand-gold);
+    --slate-deep: var(--brand-navy-deep);
+    --slate-medium: var(--brand-navy);
+    --cream: var(--brand-cream);
+    --warm-gray: var(--brand-muted);
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(220 25% 10% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(220 25% 10% / 0.08), 0 2px 4px -2px hsl(220 25% 10% / 0.05);
-    --shadow-lg: 0 10px 15px -3px hsl(220 25% 10% / 0.1), 0 4px 6px -4px hsl(220 25% 10% / 0.05);
-    --shadow-xl: 0 20px 25px -5px hsl(220 25% 10% / 0.12), 0 8px 10px -6px hsl(220 25% 10% / 0.05);
-    --shadow-gold: 0 4px 14px 0 hsl(38 92% 50% / 0.3);
-    --shadow-elevated: 0 25px 50px -12px hsl(220 25% 10% / 0.25);
+    /* Gradients — recolored to brand (no new effects introduced) */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-navy-deep)) 0%, hsl(var(--brand-navy)) 50%, hsl(var(--brand-navy-deep)) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(var(--brand-gold)) 0%, hsl(var(--brand-gold)) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(var(--brand-white)) 0%, hsl(var(--brand-cream-alt)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--brand-cream)) 0%, hsl(var(--brand-cream-alt)) 100%);
+
+    /* Shadows — recolored with navy-deep tint */
+    --shadow-sm: 0 1px 2px 0 hsl(var(--brand-navy-deep) / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(var(--brand-navy-deep) / 0.08), 0 2px 4px -2px hsl(var(--brand-navy-deep) / 0.05);
+    --shadow-lg: 0 10px 15px -3px hsl(var(--brand-navy-deep) / 0.1), 0 4px 6px -4px hsl(var(--brand-navy-deep) / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(var(--brand-navy-deep) / 0.12), 0 8px 10px -6px hsl(var(--brand-navy-deep) / 0.05);
+    --shadow-gold: 0 4px 14px 0 hsl(var(--brand-gold) / 0.3);
+    --shadow-elevated: 0 25px 50px -12px hsl(var(--brand-navy-deep) / 0.25);
 
     /* Sidebar */
-    --sidebar-background: 220 25% 12%;
-    --sidebar-foreground: 45 100% 96%;
-    --sidebar-primary: 38 92% 50%;
-    --sidebar-primary-foreground: 220 25% 10%;
-    --sidebar-accent: 220 20% 20%;
-    --sidebar-accent-foreground: 45 100% 96%;
-    --sidebar-border: 220 20% 20%;
-    --sidebar-ring: 38 92% 50%;
+    --sidebar-background: var(--brand-navy-deep);
+    --sidebar-foreground: var(--brand-cream);
+    --sidebar-primary: var(--brand-gold);
+    --sidebar-primary-foreground: var(--brand-navy);
+    --sidebar-accent: var(--brand-navy);
+    --sidebar-accent-foreground: var(--brand-cream);
+    --sidebar-border: var(--brand-navy);
+    --sidebar-ring: var(--brand-gold);
   }
 
   .dark {
-    --background: 220 25% 8%;
-    --foreground: 45 100% 96%;
+    --background: var(--brand-navy-deep);
+    --foreground: var(--brand-cream);
 
-    --card: 220 25% 12%;
-    --card-foreground: 45 100% 96%;
+    --card: var(--brand-navy);
+    --card-foreground: var(--brand-cream);
 
-    --popover: 220 25% 12%;
-    --popover-foreground: 45 100% 96%;
+    --popover: var(--brand-navy);
+    --popover-foreground: var(--brand-cream);
 
-    --primary: 45 100% 96%;
-    --primary-foreground: 220 25% 12%;
+    --primary: var(--brand-gold);
+    --primary-foreground: var(--brand-navy);
 
-    --secondary: 38 92% 50%;
-    --secondary-foreground: 220 25% 10%;
+    --secondary: var(--brand-navy);
+    --secondary-foreground: var(--brand-cream);
 
-    --muted: 220 20% 18%;
-    --muted-foreground: 220 15% 60%;
+    --muted: var(--brand-navy);
+    --muted-foreground: var(--brand-disabled);
 
-    --accent: 38 92% 50%;
-    --accent-foreground: 220 25% 10%;
+    --accent: var(--brand-gold);
+    --accent-foreground: var(--brand-navy);
 
     --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: var(--brand-white);
 
-    --border: 220 20% 18%;
-    --input: 220 20% 18%;
-    --ring: 38 92% 50%;
+    --border: var(--brand-navy);
+    --input: var(--brand-navy);
+    --ring: var(--brand-gold);
   }
 }
 
@@ -112,27 +142,36 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
-    @apply font-semibold tracking-tight;
+    font-family: Georgia, "Times New Roman", serif;
+    @apply tracking-tight;
+  }
+
+  h1, h2 {
+    font-weight: 400;
+  }
+
+  h3, h4, h5, h6 {
+    font-weight: 600;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: Georgia, "Times New Roman", serif;
   }
 
   .font-body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: Georgia, "Times New Roman", serif;
   }
 
   .text-gradient-gold {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(43 96% 56%) 100%);
+    color: hsl(var(--brand-gold));
   }
 
   .bg-hero-gradient {
@@ -149,6 +188,16 @@
 
   .shadow-elevated {
     box-shadow: var(--shadow-elevated);
+  }
+
+  /* Brand eyebrow / mini-label */
+  .eyebrow {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: hsl(var(--brand-gold));
   }
 
   /* Animations */
@@ -206,7 +255,6 @@
     }
   }
 
-  /* Stagger delays */
   .delay-100 { animation-delay: 100ms; }
   .delay-200 { animation-delay: 200ms; }
   .delay-300 { animation-delay: 300ms; }

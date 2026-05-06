@@ -31,7 +31,7 @@ const ContentClarityDiagnostic = () => {
             <h1 className="font-display text-3xl md:text-5xl font-bold mb-6 leading-tight">
               Build a Content-to-Cash System in 7 Days
             </h1>
-            <p className="text-lg md:text-xl mb-8" style={{ color: "hsl(220 15% 70%)" }}>
+            <p className="text-lg md:text-xl mb-8" >
               Stop guessing what to post. Follow a step-by-step system to turn your content into leads and revenue.
             </p>
             <Button
@@ -107,8 +107,8 @@ const ContentClarityDiagnostic = () => {
                 "Not a live session or consultation",
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <XCircle className="h-5 w-5 flex-shrink-0" style={{ color: "hsl(220 15% 50%)" }} />
-                  <p style={{ color: "hsl(220 15% 65%)" }}>{item}</p>
+                  <XCircle className="h-5 w-5 flex-shrink-0"  />
+                  <p >{item}</p>
                 </div>
               ))}
             </div>
@@ -124,7 +124,7 @@ const ContentClarityDiagnostic = () => {
                 Get the 7-Day Content-to-Cash Setup
               </h2>
               <p className="text-lg mb-2 text-[hsl(var(--gold))] font-semibold">$297</p>
-              <p className="mb-8" style={{ color: "hsl(220 15% 65%)" }}>
+              <p className="mb-8" >
                 A structured system to build your content → lead → conversion workflow in 7 days.
               </p>
               <Button variant="gold" size="lg">
@@ -137,7 +137,7 @@ const ContentClarityDiagnostic = () => {
 
         {/* Footer */}
         <footer className="py-8 border-t border-[hsl(var(--gold)/0.1)]">
-          <div className="container mx-auto px-6 text-center text-sm" style={{ color: "hsl(220 15% 45%)" }}>
+          <div className="container mx-auto px-6 text-center text-sm" >
             © {new Date().getFullYear()} Dr. Deanna Romulus, MBA. All rights reserved.
           </div>
         </footer>

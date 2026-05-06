@@ -274,15 +274,15 @@ export default function InternalLinks() {
               <div className="text-3xl font-bold">{links?.length || 0}</div>
             </CardContent>
           </Card>
-          <Card className={linkGovernance?.orphaned?.length ? "border-amber-500/50" : ""}>
+          <Card className={linkGovernance?.orphaned?.length ? "border-accent/50" : ""}>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-500" />
+                <AlertTriangle className="h-4 w-4 text-accent" />
                 Orphaned Content
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-amber-500">{linkGovernance?.orphaned?.length || 0}</div>
+              <div className="text-3xl font-bold text-accent">{linkGovernance?.orphaned?.length || 0}</div>
               <p className="text-xs text-muted-foreground">No incoming links</p>
             </CardContent>
           </Card>
@@ -400,7 +400,7 @@ export default function InternalLinks() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <AlertTriangle className="h-5 w-5 text-amber-500" />
+                      <AlertTriangle className="h-5 w-5 text-accent" />
                       Orphaned Content ({linkGovernance?.orphaned?.length || 0})
                     </CardTitle>
                     <CardDescription>

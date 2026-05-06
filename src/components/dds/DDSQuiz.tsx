@@ -124,7 +124,7 @@ const DDSQuiz = ({ leadEmail, leadFirstName, leadPhone }: Props) => {
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
             Discover Your DDS Founder Score
           </h2>
-          <p className="text-lg" style={{ color: "hsl(220 15% 70%)" }}>
+          <p className="text-lg" >
             Answer 5 quick questions to see how structurally prepared your business is for predictable revenue.
           </p>
         </div>
@@ -132,7 +132,7 @@ const DDSQuiz = ({ leadEmail, leadFirstName, leadPhone }: Props) => {
         {!showResult ? (
           <div className="space-y-8">
             <div className="mb-6">
-              <div className="flex justify-between text-sm mb-2" style={{ color: "hsl(220 15% 60%)" }}>
+              <div className="flex justify-between text-sm mb-2" >
                 <span>{answeredCount} of {QUESTIONS.length} answered</span>
                 <span>{Math.round((answeredCount / QUESTIONS.length) * 100)}%</span>
               </div>
@@ -206,12 +206,12 @@ const DDSQuiz = ({ leadEmail, leadFirstName, leadPhone }: Props) => {
                   {(result as any).headline}
                 </h3>
               )}
-              <p className="text-lg mb-8 whitespace-pre-line" style={{ color: "hsl(220 15% 70%)" }}>
+              <p className="text-lg mb-8 whitespace-pre-line" >
                 {result.message}
               </p>
 
               <div className="border-t border-[hsl(var(--gold)/0.15)] pt-6">
-                <p className="text-sm mb-4" style={{ color: "hsl(220 15% 60%)" }}>
+                <p className="text-sm mb-4" >
                   {result.cta}
                 </p>
                 <Button variant="gold" size="lg" asChild>

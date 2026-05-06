@@ -37,7 +37,7 @@ const DiagnosticKitThankYou = () => {
         noindex
       />
 
-      <div className="min-h-screen bg-slate-900 text-white font-body">
+      <div className="min-h-screen bg-primary text-white font-body">
         {/* ── HERO ── */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-6 max-w-3xl text-center">
@@ -47,7 +47,7 @@ const DiagnosticKitThankYou = () => {
             <h1 className="font-display text-3xl md:text-5xl font-bold mb-4">
               You're In. Your Diagnostic Kit Is Ready Below.
             </h1>
-            <p className="text-slate-400 text-lg">
+            <p className="text-muted-foreground text-lg">
               Your confirmation email has also been sent.
             </p>
           </div>
@@ -57,17 +57,17 @@ const DiagnosticKitThankYou = () => {
         <section className="pb-20 md:pb-28">
           <div className="container mx-auto px-6 max-w-3xl space-y-8">
             {/* Step 1 */}
-            <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-6 md:p-8">
+            <div className="bg-primary/60 border border-primary rounded-xl p-6 md:p-8">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-amber-400 font-display font-bold text-lg">
+                <span className="text-accent font-display font-bold text-lg">
                   Step 1
                 </span>
-                <Download className="w-5 h-5 text-slate-400" />
+                <Download className="w-5 h-5 text-muted-foreground" />
               </div>
               <h2 className="font-display text-xl font-semibold mb-2">
                 Download Your Diagnostic Checklist
               </h2>
-              <p className="text-slate-400 text-sm mb-5">
+              <p className="text-muted-foreground text-sm mb-5">
                 Print or save this checklist and work through it section by
                 section.
               </p>
@@ -80,22 +80,22 @@ const DiagnosticKitThankYou = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-6 md:p-8">
+            <div className="bg-primary/60 border border-primary rounded-xl p-6 md:p-8">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-amber-400 font-display font-bold text-lg">
+                <span className="text-accent font-display font-bold text-lg">
                   Step 2
                 </span>
-                <PlayCircle className="w-5 h-5 text-slate-400" />
+                <PlayCircle className="w-5 h-5 text-muted-foreground" />
               </div>
               <h2 className="font-display text-xl font-semibold mb-2">
                 Watch The Walkthrough Video
               </h2>
-              <p className="text-slate-400 text-sm mb-5">
+              <p className="text-muted-foreground text-sm mb-5">
                 This 10-minute video walks you through interpreting your
                 results.
               </p>
               <video
-                className="aspect-video w-full rounded-lg border border-slate-600"
+                className="aspect-video w-full rounded-lg border border-border"
                 controls
                 preload="metadata"
                 poster=""
@@ -109,17 +109,17 @@ const DiagnosticKitThankYou = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-6 md:p-8">
+            <div className="bg-primary/60 border border-primary rounded-xl p-6 md:p-8">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-amber-400 font-display font-bold text-lg">
+                <span className="text-accent font-display font-bold text-lg">
                   Step 3
                 </span>
-                <BookOpen className="w-5 h-5 text-slate-400" />
+                <BookOpen className="w-5 h-5 text-muted-foreground" />
               </div>
               <h2 className="font-display text-xl font-semibold mb-2">
                 Review Your Results Guide
               </h2>
-              <p className="text-slate-400 text-sm mb-5">
+              <p className="text-muted-foreground text-sm mb-5">
                 Learn what to fix first, what can wait, and how to prioritize.
               </p>
               <Button variant="gold" asChild>
@@ -131,12 +131,12 @@ const DiagnosticKitThankYou = () => {
             </div>
 
             {/* Step 4 */}
-            <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-6 md:p-8">
+            <div className="bg-primary/60 border border-primary rounded-xl p-6 md:p-8">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-amber-400 font-display font-bold text-lg">
+                <span className="text-accent font-display font-bold text-lg">
                   Step 4
                 </span>
-                <Headphones className="w-5 h-5 text-slate-400" />
+                <Headphones className="w-5 h-5 text-muted-foreground" />
               </div>
               <h2 className="font-display text-xl font-semibold mb-5">
                 Founder Briefing: Why Effort Isn't the Problem — Structure Is
@@ -159,12 +159,12 @@ const DiagnosticKitThankYou = () => {
         {/* ── INCOME CLARITY DIAGNOSTIC UPSELL ── */}
         <section className="pb-20 md:pb-28">
           <div className="container mx-auto px-6 max-w-2xl">
-            <div className="border border-amber-500/20 rounded-xl p-8 md:p-10 bg-slate-800/30">
+            <div className="border border-accent/20 rounded-xl p-8 md:p-10 bg-primary/30">
               <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-4">
                 Want Expert Guidance Reviewing Your Results?
               </h2>
 
-              <div className="space-y-4 text-slate-300 leading-relaxed mb-8">
+              <div className="space-y-4 text-muted-foreground leading-relaxed mb-8">
                 <p>
                   The Diagnostic Kit gives you{" "}
                   <span className="text-white font-medium">clarity</span>.
@@ -175,30 +175,30 @@ const DiagnosticKitThankYou = () => {
                 </p>
               </div>
 
-              <p className="text-slate-400 text-sm uppercase tracking-wider mb-4">
+              <p className="text-muted-foreground text-sm uppercase tracking-wider mb-4">
                 During this private 60-minute session we will:
               </p>
 
-              <ul className="space-y-3 text-slate-300 mb-8">
+              <ul className="space-y-3 text-muted-foreground mb-8">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 shrink-0" />
                   <span>Confirm your primary structural constraint</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 shrink-0" />
                   <span>Identify your highest-leverage correction</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 shrink-0" />
                   <span>Clarify the correct repair sequence</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 shrink-0" />
                   <span>Determine whether Systems Before Scale™ is the appropriate next step</span>
                 </li>
               </ul>
 
-              <p className="text-slate-500 text-sm text-center mb-6">
+              <p className="text-muted-foreground text-sm text-center mb-6">
                 This is a focused evaluation session — not open coaching.
               </p>
 
@@ -212,7 +212,7 @@ const DiagnosticKitThankYou = () => {
                     <ArrowRight className="w-4 h-4 ml-1" />
                   </a>
                 </Button>
-                <p className="text-slate-600 text-xs pt-2">
+                <p className="text-foreground text-xs pt-2">
                   Limited weekly availability to ensure focused evaluation.
                 </p>
               </div>
@@ -222,7 +222,7 @@ const DiagnosticKitThankYou = () => {
 
         {/* ── FOOTER NOTE ── */}
         <footer className="pb-10 text-center">
-          <p className="text-slate-600 text-xs">
+          <p className="text-foreground text-xs">
             © {new Date().getFullYear()} Dr. Romulus MBA. All rights reserved.
           </p>
         </footer>
