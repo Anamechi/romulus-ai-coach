@@ -1,4 +1,4 @@
-import aboutImage from "@/assets/dr-romulus-about.png";
+import aboutImage from "@/assets/dr-romulus-hero.png";
 
 export const AuthoritySection = () => {
   return (
@@ -32,7 +32,7 @@ export const AuthoritySection = () => {
           <div>
             <img
               src={aboutImage}
-              alt="Dr. Romulus working with service-based business owners on business systems"
+              alt="Dr. Deanna Romulus, business strategist"
               className="w-full h-auto object-cover"
               loading="lazy"
             />
