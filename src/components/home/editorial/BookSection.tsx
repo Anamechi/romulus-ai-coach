@@ -25,7 +25,7 @@ export const BookSection = () => {
               Systems Before Scale
             </h2>
             <p className="text-primary/80 text-lg leading-relaxed mb-10" style={{ maxWidth: "52ch" }}>
-              Why your business feels hard — and the structure that makes it predictable.
+              How Entrepreneurs Eliminate Revenue Chaos and Build Predictable Growth.
             </p>
             <Button
               asChild
