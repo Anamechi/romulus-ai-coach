@@ -18,11 +18,12 @@ export const BookSection = () => {
             <p className="text-accent uppercase mb-6" style={{ letterSpacing: "0.3em", fontSize: "0.75rem" }}>
               The Book
             </p>
+            <div className="h-px bg-accent w-12 mb-8" aria-hidden="true" />
             <h2
               className="text-primary font-normal leading-[1.15] mb-6"
               style={{ fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)", letterSpacing: "-0.005em" }}
             >
-              Systems Before Scale
+              Systems Before Scale<span className="text-accent">™</span><span className="text-accent">.</span>
             </h2>
             <p className="text-primary/80 text-lg leading-relaxed mb-10" style={{ maxWidth: "52ch" }}>
               How Entrepreneurs Eliminate Revenue Chaos and Build Predictable Growth.
