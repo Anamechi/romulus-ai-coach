@@ -1,10 +1,14 @@
 import { Button } from "@/components/ui/button";
 import heroBackground from "@/assets/hero-architecture.png";
+import { BlueprintGrid, RegistrationMarks } from "./BlueprintGrid";
 
 export const EditorialHero = () => {
   return (
     <section className="relative overflow-hidden bg-background">
-      {/* Architectural background — hidden on mobile for clarity, anchored right on tablet+ */}
+      {/* Subtle blueprint grid across the full hero */}
+      <BlueprintGrid opacity={0.05} size={48} />
+
+      {/* Architectural background image — anchored right on tablet+ */}
       <div
         aria-hidden="true"
         className="hidden sm:block absolute inset-y-0 right-0 w-[55%] lg:w-[55%] bg-no-repeat bg-right bg-cover opacity-90"
@@ -16,11 +20,14 @@ export const EditorialHero = () => {
         className="hidden sm:block absolute inset-0 bg-gradient-to-r from-background via-background/95 sm:via-background/85 lg:via-background/70 to-transparent"
       />
 
+      {/* Gold corner registration marks */}
+      <RegistrationMarks inset={24} />
+
       <div className="relative z-10 container mx-auto px-6 lg:px-12 py-20 lg:py-32">
         <div className="max-w-2xl">
           <p
             className="text-accent uppercase mb-8"
-            style={{ letterSpacing: "0.25em", fontSize: "0.75rem" }}
+            style={{ letterSpacing: "0.3em", fontSize: "0.75rem" }}
           >
             Dr. Deanna Romulus, Ed.D., MBA
           </p>
@@ -35,7 +42,7 @@ export const EditorialHero = () => {
             className="text-primary uppercase mb-8"
             style={{ letterSpacing: "0.3em", fontSize: "0.875rem" }}
           >
-            Systems Before Scale
+            Systems Before Scale<span className="text-accent">™</span>
           </p>
           <p className="text-primary/80 text-lg lg:text-xl leading-relaxed mb-12 max-w-xl">
             Helping service-based business owners build structural businesses that generate
