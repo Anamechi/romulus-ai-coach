@@ -4,6 +4,7 @@ import { AuthoritySection } from "@/components/home/editorial/AuthoritySection";
 import { MethodSection } from "@/components/home/editorial/MethodSection";
 import { BookSection } from "@/components/home/editorial/BookSection";
 import { ClosingCTA } from "@/components/home/editorial/ClosingCTA";
+import { HomeFAQ } from "@/components/home/editorial/HomeFAQ";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Helmet } from 'react-helmet-async';
 
@@ -123,6 +124,7 @@ const Index = () => {
       <AuthoritySection />
       <MethodSection />
       <BookSection />
+      <HomeFAQ faqs={homepageFAQs} />
       <ClosingCTA />
     </Layout>
   );
