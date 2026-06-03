@@ -83,6 +83,7 @@ const PortalProgress = lazy(() => import("./pages/portal/PortalProgress"));
 const RevenueArchitectureSession = lazy(() => import("./pages/RevenueArchitectureSession"));
 const DDSFramework = lazy(() => import("./pages/DDSFramework"));
 const DDSScorecard = lazy(() => import("./pages/DDSScorecard"));
+const Preorder = lazy(() => import("./pages/Preorder"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -135,7 +136,8 @@ const App = () => (
               <Route path="/revenue-architecture-session" element={<RevenueArchitectureSession />} />
               <Route path="/dds-framework" element={<DDSFramework />} />
               <Route path="/dds-scorecard" element={<DDSScorecard />} />
-              <Route path="/content-to-cash" element={<ContentClarityDiagnostic />} />
+      <Route path="/content-to-cash" element={<ContentClarityDiagnostic />} />
+      <Route path="/preorder" element={<Preorder />} />
               <Route path="/income-systems-diagnostic" element={<IncomeSystemsDiagnostic />} />
               
               {/* Admin Routes */}
