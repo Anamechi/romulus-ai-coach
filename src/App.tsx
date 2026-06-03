@@ -83,6 +83,7 @@ const PortalProgress = lazy(() => import("./pages/portal/PortalProgress"));
 const RevenueArchitectureSession = lazy(() => import("./pages/RevenueArchitectureSession"));
 const DDSFramework = lazy(() => import("./pages/DDSFramework"));
 const DDSScorecard = lazy(() => import("./pages/DDSScorecard"));
+const Preorder = lazy(() => import("./pages/Preorder"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
