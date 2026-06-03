@@ -44,9 +44,10 @@ export const EditorialHero = () => {
           >
             Systems Before Scale<span className="text-accent">™</span>
           </p>
-          <p className="text-primary/80 text-lg lg:text-xl leading-relaxed mb-12 max-w-xl">
-            Helping service-based business owners build structural businesses that generate
-            consistent, predictable revenue.
+          <p className="speakable-summary text-primary/80 text-lg lg:text-xl leading-relaxed mb-12 max-w-xl">
+            Dr. Deanna Romulus, Ed.D., MBA, helps service-based business owners build
+            structural businesses that generate consistent, predictable revenue through
+            the DDS Framework — Diagnose, Design, Scale.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
