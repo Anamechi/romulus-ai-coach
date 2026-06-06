@@ -127,7 +127,10 @@ export default function About() {
               
               <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
                 Dr. Deanna Romulus,{" "}
-                <span className="text-gradient-gold">MBA</span>
+                <span className="text-gradient-gold">Ed.D., MBA</span>
+                <span className="block text-2xl md:text-3xl font-normal text-foreground/80 mt-3">
+                  Business Strategist & Educator for Service-Based Founders
+                </span>
               </h1>
               
               <p className="font-body text-xl text-gold font-medium mb-6">
