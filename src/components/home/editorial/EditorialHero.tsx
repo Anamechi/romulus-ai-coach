@@ -36,6 +36,9 @@ export const EditorialHero = () => {
             style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)", letterSpacing: "-0.01em" }}
           >
             Dr<span className="text-accent">.</span> Romulus
+            <span className="block text-primary/80 mt-4" style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.75rem)", letterSpacing: "0.01em" }}>
+              Business Systems Strategist for Service-Based Founders
+            </span>
           </h1>
           <div className="h-px bg-accent w-3/5 mb-8" aria-hidden="true" />
           <p

@@ -1,0 +1,42 @@
+# Dr. Romulus MBA
+
+> Dr. Deanna Romulus, Ed.D., MBA — helping service-based business owners build structural businesses that generate consistent, predictable revenue through the DDS Framework (Diagnose, Design, Scale).
+
+Dr. Romulus is a business consultant and educator focused on installing income systems, automation, and authority infrastructure before scaling. The site publishes long-form articles, FAQs, and Q&A pages covering business structure, financial self-efficacy, automation & AI, client acquisition, digital authority, and leadership.
+
+## Pages
+
+- [Home](/): Overview of Dr. Romulus and the Systems Before Scale methodology.
+- [About](/about): Dr. Deanna Romulus — Business Strategist & Educator.
+- [Methodology](/methodology): The DDS Framework — Diagnose, Design, Scale.
+- [Programs](/programs): Engagement models and program structure.
+- [DDS Framework Guide](/dds-framework): Free guide to the DDS Framework.
+- [DDS Scorecard](/dds-scorecard): Self-assessment quiz for service founders.
+- [Diagnostic](/diagnostic): Income Systems Diagnostic overview.
+- [Diagnostic Kit](/diagnostickit): $27 Complete Income Systems Diagnostic Kit.
+- [Income Systems Diagnostic](/income-systems-diagnostic): Feedback-based diagnostic.
+- [Income Clarity Diagnostic](/income-clarity-diagnostic): Clarity-stage diagnostic.
+- [Revenue Architecture Session](/revenue-architecture-session): Standalone session for established founders.
+- [Content-to-Cash Setup](/content-to-cash-setup): Mid-tier implementation offer.
+- [Content Clarity Diagnostic](/content-clarity-diagnostic): Content-focused diagnostic.
+- [Checklist](/checklist): Free implementation checklist.
+- [Pre-Order](/preorder): Pre-order Dr. Romulus's forthcoming book.
+- [Contact](/contact): Get in touch.
+- [Apply](/apply): Apply to work with Dr. Romulus.
+- [Trust](/trust): Trust and credibility standards.
+- [Editorial Policy](/editorial-policy): Editorial standards and review process.
+- [Privacy Policy](/privacy): Privacy practices.
+- [Terms of Service](/terms): Terms of use.
+
+## Content
+
+- [Blog Index](/blog): Long-form articles on systems, automation, and growth.
+- [Topics Index](/topics): Core SEO topic clusters.
+- [FAQ Index](/faq): Frequently asked questions.
+- [Q&A Index](/qa): Answer-engine optimized Q&A pages.
+- [Authors](/authors): Author profiles and credentials.
+
+## Optional
+
+- [AI Content Policy](/ai.txt): AI training and crawler policy.
+- [Sitemap](/sitemap.xml): Full URL list for crawlers.

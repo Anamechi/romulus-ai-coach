@@ -49,7 +49,7 @@ export default function BlogIndex() {
         <div className="max-w-5xl mx-auto">
           <header className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
-              Insights & Resources
+              Insights & Resources — Business Systems, Automation & Authority
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Expert strategies for building structured, credible, and scalable businesses.
@@ -164,7 +164,7 @@ export default function BlogIndex() {
                                   </span>
                                 )}
                                 <span className="flex items-center gap-1 text-primary ml-auto">
-                                  Read more <ArrowRight className="h-4 w-4" />
+                                  Read Full Article <ArrowRight className="h-4 w-4" />
                                 </span>
                               </div>
                             </div>
