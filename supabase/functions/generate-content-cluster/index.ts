@@ -182,59 +182,70 @@ serve(async (req) => {
     // Clean any prior partial items for this cluster (idempotent regeneration)
     await supabase.from('cluster_items').delete().eq('cluster_id', clusterId);
 
-    const generated: any[] = [];
-    const failures: string[] = [];
+    // Run generation in the background to avoid 150s edge timeout.
+    // Client polls content_clusters.status for completion.
+    const work = (async () => {
+      const generated: any[] = [];
+      const failures: string[] = [];
 
-    for (let i = 0; i < CLUSTER_STRUCTURE.length; i++) {
-      const { stage, type, focus } = CLUSTER_STRUCTURE[i];
-      try {
-        const article = await generateArticle(i, stage, type, focus, ctx);
-        const { data: inserted, error: insertError } = await supabase
-          .from('cluster_items')
-          .insert({
-            cluster_id: clusterId,
-            funnel_stage: stage,
-            content_type: type,
-            title: article.title,
-            slug: article.slug,
-            content: article.content,
-            speakable_answer: article.speakable_answer,
-            meta_title: article.meta_title,
-            meta_description: article.meta_description,
-            faqs: article.faqs,
-            internal_links: [],
-            external_citations: article.external_citations,
-            status: 'draft',
-            sort_order: i,
-          })
-          .select()
-          .single();
-        if (insertError) throw insertError;
-        generated.push(inserted);
-        console.log(`✓ ${stage} #${i + 1}: ${article.title}`);
-      } catch (e) {
-        const msg = e instanceof Error ? e.message : String(e);
-        console.error(`✗ ${stage} #${i + 1}: ${msg}`);
-        failures.push(`${stage} #${i + 1}: ${msg}`);
+      for (let i = 0; i < CLUSTER_STRUCTURE.length; i++) {
+        const { stage, type, focus } = CLUSTER_STRUCTURE[i];
+        try {
+          const article = await generateArticle(i, stage, type, focus, ctx);
+          const { data: inserted, error: insertError } = await supabase
+            .from('cluster_items')
+            .insert({
+              cluster_id: clusterId,
+              funnel_stage: stage,
+              content_type: type,
+              title: article.title,
+              slug: article.slug,
+              content: article.content,
+              speakable_answer: article.speakable_answer,
+              meta_title: article.meta_title,
+              meta_description: article.meta_description,
+              faqs: article.faqs,
+              internal_links: [],
+              external_citations: article.external_citations,
+              status: 'draft',
+              sort_order: i,
+            })
+            .select()
+            .single();
+          if (insertError) throw insertError;
+          generated.push(inserted);
+          console.log(`✓ ${stage} #${i + 1}: ${article.title}`);
+        } catch (e) {
+          const msg = e instanceof Error ? e.message : String(e);
+          console.error(`✗ ${stage} #${i + 1}: ${msg}`);
+          failures.push(`${stage} #${i + 1}: ${msg}`);
+        }
       }
-    }
 
-    // STRICT: require all 6 articles. Otherwise mark failed so user can retry cleanly.
-    if (generated.length === CLUSTER_STRUCTURE.length) {
-      await supabase.from('content_clusters').update({ status: 'review', error_message: null }).eq('id', clusterId);
+      if (generated.length === CLUSTER_STRUCTURE.length) {
+        await supabase.from('content_clusters').update({ status: 'review', error_message: null }).eq('id', clusterId);
+      } else {
+        await supabase
+          .from('content_clusters')
+          .update({
+            status: 'failed',
+            error_message: `Only ${generated.length}/6 articles generated. Failures: ${failures.join(' | ')}`,
+          })
+          .eq('id', clusterId);
+      }
+    })();
+
+    // @ts-ignore EdgeRuntime is available in Supabase edge runtime
+    if (typeof EdgeRuntime !== 'undefined' && EdgeRuntime.waitUntil) {
+      // @ts-ignore
+      EdgeRuntime.waitUntil(work);
     } else {
-      await supabase
-        .from('content_clusters')
-        .update({
-          status: 'failed',
-          error_message: `Only ${generated.length}/6 articles generated. Failures: ${failures.join(' | ')}`,
-        })
-        .eq('id', clusterId);
+      work.catch((e) => console.error('background work error', e));
     }
 
     return new Response(
-      JSON.stringify({ success: generated.length === 6, itemsGenerated: generated.length, failures, clusterId }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      JSON.stringify({ success: true, status: 'generating', clusterId, message: 'Generation started in background. Poll cluster status for completion.' }),
+      { status: 202, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
     console.error('Cluster generation fatal:', error);
