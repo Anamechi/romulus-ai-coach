@@ -98,11 +98,10 @@ export function useChatWidget() {
       const updatedMessages = [...messages, userMessage];
       setMessages(updatedMessages);
 
-      // Update conversation in DB
-      await supabase
-        .from('chatbot_conversations')
-        .update({ messages: updatedMessages } as any)
-        .eq('id', convId);
+      // Note: conversation persistence (including the user message and the
+      // assistant response) is handled server-side by the chatbot-respond
+      // edge function via the service role. Client-side updates to
+      // chatbot_conversations are intentionally disabled by RLS.
 
       // Call chatbot edge function
       const { data, error } = await supabase.functions.invoke('chatbot-respond', {
@@ -128,15 +127,7 @@ export function useChatWidget() {
         timestamp: new Date().toISOString(),
       };
 
-      const finalMessages = [...updatedMessages, assistantMessage];
-      setMessages(finalMessages);
-
-      // Update conversation with assistant response
-      await supabase
-        .from('chatbot_conversations')
-        .update({ messages: finalMessages } as any)
-        .eq('id', convId);
-
+      setMessages([...updatedMessages, assistantMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -152,14 +143,8 @@ export function useChatWidget() {
 
     if (leadError) throw leadError;
 
-    // Link to conversation
-    if (conversationId) {
-      await supabase
-        .from('chatbot_conversations')
-        .update({ lead_id: lead.id } as any)
-        .eq('id', conversationId);
-    }
-
+    // Conversation/lead linking is performed server-side by the
+    // chatbot-respond edge function when the webinar marker is detected.
     return lead;
   };
 
