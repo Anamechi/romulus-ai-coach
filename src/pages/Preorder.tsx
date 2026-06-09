@@ -2,7 +2,7 @@ import { SEOHead } from "@/components/seo/SEOHead";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 const Preorder = () => {
-  const externalUrl = "https://happybirthdaydeanna.com";
+  const externalUrl = "https://www.amazon.com/dp/B0H4C5R87D";
 
   return (
     <>
