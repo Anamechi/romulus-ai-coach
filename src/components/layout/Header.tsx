@@ -35,18 +35,12 @@ export function Header() {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center group">
             <img
               src="https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69fcc5bffb9074ae035393df.png"
               alt="Dr. Romulus MBA"
               className="h-10 w-auto"
             />
-            <div className="hidden sm:block">
-              <span className="font-display text-xl font-semibold text-foreground">
-                Dr. Romulus
-              </span>
-              <span className="text-gold font-body text-sm font-medium ml-1">MBA</span>
-            </div>
           </Link>
 
           {/* Desktop Navigation */}
