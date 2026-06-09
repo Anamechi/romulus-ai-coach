@@ -268,6 +268,18 @@ serve(async (req) => {
       }
     }
 
+    // Persist the full message thread including the assistant response.
+    if (conversation_id) {
+      const finalMessages = [
+        ...messages,
+        { role: "assistant", content: responseText, timestamp: new Date().toISOString() },
+      ];
+      await adminSupabase
+        .from("chatbot_conversations")
+        .update({ messages: finalMessages })
+        .eq("id", conversation_id);
+    }
+
     console.log(`Chatbot response generated for conversation: ${conversation_id}`);
 
     return new Response(JSON.stringify({ 
