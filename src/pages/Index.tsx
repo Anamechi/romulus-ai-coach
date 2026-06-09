@@ -36,7 +36,7 @@ const homepageSchema = {
       "name": "Dr. Deanna Romulus",
       "url": "https://drromulusmba.com",
       "jobTitle": "AI-Ready Business Systems Strategist",
-      "image": "https://drromulusmba.com/favicon-64.png",
+      "image": "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69fcc5bffb9074ae035393df.png",
       "description": "Dr. Deanna Romulus helps service-based business owners build fundable, automated revenue systems that generate predictable income.",
       "hasCredential": [
         { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "Ed.D." },
@@ -67,7 +67,7 @@ const homepageSchema = {
       "@id": "https://drromulusmba.com/#organization",
       "name": "Dr. Deanna Romulus",
       "url": "https://drromulusmba.com",
-      "logo": "https://drromulusmba.com/favicon-64.png",
+      "logo": "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69fcc5bffb9074ae035393df.png",
       "founder": { "@id": "https://drromulusmba.com/#person" }
     },
     {
