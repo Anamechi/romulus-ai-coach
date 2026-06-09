@@ -144,6 +144,23 @@ serve(async (req) => {
       throw new Error("No user message found");
     }
 
+    // Service-role client for persisting conversation updates server-side
+    // (client-side UPDATE on chatbot_conversations is locked down via RLS).
+    const adminSupabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+
+    // Persist the user-submitted messages array immediately so it isn't lost
+    // even if the AI call fails.
+    if (conversation_id) {
+      await adminSupabase
+        .from("chatbot_conversations")
+        .update({ messages })
+        .eq("id", conversation_id);
+    }
+
+
     const aiMessages = [
       { role: "system", content: SYSTEM_PROMPT },
       ...messages.map((m: { role: string; content: string }) => ({
