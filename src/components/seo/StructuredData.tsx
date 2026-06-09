@@ -11,7 +11,7 @@ export function OrganizationSchema() {
     "@id": `${BASE_URL}/#organization`,
     "name": SITE_NAME,
     "url": BASE_URL,
-    "logo": `${BASE_URL}/favicon-64.png`,
+    "logo": `https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69fcc5bffb9074ae035393df.png`,
     "description": "Business consulting and MBA coaching services by Dr. Deanna Romulus",
     "founder": {
       "@type": "Person",
@@ -111,7 +111,7 @@ export function ArticleSchema({
       "name": SITE_NAME,
       "logo": {
         "@type": "ImageObject",
-        "url": `${BASE_URL}/favicon-64.png`
+        "url": `https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69fcc5bffb9074ae035393df.png`
       }
     },
     "mainEntityOfPage": {
