@@ -144,6 +144,23 @@ serve(async (req) => {
       throw new Error("No user message found");
     }
 
+    // Service-role client for persisting conversation updates server-side
+    // (client-side UPDATE on chatbot_conversations is locked down via RLS).
+    const adminSupabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+
+    // Persist the user-submitted messages array immediately so it isn't lost
+    // even if the AI call fails.
+    if (conversation_id) {
+      await adminSupabase
+        .from("chatbot_conversations")
+        .update({ messages })
+        .eq("id", conversation_id);
+    }
+
+
     const aiMessages = [
       { role: "system", content: SYSTEM_PROMPT },
       ...messages.map((m: { role: string; content: string }) => ({
@@ -197,12 +214,7 @@ serve(async (req) => {
       webinarLeadCaptured = true;
 
       try {
-        // Insert lead into database
-        const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-        const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-        const supabase = createClient(supabaseUrl, supabaseKey);
-
-        await supabase.from("leads").insert({
+        await adminSupabase.from("leads").insert({
           full_name: lead.name,
           email: lead.email,
           source: "chatbot-webinar",
@@ -211,7 +223,7 @@ serve(async (req) => {
 
         // Link lead to conversation if possible
         if (conversation_id) {
-          const { data: leadData } = await supabase
+          const { data: leadData } = await adminSupabase
             .from("leads")
             .select("id")
             .eq("email", lead.email)
@@ -220,12 +232,13 @@ serve(async (req) => {
             .single();
 
           if (leadData) {
-            await supabase
+            await adminSupabase
               .from("chatbot_conversations")
               .update({ lead_id: leadData.id, converted_to: "webinar" })
               .eq("id", conversation_id);
           }
         }
+
 
         // Send to GHL webhook
         const ghlWebhookUrl = Deno.env.get("GHL_NEWSLETTER_WEBHOOK_URL");
@@ -253,6 +266,18 @@ serve(async (req) => {
         console.error("Error processing webinar lead:", leadError);
         // Don't fail the response if lead capture fails
       }
+    }
+
+    // Persist the full message thread including the assistant response.
+    if (conversation_id) {
+      const finalMessages = [
+        ...messages,
+        { role: "assistant", content: responseText, timestamp: new Date().toISOString() },
+      ];
+      await adminSupabase
+        .from("chatbot_conversations")
+        .update({ messages: finalMessages })
+        .eq("id", conversation_id);
     }
 
     console.log(`Chatbot response generated for conversation: ${conversation_id}`);
