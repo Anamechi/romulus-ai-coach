@@ -2,7 +2,7 @@ import { SEOHead } from "@/components/seo/SEOHead";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 const Preorder = () => {
-  const externalUrl = "https://happybirthdaydeanna.com";
+  const externalUrl = "https://www.amazon.com/dp/B0H4C5R87D";
 
   return (
     <>
@@ -88,7 +88,7 @@ const Preorder = () => {
               className="mt-6 text-sm italic"
               style={{ color: "rgba(245,245,240,0.6)", fontFamily: "Georgia, serif" }}
             >
-              You will be redirected to happybirthdaydeanna.com to finalize your reservation.
+              You will be redirected to Amazon to finalize your pre-order.
             </p>
           </div>
         </div>
