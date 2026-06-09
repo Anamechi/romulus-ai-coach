@@ -214,12 +214,7 @@ serve(async (req) => {
       webinarLeadCaptured = true;
 
       try {
-        // Insert lead into database
-        const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-        const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-        const supabase = createClient(supabaseUrl, supabaseKey);
-
-        await supabase.from("leads").insert({
+        await adminSupabase.from("leads").insert({
           full_name: lead.name,
           email: lead.email,
           source: "chatbot-webinar",
@@ -228,7 +223,7 @@ serve(async (req) => {
 
         // Link lead to conversation if possible
         if (conversation_id) {
-          const { data: leadData } = await supabase
+          const { data: leadData } = await adminSupabase
             .from("leads")
             .select("id")
             .eq("email", lead.email)
@@ -237,12 +232,13 @@ serve(async (req) => {
             .single();
 
           if (leadData) {
-            await supabase
+            await adminSupabase
               .from("chatbot_conversations")
               .update({ lead_id: leadData.id, converted_to: "webinar" })
               .eq("id", conversation_id);
           }
         }
+
 
         // Send to GHL webhook
         const ghlWebhookUrl = Deno.env.get("GHL_NEWSLETTER_WEBHOOK_URL");
