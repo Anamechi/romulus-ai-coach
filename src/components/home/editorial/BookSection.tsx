@@ -34,7 +34,7 @@ export const BookSection = () => {
               size="lg"
               className="rounded-none h-auto px-8 py-4 text-base"
             >
-              <a href="/methodology">Explore the DDS Methodology</a>
+              <a href="/preorder">Explore the DDS Methodology</a>
             </Button>
           </div>
         </div>
