@@ -1,8 +1,19 @@
 import { SEOHead } from "@/components/seo/SEOHead";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import { trackPreorderClick } from "@/lib/tracking";
 
 const Preorder = () => {
   const externalUrl = "https://www.amazon.com/dp/B0H4C5R87D";
+
+  const handlePreorderClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const finalUrl = trackPreorderClick(externalUrl);
+    // Small delay so the pixel request has a chance to flush before navigation.
+    window.setTimeout(() => {
+      window.open(finalUrl, "_blank", "noopener,noreferrer");
+    }, 150);
+  };
+
 
   return (
     <>
@@ -63,8 +74,12 @@ const Preorder = () => {
             </p>
             <a
               href={externalUrl}
+              onClick={handlePreorderClick}
               target="_blank"
               rel="noopener noreferrer"
+              data-event="preorder_click"
+              data-location="hero"
+
               className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium transition-colors"
               style={{
                 backgroundColor: "#C9A84C",
@@ -246,8 +261,12 @@ const Preorder = () => {
           </p>
           <a
             href={externalUrl}
+            onClick={handlePreorderClick}
             target="_blank"
             rel="noopener noreferrer"
+            data-event="preorder_click"
+            data-location="footer_cta"
+
             className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium transition-colors"
             style={{
               backgroundColor: "#1A1A2E",
