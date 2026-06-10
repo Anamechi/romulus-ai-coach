@@ -18,6 +18,8 @@ declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
     pintrk?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
   }
 }
 
@@ -95,6 +97,15 @@ export function trackMeta(
  * Standard handler for the "Pre-order on Amazon" button.
  * Fires Meta Lead + custom PreorderClick, then returns the UTM-decorated URL.
  */
+export function trackGA(event: string, params?: Record<string, unknown>): void {
+  if (typeof window === "undefined" || !window.gtag) return;
+  try {
+    window.gtag("event", event, params || {});
+  } catch {
+    // swallow
+  }
+}
+
 export function trackPreorderClick(destinationUrl: string): string {
   const utms = getStoredUtms();
   trackMeta("Lead", {
@@ -111,5 +122,11 @@ export function trackPreorderClick(destinationUrl: string): string {
     },
     "trackCustom",
   );
+  trackGA("preorder_click", {
+    content_name: "Systems Before Scale",
+    destination: "amazon",
+    outbound: true,
+    ...utms,
+  });
   return appendUtmsToUrl(destinationUrl);
 }
