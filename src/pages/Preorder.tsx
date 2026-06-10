@@ -74,8 +74,12 @@ const Preorder = () => {
             </p>
             <a
               href={externalUrl}
+              onClick={handlePreorderClick}
               target="_blank"
               rel="noopener noreferrer"
+              data-event="preorder_click"
+              data-location="hero"
+
               className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium transition-colors"
               style={{
                 backgroundColor: "#C9A84C",
@@ -257,8 +261,12 @@ const Preorder = () => {
           </p>
           <a
             href={externalUrl}
+            onClick={handlePreorderClick}
             target="_blank"
             rel="noopener noreferrer"
+            data-event="preorder_click"
+            data-location="footer_cta"
+
             className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium transition-colors"
             style={{
               backgroundColor: "#1A1A2E",
