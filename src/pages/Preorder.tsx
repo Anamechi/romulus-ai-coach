@@ -1,8 +1,19 @@
 import { SEOHead } from "@/components/seo/SEOHead";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import { trackPreorderClick } from "@/lib/tracking";
 
 const Preorder = () => {
   const externalUrl = "https://www.amazon.com/dp/B0H4C5R87D";
+
+  const handlePreorderClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const finalUrl = trackPreorderClick(externalUrl);
+    // Small delay so the pixel request has a chance to flush before navigation.
+    window.setTimeout(() => {
+      window.open(finalUrl, "_blank", "noopener,noreferrer");
+    }, 150);
+  };
+
 
   return (
     <>
