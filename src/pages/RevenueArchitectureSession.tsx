@@ -858,11 +858,11 @@ const RevenueArchitectureSession = () => {
             >
               Schedule Your Session
             </h2>
-            <div className="rounded-xl overflow-hidden" style={{ height: "1400px" }}>
+            <div className="rounded-xl overflow-auto -webkit-overflow-scrolling-touch" style={{ height: "1400px" }}>
               <iframe
                 src="https://link.drromulusmba.com/widget/booking/wlTCpuAi2QG0tn0BVVBG"
-                style={{ width: "100%", height: "100%", border: "none", overflow: "hidden" }}
-                scrolling="no"
+                style={{ width: "100%", minHeight: "1400px", border: "none" }}
+                scrolling="yes"
                 title="Book Revenue Architecture Blueprint Session"
               />
             </div>
