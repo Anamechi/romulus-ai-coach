@@ -154,6 +154,15 @@ const BlueprintIllustration = () => (
 
 const RevenueArchitectureSession = () => {
   useEffect(() => {
+    trackMetaWithCapi(
+      "ViewContent",
+      {
+        content_name: "Revenue Architecture Session",
+        content_category: "blueprint_session",
+        value: 3500,
+        currency: "USD",
+      },
+    );
     if (typeof window !== "undefined" && (window as any).pintrk) {
       (window as any).pintrk("track", "checkout", {
         event_id: "eventId0001",
