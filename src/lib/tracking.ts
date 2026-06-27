@@ -1,6 +1,10 @@
 // Lightweight tracking helpers for Meta Pixel + Conversions API (CAPI).
 // Pixel is loaded site-wide in index.html (ID 2014599869476161).
 // Server-side relay lives at supabase/functions/meta-capi.
+//
+// Every fbq event in the app should go through `trackMetaWithCapi` (or
+// `trackPageView`) so the browser Pixel and server CAPI fire in parallel
+// with a shared event_id for deduplication.
 
 const UTM_KEYS = [
   "utm_source",
@@ -15,6 +19,8 @@ const UTM_KEYS = [
 
 const STORAGE_KEY = "drmba_utms";
 const PIXEL_ID = "2014599869476161";
+const CAPI_URL =
+  "https://xxdbmkllubljncwvxkrl.supabase.co/functions/v1/meta-capi";
 
 declare global {
   interface Window {
@@ -42,8 +48,8 @@ export function captureUtmsFromUrl(): Record<string, string> {
       const existing = getStoredUtms();
       const merged = { ...existing, ...found };
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-      // If fbclid is present and no fbc cookie has been set yet by the Pixel,
-      // synthesize one so server-side matching works on first pageview.
+      // Synthesize an _fbc cookie if Meta hasn't already, so server-side
+      // matching works on the very first pageview.
       if (found.fbclid && !getCookie("_fbc")) {
         const fbc = `fb.1.${Date.now()}.${found.fbclid}`;
         try {
@@ -100,7 +106,6 @@ function uuidv4(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return (crypto as Crypto).randomUUID();
   }
-  // Fallback (RFC4122 v4)
   const bytes = new Uint8Array(16);
   (crypto as Crypto).getRandomValues(bytes);
   bytes[6] = (bytes[6] & 0x0f) | 0x40;
@@ -109,10 +114,99 @@ function uuidv4(): string {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
+interface CapiUserData {
+  em?: string;
+  ph?: string;
+}
+
+interface CapiOptions {
+  eventName: string;
+  eventId: string;
+  userData?: CapiUserData;
+  customData?: Record<string, unknown>;
+}
+
 /**
- * Fire Meta Pixel events. Safe no-op if fbq isn't loaded yet.
- * Pass an `eventID` in params to enable dedup with CAPI.
+ * Send the matching server-side event to our meta-capi edge function.
+ * Fire-and-forget; failures are silent so they never block navigation.
+ *
+ * Uses fetch + keepalive (NOT sendBeacon) because sendBeacon with a JSON
+ * Content-Type blob triggers a CORS preflight that sendBeacon can't perform,
+ * causing the request to be silently dropped in some browsers.
  */
+function sendCapiEvent(opts: CapiOptions): void {
+  if (typeof window === "undefined") return;
+  const fbp = getCookie("_fbp");
+  const fbc = getCookie("_fbc");
+  const payload = {
+    event_name: opts.eventName,
+    event_id: opts.eventId,
+    event_time: Math.floor(Date.now() / 1000),
+    event_source_url: window.location.href,
+    action_source: "website",
+    user_data: {
+      ...(opts.userData?.em ? { em: opts.userData.em } : {}),
+      ...(opts.userData?.ph ? { ph: opts.userData.ph } : {}),
+      ...(fbp ? { fbp } : {}),
+      ...(fbc ? { fbc } : {}),
+    },
+    custom_data: opts.customData ?? {},
+  };
+  try {
+    void fetch(CAPI_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true,
+      mode: "cors",
+      credentials: "omit",
+    }).catch(() => {
+      // swallow
+    });
+  } catch {
+    // swallow
+  }
+}
+
+/**
+ * Fire a Meta Pixel event AND its server-side CAPI twin with a shared
+ * event_id so Meta deduplicates them. This is the only function the rest of
+ * the app should use for tracked events (other than `trackPageView`).
+ */
+export function trackMetaWithCapi(
+  eventName: string,
+  params?: Record<string, unknown>,
+  type: "track" | "trackCustom" = "track",
+  userData?: CapiUserData,
+): string {
+  const eventId = uuidv4();
+  const utms = getStoredUtms();
+  const merged = { ...(params ?? {}), ...utms };
+
+  if (typeof window !== "undefined" && window.fbq) {
+    try {
+      window.fbq(type, eventName, merged, { eventID: eventId });
+    } catch {
+      // swallow
+    }
+  }
+
+  sendCapiEvent({
+    eventName,
+    eventId,
+    userData,
+    customData: merged,
+  });
+
+  return eventId;
+}
+
+/** Dual-fire PageView with a shared event_id on every route change. */
+export function trackPageView(): void {
+  trackMetaWithCapi("PageView");
+}
+
+/** Legacy helper — kept for any caller that just wants a raw fbq with no CAPI. */
 export function trackMeta(
   event: string,
   params?: Record<string, unknown>,
@@ -139,96 +233,30 @@ export function trackGA(event: string, params?: Record<string, unknown>): void {
   }
 }
 
-interface CapiUserData {
-  em?: string;
-  ph?: string;
-}
-
-interface CapiOptions {
-  eventName: string;
-  eventId: string;
-  userData?: CapiUserData;
-  customData?: Record<string, unknown>;
-}
-
-/**
- * Send the matching server-side event to our meta-capi edge function.
- * Fire-and-forget; failures are silent so they never block navigation.
- */
-async function sendCapiEvent(opts: CapiOptions): Promise<void> {
-  if (typeof window === "undefined") return;
-  const url = `https://xxdbmkllubljncwvxkrl.supabase.co/functions/v1/meta-capi`;
-  const fbp = getCookie("_fbp");
-  const fbc = getCookie("_fbc");
-  const payload = {
-    event_name: opts.eventName,
-    event_id: opts.eventId,
-    event_time: Math.floor(Date.now() / 1000),
-    event_source_url: window.location.href,
-    action_source: "website",
-    user_data: {
-      ...(opts.userData?.em ? { em: opts.userData.em } : {}),
-      ...(opts.userData?.ph ? { ph: opts.userData.ph } : {}),
-      ...(fbp ? { fbp } : {}),
-      ...(fbc ? { fbc } : {}),
-    },
-    custom_data: opts.customData ?? {},
-  };
-  try {
-    const body = JSON.stringify(payload);
-    // Prefer sendBeacon so outbound clicks don't cancel the request.
-    if (navigator.sendBeacon) {
-      const blob = new Blob([body], { type: "application/json" });
-      const ok = navigator.sendBeacon(url, blob);
-      if (ok) return;
-    }
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body,
-      keepalive: true,
-    });
-  } catch {
-    // swallow
-  }
-}
-
 /**
  * Standard handler for the "Pre-order on Amazon" button.
- * Fires deduped Meta Pixel (browser) + CAPI (server) events for Lead and
- * the custom PreorderClick, then returns the UTM-decorated destination URL.
+ * Dual-fires Lead + PreorderClick (browser + CAPI, shared event_id) and
+ * returns the UTM-decorated destination URL.
  */
 export function trackPreorderClick(destinationUrl: string): string {
   const utms = getStoredUtms();
-  const leadEventId = uuidv4();
-  const clickEventId = uuidv4();
 
-  const leadCustom = {
-    content_name: "Systems Before Scale Preorder",
-    content_category: "book",
-    ...utms,
-  };
-  const clickCustom = {
-    content_name: "Systems Before Scale",
-    destination: "amazon",
-    ...utms,
-  };
-
-  // Browser pixel (with eventID for dedup)
-  trackMeta("Lead", leadCustom, "track", leadEventId);
-  trackMeta("PreorderClick", clickCustom, "trackCustom", clickEventId);
-
-  // Server-side CAPI mirror
-  void sendCapiEvent({
-    eventName: "Lead",
-    eventId: leadEventId,
-    customData: leadCustom,
-  });
-  void sendCapiEvent({
-    eventName: "PreorderClick",
-    eventId: clickEventId,
-    customData: clickCustom,
-  });
+  trackMetaWithCapi(
+    "Lead",
+    {
+      content_name: "Systems Before Scale Preorder",
+      content_category: "book",
+    },
+    "track",
+  );
+  trackMetaWithCapi(
+    "PreorderClick",
+    {
+      content_name: "Systems Before Scale",
+      destination: "amazon",
+    },
+    "trackCustom",
+  );
 
   trackGA("preorder_click", {
     content_name: "Systems Before Scale",
@@ -240,5 +268,4 @@ export function trackPreorderClick(destinationUrl: string): string {
   return appendUtmsToUrl(destinationUrl);
 }
 
-// Exported for future call sites that want raw access.
 export { sendCapiEvent, uuidv4 };

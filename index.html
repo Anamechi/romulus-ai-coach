@@ -63,7 +63,8 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '2014599869476161');
-    fbq('track', 'PageView');
+    // PageView is fired from the React app (src/lib/tracking.ts -> trackPageView)
+    // so it can include a shared eventID and dual-fire to the Meta CAPI relay.
     </script>
     <!-- End Meta Pixel Code -->
 
