@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { PageLoader } from "@/components/ui/PageLoader";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 
 // Eagerly load critical pages
 import Index from "./pages/Index";
@@ -103,6 +104,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <PageViewTracker />
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Public Routes */}
