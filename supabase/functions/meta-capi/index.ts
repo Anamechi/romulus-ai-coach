@@ -1,35 +1,36 @@
-// Meta Conversions API (server-side) relay.
-// Receives event payload from the browser, hashes PII, and forwards to Meta.
-// Pixel ID is public and hardcoded. Access token is read from a Supabase secret
-// (META_CAPI_ACCESS_TOKEN) and never logged or returned.
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+// Meta Conversions API relay.
+// Receives event payloads from the browser pixel and forwards them to Meta
+// server-side, hashing PII (email/phone) with SHA-256 first.
+//
+// Secrets:
+//   META_CAPI_ACCESS_TOKEN  (required)  — never log, never accept from client
+//   META_CAPI_TEST_CODE     (optional)  — set for Test Events, unset for prod
+//
+// Pixel ID is hardcoded (not a secret).
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
+import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 
 const PIXEL_ID = "2014599869476161";
-const GRAPH_VERSION = "v18.0";
+const GRAPH_URL = `https://graph.facebook.com/v21.0/${PIXEL_ID}/events`;
 
-interface IncomingEvent {
-  event_name: string;
-  event_id: string;
+interface InboundUserData {
+  em?: string;
+  ph?: string;
+  fbp?: string;
+  fbc?: string;
+}
+
+interface InboundPayload {
+  event_name?: string;
+  event_id?: string;
   event_time?: number;
   event_source_url?: string;
   action_source?: string;
-  user_data?: {
-    em?: string; // raw email
-    ph?: string; // raw phone
-    fbp?: string;
-    fbc?: string;
-  };
+  user_data?: InboundUserData;
   custom_data?: Record<string, unknown>;
 }
 
-async function sha256Hex(input: string): Promise<string> {
+async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
   const buf = await crypto.subtle.digest("SHA-256", data);
   return Array.from(new Uint8Array(buf))
@@ -37,24 +38,27 @@ async function sha256Hex(input: string): Promise<string> {
     .join("");
 }
 
-function normalizeEmail(v: string): string {
-  return v.trim().toLowerCase();
+function looksHashed(v: string): boolean {
+  return /^[a-f0-9]{64}$/i.test(v);
 }
 
-function normalizePhone(v: string): string {
-  // Strip everything that isn't a digit. Meta expects E.164 digits only.
-  return v.replace(/[^\d]/g, "");
+async function normalizeAndHash(v: string | undefined): Promise<string | undefined> {
+  if (!v) return undefined;
+  const trimmed = v.trim().toLowerCase();
+  if (!trimmed) return undefined;
+  return looksHashed(trimmed) ? trimmed : await sha256(trimmed);
 }
 
-function getClientIp(req: Request): string | undefined {
-  const xff = req.headers.get("x-forwarded-for");
-  if (xff) return xff.split(",")[0].trim();
-  return req.headers.get("cf-connecting-ip") ?? undefined;
+async function normalizePhone(v: string | undefined): Promise<string | undefined> {
+  if (!v) return undefined;
+  const digits = v.replace(/[^\d]/g, "");
+  if (!digits) return undefined;
+  return looksHashed(v.trim()) ? v.trim().toLowerCase() : await sha256(digits);
 }
 
-serve(async (req: Request) => {
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return new Response("ok", { headers: corsHeaders });
   }
 
   if (req.method !== "POST") {
@@ -66,16 +70,16 @@ serve(async (req: Request) => {
 
   const accessToken = Deno.env.get("META_CAPI_ACCESS_TOKEN");
   if (!accessToken) {
-    console.error("META_CAPI_ACCESS_TOKEN not configured");
-    return new Response(
-      JSON.stringify({ error: "Server not configured" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-    );
+    return new Response(JSON.stringify({ error: "CAPI not configured" }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
+  const testCode = Deno.env.get("META_CAPI_TEST_CODE");
 
-  let body: IncomingEvent;
+  let body: InboundPayload;
   try {
-    body = await req.json();
+    body = (await req.json()) as InboundPayload;
   } catch {
     return new Response(JSON.stringify({ error: "Invalid JSON" }), {
       status: 400,
@@ -83,24 +87,30 @@ serve(async (req: Request) => {
     });
   }
 
-  if (!body.event_name || !body.event_id) {
-    return new Response(
-      JSON.stringify({ error: "event_name and event_id are required" }),
-      { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-    );
+  if (!body.event_name || typeof body.event_name !== "string") {
+    return new Response(JSON.stringify({ error: "event_name required" }), {
+      status: 400,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
 
-  const userAgent = req.headers.get("user-agent") ?? undefined;
-  const clientIp = getClientIp(req);
+  const ua = req.headers.get("user-agent") ?? undefined;
+  const xff = req.headers.get("x-forwarded-for") ?? "";
+  const clientIp = xff.split(",")[0]?.trim() || undefined;
+
+  const inUser = body.user_data ?? {};
+  const [em, ph] = await Promise.all([
+    normalizeAndHash(inUser.em),
+    normalizePhone(inUser.ph),
+  ]);
 
   const user_data: Record<string, unknown> = {};
-  const incoming = body.user_data ?? {};
-  if (incoming.em) user_data.em = [await sha256Hex(normalizeEmail(incoming.em))];
-  if (incoming.ph) user_data.ph = [await sha256Hex(normalizePhone(incoming.ph))];
-  if (incoming.fbp) user_data.fbp = incoming.fbp;
-  if (incoming.fbc) user_data.fbc = incoming.fbc;
+  if (em) user_data.em = [em];
+  if (ph) user_data.ph = [ph];
+  if (inUser.fbp) user_data.fbp = inUser.fbp;
+  if (inUser.fbc) user_data.fbc = inUser.fbc;
   if (clientIp) user_data.client_ip_address = clientIp;
-  if (userAgent) user_data.client_user_agent = userAgent;
+  if (ua) user_data.client_user_agent = ua;
 
   const event = {
     event_name: body.event_name,
@@ -113,39 +123,39 @@ serve(async (req: Request) => {
   };
 
   const payload: Record<string, unknown> = { data: [event] };
-  const testCode = Deno.env.get("META_CAPI_TEST_CODE");
   if (testCode) payload.test_event_code = testCode;
 
-  const url = `https://graph.facebook.com/${GRAPH_VERSION}/${PIXEL_ID}/events?access_token=${encodeURIComponent(accessToken)}`;
-
   try {
-    const res = await fetch(url, {
+    const resp = await fetch(GRAPH_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
       body: JSON.stringify(payload),
     });
-    const json = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      // Log Meta's error body for diagnostics, but never echo our token.
-      console.error("Meta CAPI error", res.status, JSON.stringify(json));
+    const text = await resp.text();
+    if (!resp.ok) {
+      // Log status only; never log the token or full request payload.
+      console.error("Meta CAPI error", resp.status, text.slice(0, 500));
       return new Response(
-        JSON.stringify({ error: "Meta CAPI rejected event", meta: json }),
+        JSON.stringify({ error: "Upstream error", status: resp.status }),
         { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
-    return new Response(
-      JSON.stringify({
-        ok: true,
-        event_id: body.event_id,
-        events_received: json.events_received,
-        fbtrace_id: json.fbtrace_id,
-        test_mode: Boolean(testCode),
-      }),
-      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-    );
+    let parsed: unknown = null;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      parsed = { raw: text };
+    }
+    return new Response(JSON.stringify({ ok: true, meta: parsed }), {
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   } catch (err) {
-    console.error("Meta CAPI request failed", (err as Error).message);
-    return new Response(JSON.stringify({ error: "Upstream request failed" }), {
+    console.error("Meta CAPI fetch failed", (err as Error).message);
+    return new Response(JSON.stringify({ error: "Network error" }), {
       status: 502,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
