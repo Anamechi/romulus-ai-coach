@@ -2,8 +2,15 @@ import { useEffect } from "react";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { trackMetaWithCapi } from "@/lib/tracking";
 
 const scrollToBooking = () => {
+  trackMetaWithCapi("Lead", {
+    content_name: "Revenue Architecture Session",
+    content_category: "blueprint_session",
+    value: 3500,
+    currency: "USD",
+  });
   document.getElementById("booking-section")?.scrollIntoView({ behavior: "smooth" });
 };
 
