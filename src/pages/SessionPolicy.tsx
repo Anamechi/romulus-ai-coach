@@ -6,7 +6,7 @@ export default function SessionPolicy() {
       <SEOHead
         title="Scheduling & Payment Policy | Revenue Architecture Session"
         description="Scheduling, rescheduling, refund, and guarantee terms for the Revenue Architecture Session with Dr. Deanna Romulus."
-        canonical="https://drromulusmba.com/session-policy"
+        canonicalUrl="https://drromulusmba.com/session-policy"
       />
 
       <div className="min-h-screen bg-[#F5F5F0]">
