@@ -141,6 +141,7 @@ const App = () => (
               <Route path="/dds-scorecard" element={<DDSScorecard />} />
       <Route path="/content-to-cash" element={<ContentClarityDiagnostic />} />
       <Route path="/preorder" element={<Preorder />} />
+      <Route path="/session-policy" element={<SessionPolicy />} />
               <Route path="/income-systems-diagnostic" element={<IncomeSystemsDiagnostic />} />
               
               {/* Admin Routes */}
