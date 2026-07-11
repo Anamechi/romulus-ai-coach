@@ -3,6 +3,8 @@ import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { trackMetaWithCapi } from "@/lib/tracking";
+import aiConsultantBadge from "@/assets/ai-consultant-badge.png.asset.json";
+
 
 const scrollToBooking = () => {
   trackMetaWithCapi("Lead", {

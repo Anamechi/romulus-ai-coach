@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Twitter, Youtube, Mail } from "lucide-react";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
+import aiConsultantBadge from "@/assets/ai-consultant-badge.png.asset.json";
+
 
 const footerLinks = {
   company: [
@@ -153,6 +155,12 @@ export function Footer() {
           <p className="font-body text-sm text-cream/50">
             © {new Date().getFullYear()} Dr. Romulus MBA. All rights reserved.
           </p>
+          <img
+            src={aiConsultantBadge.url}
+            alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
+            className="h-16 w-auto opacity-90"
+            loading="lazy"
+          />
           <div className="flex gap-6">
             {footerLinks.legal.map((link) => (
               <Link
@@ -165,6 +173,7 @@ export function Footer() {
             ))}
           </div>
         </div>
+
       </div>
     </footer>
   );
