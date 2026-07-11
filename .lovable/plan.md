@@ -1,28 +1,18 @@
-## Change: Replace calendar with prequalification survey on `/revenue-architecture-session`
+## Add Certified AI Consultant badge
 
+### 1. Upload badge as Lovable Asset
+- Upload `user-uploads://AI-Certification-Badge-transparent.png` via `lovable-assets` CLI → `src/assets/ai-consultant-badge.png.asset.json`.
+
+### 2. Sitewide footer (subtle, ~64px)
+**File:** `src/components/layout/Footer.tsx`
+- Add badge (h-16 / 64px, transparent PNG) in an unobtrusive spot within the existing footer layout (e.g., near credentials/trust markers or aligned right on the copyright row).
+- Wrap in `<img>` with alt "Certified AI Consultant — International Association of Artificial Intelligence Consultants".
+- No layout restructure; only additive.
+
+### 3. Revenue Architecture Session hero
 **File:** `src/pages/RevenueArchitectureSession.tsx`
+- Insert the same badge (h-16) directly under the italic byline block ("Dr. Deanna Romulus, MBA — Revenue Architect · Business Strategist / Author, Systems Before Scale™…"), left-aligned to match the hero content column.
+- Small gold-tinted caption line beneath is not needed; the badge speaks for itself.
 
-1. **Replace the calendar iframe section** with the GHL survey iframe:
-   ```html
-   <iframe
-     src="https://link.drromulusmba.com/widget/survey/GvfGdLT5pjd7yHbIYeWu"
-     style={{ border: 'none', width: '100%' }}
-     scrolling="no"
-     id="GvfGdLT5pjd7yHbIYeWu"
-     title="Revenue Architecture Session – Prequalification Survey"
-   />
-   ```
-   - Dynamically inject `https://link.drromulusmba.com/js/form_embed.js` once via `useEffect` (so it auto-resizes the iframe).
-   - Keep the section wrapper, heading, and ID (`#booking` or equivalent) so existing anchor scrolling still works.
-   - Update the section heading copy to reflect prequalification (e.g., "Apply for a Revenue Architecture Session") instead of "Schedule / Book".
-
-2. **CTA buttons** on the page:
-   - Keep the existing `scrollToBooking` behavior (scrolls to the survey section — which now hosts the survey instead of the calendar).
-   - Keep the existing `trackMetaWithCapi("Lead", …)` fire on click — no changes to tracking wiring.
-   - `ViewContent` on mount stays as-is.
-
-3. **No other pages touched.** Preorder CTAs, PageViewTracker, tracking.ts, and edge function all remain untouched.
-
-### Notes
-- The GHL `form_embed.js` script auto-adjusts iframe height, so no fixed pixel height is needed (unlike the previous 1400px calendar wrapper).
-- Script is injected in `useEffect` with a guard to prevent duplicate insertion on re-render.
+### 4. No other changes
+- No new routes, no tracking changes, no design token edits, no other pages touched.
