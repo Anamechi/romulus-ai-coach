@@ -69,6 +69,10 @@ const IncomeClarityDiagnostic = () => {
                   <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 shrink-0" />
                   <span>Determine whether Systems Before Scale™ is appropriate</span>
                 </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                  <span>Recorded and written — you receive both the session replay and a written summary of next steps</span>
+                </li>
               </ul>
               <div className="space-y-2 text-muted-foreground text-sm">
                 <p>This is not an open coaching call.</p>
