@@ -173,6 +173,14 @@ const RevenueArchitectureSession = () => {
         line_items: [{ product_price: 3500 }],
       });
     }
+    // Inject GHL form embed script once for survey auto-resize
+    const scriptSrc = "https://link.drromulusmba.com/js/form_embed.js";
+    if (typeof document !== "undefined" && !document.querySelector(`script[src="${scriptSrc}"]`)) {
+      const s = document.createElement("script");
+      s.src = scriptSrc;
+      s.async = true;
+      document.body.appendChild(s);
+    }
   }, []);
 
   return (
@@ -860,26 +868,37 @@ const RevenueArchitectureSession = () => {
         </div>
       </section>
 
-      {/* BOOKING CALENDAR — DO NOT MODIFY */}
+      {/* PREQUALIFICATION SURVEY */}
       <section id="booking-section" className="py-24" style={{ backgroundColor: "white" }}>
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <h2
-              className="text-center mb-8 font-normal"
+              className="text-center mb-4 font-normal"
               style={{
                 color: "#1A1A2E",
                 fontFamily: "Georgia, serif",
                 fontSize: "clamp(1.75rem, 3vw, 2.25rem)",
               }}
             >
-              Schedule Your Session
+              Apply for a Blueprint Session
             </h2>
-            <div className="rounded-xl overflow-auto -webkit-overflow-scrolling-touch" style={{ height: "1400px" }}>
+            <p
+              className="text-center mb-8"
+              style={{
+                color: "rgba(26,26,46,0.7)",
+                fontFamily: "Georgia, serif",
+                fontSize: "1rem",
+              }}
+            >
+              A brief prequalification survey. If your business is a fit, you'll receive next steps to book.
+            </p>
+            <div className="rounded-xl overflow-hidden">
               <iframe
-                src="https://link.drromulusmba.com/widget/booking/wlTCpuAi2QG0tn0BVVBG"
-                style={{ width: "100%", minHeight: "1400px", border: "none" }}
-                scrolling="yes"
-                title="Book Revenue Architecture Blueprint Session"
+                src="https://link.drromulusmba.com/widget/survey/GvfGdLT5pjd7yHbIYeWu"
+                style={{ border: "none", width: "100%", minHeight: "700px" }}
+                scrolling="no"
+                id="GvfGdLT5pjd7yHbIYeWu"
+                title="Revenue Architecture Session – Prequalification Survey"
               />
             </div>
           </div>
