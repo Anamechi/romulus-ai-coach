@@ -260,7 +260,14 @@ const RevenueArchitectureSession = () => {
                 <br />
                 Author, Systems Before Scale™ — Launching August 11, 2026
               </p>
+              <img
+                src={aiConsultantBadge.url}
+                alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
+                className="mt-6 h-16 w-auto"
+                loading="lazy"
+              />
             </div>
+
             <div className="lg:pl-8">
               <BlueprintIllustration />
             </div>
