@@ -158,7 +158,7 @@ export function Footer() {
           <img
             src={aiConsultantBadge.url}
             alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
-            className="h-16 w-auto opacity-90"
+            className="h-24 w-auto opacity-90"
             loading="lazy"
           />
           <div className="flex gap-6">

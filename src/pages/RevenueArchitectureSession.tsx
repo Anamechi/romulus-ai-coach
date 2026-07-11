@@ -265,7 +265,7 @@ const RevenueArchitectureSession = () => {
               <img
                 src={aiConsultantBadge.url}
                 alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
-                className="mt-6 h-16 w-auto"
+                className="mt-6 h-24 w-auto"
                 loading="lazy"
               />
             </div>
