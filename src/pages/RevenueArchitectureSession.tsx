@@ -173,6 +173,14 @@ const RevenueArchitectureSession = () => {
         line_items: [{ product_price: 3500 }],
       });
     }
+    // Inject GHL form embed script once for survey auto-resize
+    const scriptSrc = "https://link.drromulusmba.com/js/form_embed.js";
+    if (typeof document !== "undefined" && !document.querySelector(`script[src="${scriptSrc}"]`)) {
+      const s = document.createElement("script");
+      s.src = scriptSrc;
+      s.async = true;
+      document.body.appendChild(s);
+    }
   }, []);
 
   return (
