@@ -170,7 +170,22 @@ async function handleRequest(request) {
   
   // Log for debugging (visible in Cloudflare dashboard)
   console.log(`[AI-Router] Path: ${pathname}, UA: ${userAgent.substring(0, 50)}...`);
-  
+
+  // 1a. Proxy Lovable CDN asset paths (/__l5e/*) directly to the Lovable origin.
+  // On the custom domain these paths otherwise fall through to the SPA shell
+  // and images (badges, uploaded assets, etc.) return text/html instead of bytes.
+  if (pathname.startsWith('/__l5e/')) {
+    const assetUrl = `https://authority-engine-34.lovable.app${pathname}${url.search}`;
+    const assetResponse = await fetch(assetUrl, {
+      method: request.method,
+      headers: { 'User-Agent': userAgent, 'Accept': request.headers.get('Accept') || '*/*' }
+    });
+    return new Response(assetResponse.body, {
+      status: assetResponse.status,
+      headers: assetResponse.headers
+    });
+  }
+
   // 2. Check if this is an AI bot requesting a prerenderable path
   if (isAIBot(userAgent) && shouldPrerender(pathname)) {
     console.log(`[AI-Router] AI bot detected, routing to prerender`);
