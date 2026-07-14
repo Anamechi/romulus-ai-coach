@@ -262,12 +262,20 @@ const RevenueArchitectureSession = () => {
                 <br />
                 Author, Systems Before Scale™ — Launching August 11, 2026
               </p>
-              <img
-                src={aiConsultantBadge.url}
-                alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
-                className="mt-6 h-24 w-auto"
-                loading="lazy"
-              />
+              <a
+                href="https://credsverse.com/credentials/83d57a8b-d501-46bf-bf54-b3b30742948d?preview=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Verify Dr. Deanna Romulus’s AI Consultant Certification."
+                className="cursor-pointer inline-block mt-6"
+              >
+                <img
+                  src={aiConsultantBadge.url}
+                  alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
+                  className="h-24 w-auto"
+                  loading="lazy"
+                />
+              </a>
             </div>
 
             <div className="lg:pl-8">
