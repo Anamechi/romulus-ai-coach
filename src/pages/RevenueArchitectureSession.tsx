@@ -270,9 +270,9 @@ const RevenueArchitectureSession = () => {
                 className="cursor-pointer inline-block mt-6"
               >
                 <img
-                  src={aiConsultantBadge.url}
+                  src={`${aiConsultantBadge.url}?v=20260714-2`}
                   alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
-                  className="h-24 w-auto"
+                  className="h-24 w-auto object-contain"
                   loading="lazy"
                 />
               </a>
