@@ -155,12 +155,20 @@ export function Footer() {
           <p className="font-body text-sm text-cream/50">
             © {new Date().getFullYear()} Dr. Romulus MBA. All rights reserved.
           </p>
-          <img
-            src={aiConsultantBadge.url}
-            alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
-            className="h-24 w-auto opacity-90"
-            loading="lazy"
-          />
+          <a
+            href="https://credsverse.com/credentials/83d57a8b-d501-46bf-bf54-b3b30742948d?preview=1"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Verify Dr. Deanna Romulus’s AI Consultant Certification."
+            className="cursor-pointer"
+          >
+            <img
+              src={aiConsultantBadge.url}
+              alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
+              className="h-24 w-auto opacity-90"
+              loading="lazy"
+            />
+          </a>
           <div className="flex gap-6">
             {footerLinks.legal.map((link) => (
               <Link
