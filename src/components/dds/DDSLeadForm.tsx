@@ -18,10 +18,10 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
       <div className="container mx-auto px-6 max-w-lg">
         <div className="bg-[hsl(var(--slate-deep))] border border-[hsl(var(--gold)/0.2)] rounded-2xl p-8 md:p-10">
           <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-3">
-            Get the DDS Framework Breakdown Guide
+            Get the Founder Score Workbook
           </h2>
           <p className="text-center text-sm mb-8" >
-            Enter your information below and we'll send you the DDS Framework Breakdown Guide.
+            Enter your information below and we will send you the Founder Score Workbook.
           </p>
 
           <form onSubmit={onSubmit} className="space-y-5">
@@ -65,11 +65,11 @@ const DDSLeadForm = ({ submitted, loading, formData, setFormData, onSubmit }: Pr
             </div>
 
             <Button type="submit" variant="gold" size="lg" className="w-full" disabled={loading}>
-              {loading ? "Sending…" : "Send Me the DDS Guide"}
+              {loading ? "Sending…" : "Send Me the Workbook"}
             </Button>
 
             <p className="text-center text-xs mt-3" >
-              No spam. Just the DDS Framework guide.
+              No spam. Just the Founder Score Workbook.
             </p>
           </form>
         </div>

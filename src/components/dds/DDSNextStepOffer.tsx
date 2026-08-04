@@ -16,7 +16,7 @@ const DDSNextStepOffer = ({ diagnosticKitUrl }: Props) => (
           Identify Your Primary Income Constraint
         </h2>
         <p className="mb-6" >
-          The Complete Income Systems Diagnostic Kit™ reveals the structural issue currently blocking predictable revenue in your business. This is the natural next step after reviewing the DDS Framework Guide.
+          The Complete Income Systems Diagnostic Kit™ reveals the structural issue currently blocking predictable revenue in your business. This is the natural next step after reviewing your Founder Score Workbook.
         </p>
 
         <ul className="space-y-3 mb-8">
