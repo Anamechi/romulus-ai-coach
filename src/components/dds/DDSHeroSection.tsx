@@ -23,12 +23,12 @@ const DDSHeroSection = ({ onCTAClick }: Props) => (
       </p>
 
       <Button variant="gold" size="xl" onClick={onCTAClick}>
-        Get the DDS Framework Guide
+        Get the Founder Score Workbook
         <ArrowRight className="ml-2 h-5 w-5" />
       </Button>
 
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-sm" >
-        <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Free breakdown guide</span>
+        <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Free workbook</span>
         <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Built for service-based business owners</span>
         <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-[hsl(var(--gold))]" /> Takes less than 5 minutes to understand</span>
       </div>

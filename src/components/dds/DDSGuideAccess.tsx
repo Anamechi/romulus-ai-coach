@@ -10,16 +10,16 @@ const DDSGuideAccess = () => (
         <CheckCircle2 className="h-8 w-8 text-[hsl(var(--gold))]" />
       </div>
       <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-        Your DDS Framework Guide Is Ready
+        Your Founder Score Workbook Is Ready
       </h2>
       <p className="text-lg mb-8" >
-        Your guide has also been sent to your email and phone.
+        Your workbook has also been sent to your email and phone.
       </p>
 
       <Button variant="gold" size="lg" asChild>
         <a href={DDS_GUIDE_URL} target="_blank" rel="noopener noreferrer">
           <Download className="mr-2 h-5 w-5" />
-          Download Guide
+          Download Workbook
         </a>
       </Button>
     </div>
