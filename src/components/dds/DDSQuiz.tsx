@@ -43,7 +43,7 @@ function getResult(score: number) {
   if (score <= 3) {
     return {
       stage: "Diagnose",
-      message: "Your business has foundational gaps. Before you scale, you need to identify what's actually broken.",
+      message: "Your business has foundational gaps. Before you scale, you need to identify what is actually broken.",
       cta: "Identify your primary constraint",
       url: "/diagnostickit",
       buttonLabel: "Get the Diagnostic Kit — $27",
@@ -54,7 +54,7 @@ function getResult(score: number) {
     return {
       stage: "Design",
       headline: "Your system has gaps, and we know where to look.",
-      message: "You've built something. But revenue is inconsistent because there's a structural constraint somewhere in your system — and right now, you're likely guessing which one.\n\nThe next step isn't a strategy session. It's a diagnosis.\n\nStart with the Complete Income Systems Diagnostic Kit™ — $27. It walks you through pinpointing the #1 bottleneck in your income system — or determining whether the constraint you identified is actually the one you should fix first.",
+      message: "You have built something. But revenue is inconsistent because there is a structural constraint somewhere in your system — and right now, you are likely guessing which one.\n\nThe next step is not a strategy session. It is a diagnosis.\n\nStart with the Complete Income Systems Diagnostic Kit™ — $27. It walks you through pinpointing the #1 bottleneck in your income system — or determining whether the constraint you identified is actually the one you should fix first.",
       cta: "Start with the diagnosis",
       url: "https://drromulusmba.com/diagnostickit",
       buttonLabel: "Get the Diagnostic Kit — $27",
@@ -63,7 +63,7 @@ function getResult(score: number) {
   }
   return {
     stage: "Scale",
-    message: "You've built a strong foundation. Now it's time to refine your revenue architecture and scale with precision.",
+    message: "You have built a strong foundation. Now it is time to refine your revenue architecture and scale with precision.",
     cta: "Build your revenue blueprint",
     url: "/revenue-architecture-session",
     buttonLabel: "Book Your Revenue Architecture Session — $500+",
