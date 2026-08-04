@@ -1,7 +1,7 @@
 import { CheckCircle2, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const DDS_GUIDE_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69de741b190683601a1b239c.pdf";
+const DDS_GUIDE_URL = "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/6a701935497cd89d24cb01e9.pdf";
 
 const DDSGuideAccess = () => (
   <section id="dds-guide-access" className="py-20 md:py-28 bg-[hsl(var(--slate-medium))]">
