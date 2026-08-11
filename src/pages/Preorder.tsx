@@ -181,55 +181,12 @@ const Preorder = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <div
-                className="relative w-full max-w-sm aspect-[3/4] flex items-center justify-center"
-                style={{ border: "1px solid #C9A84C", backgroundColor: "#1A1A2E" }}
-              >
-                <div
-                  className="absolute inset-0 opacity-[0.06]"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(#C9A84C 1px, transparent 1px), linear-gradient(90deg, #C9A84C 1px, transparent 1px)",
-                    backgroundSize: "24px 24px",
-                  }}
-                  aria-hidden="true"
-                />
-                <div className="text-center relative z-10 p-8">
-                  <p
-                    className="uppercase mb-4"
-                    style={{
-                      color: "#C9A84C",
-                      fontFamily: "Georgia, serif",
-                      letterSpacing: "0.3em",
-                      fontSize: "0.7rem",
-                    }}
-                  >
-                    Systems Before Scale
-                  </p>
-                  <h3
-                    className="font-normal leading-[1.2] mb-4"
-                    style={{
-                      color: "#F5F5F0",
-                      fontFamily: "Georgia, serif",
-                      fontSize: "clamp(1.5rem, 3vw, 2rem)",
-                    }}
-                  >
-                    The DDS Framework
-                    <br />
-                    for Service Entrepreneurs
-                  </h3>
-                  <div
-                    className="w-12 h-px mx-auto mb-4"
-                    style={{ backgroundColor: "#C9A84C" }}
-                  />
-                  <p
-                    className="text-sm italic"
-                    style={{ color: "rgba(245,245,240,0.6)", fontFamily: "Georgia, serif" }}
-                  >
-                    Dr. Deanna Romulus, MBA
-                  </p>
-                </div>
-              </div>
+              <img
+                src="https://sbs-summit-proof.pages.dev/book-render.webp"
+                alt="Systems Before Scale hardcover book by Dr. Deanna Romulus, MBA"
+                loading="lazy"
+                className="w-full max-w-sm aspect-[3/4] object-contain"
+              />
             </div>
           </div>
         </div>

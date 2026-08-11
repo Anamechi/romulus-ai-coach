@@ -260,7 +260,7 @@ const RevenueArchitectureSession = () => {
               >
                 Dr. Deanna Romulus, MBA — Revenue Architect · Business Strategist
                 <br />
-                Author, Systems Before Scale™ — Launching August 11, 2026
+                Author, Systems Before Scale™, available now
               </p>
               <a
                 href="https://credsverse.com/credentials/83d57a8b-d501-46bf-bf54-b3b30742948d?preview=1"
