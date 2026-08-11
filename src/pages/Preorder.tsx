@@ -18,8 +18,8 @@ const Preorder = () => {
   return (
     <>
       <SEOHead
-        title="Pre-Order | Systems Before Scale — Dr. Deanna Romulus, MBA"
-        description="Pre-order your copy of Systems Before Scale by Dr. Deanna Romulus, MBA. Reserve the book that installs the infrastructure your business actually needs."
+        title="Order the Book | Systems Before Scale by Dr. Deanna Romulus, MBA"
+        description="Systems Before Scale by Dr. Deanna Romulus, MBA is available now on Amazon. Order the book that installs the infrastructure your business actually needs."
         canonicalUrl="/preorder"
         ogType="website"
       />
@@ -48,6 +48,17 @@ const Preorder = () => {
             >
               Systems Before Scale
             </p>
+            <p
+              className="uppercase mb-6"
+              style={{
+                color: "#C9A84C",
+                fontFamily: "Georgia, serif",
+                letterSpacing: "0.3em",
+                fontSize: "0.75rem",
+              }}
+            >
+              Available Now on Amazon
+            </p>
             <h1
               className="font-normal leading-[1.1] mb-8"
               style={{
@@ -57,7 +68,7 @@ const Preorder = () => {
                 letterSpacing: "-0.01em",
               }}
             >
-              Pre-order the book that installs the infrastructure your business actually needs
+              The book that installs the infrastructure your business actually needs
               <span style={{ color: "#C9A84C" }}>.</span>
             </h1>
             <p
@@ -96,14 +107,14 @@ const Preorder = () => {
                 e.currentTarget.style.color = "#1A1A2E";
               }}
             >
-              Complete Your Pre-Order
+              Order on Amazon
               <ExternalLink className="w-5 h-5" />
             </a>
             <p
               className="mt-6 text-sm italic"
               style={{ color: "rgba(245,245,240,0.6)", fontFamily: "Georgia, serif" }}
             >
-              You will be redirected to Amazon to finalize your pre-order.
+              You will be redirected to Amazon to complete your order.
             </p>
           </div>
         </div>
@@ -155,8 +166,8 @@ const Preorder = () => {
                     <dd style={{ color: "#1A1A2E" }}>Dr. Deanna Romulus, MBA</dd>
                   </div>
                   <div>
-                    <dt className="uppercase mb-1" style={{ color: "#C9A84C", letterSpacing: "0.2em", fontSize: "0.7rem" }}>Release</dt>
-                    <dd style={{ color: "#1A1A2E" }}>August 11, 2026</dd>
+                    <dt className="uppercase mb-1" style={{ color: "#C9A84C", letterSpacing: "0.2em", fontSize: "0.7rem" }}>Availability</dt>
+                    <dd style={{ color: "#1A1A2E" }}>Available now</dd>
                   </div>
                   <div>
                     <dt className="uppercase mb-1" style={{ color: "#C9A84C", letterSpacing: "0.2em", fontSize: "0.7rem" }}>Format</dt>
@@ -244,7 +255,7 @@ const Preorder = () => {
               fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
             }}
           >
-            Reserve your copy today
+            Get your copy today
             <span style={{ color: "#F5F5F0" }}>.</span>
           </h2>
           <p
@@ -256,8 +267,8 @@ const Preorder = () => {
               maxWidth: "48ch",
             }}
           >
-            Join founders who are choosing structure over hype. Your pre-order secures first-edition
-            access and early-reader bonuses.
+            Join the business owners who are choosing structure over hype. Order your copy today and
+            start building predictable revenue.
           </p>
           <a
             href={externalUrl}
@@ -283,7 +294,7 @@ const Preorder = () => {
               e.currentTarget.style.color = "#C9A84C";
             }}
           >
-            Pre-Order Now
+            Order the Book
             <ArrowRight className="w-5 h-5" />
           </a>
         </div>
