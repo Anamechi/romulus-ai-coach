@@ -23,7 +23,7 @@ export const HomeFAQ = ({ faqs }: HomeFAQProps) => {
             className="text-primary font-normal leading-[1.15] mb-12 text-center"
             style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)" }}
           >
-            What founders ask first<span className="text-accent">.</span>
+            What business owners ask first<span className="text-accent">.</span>
           </h2>
           <dl className="space-y-10">
             {faqs.map((f) => (

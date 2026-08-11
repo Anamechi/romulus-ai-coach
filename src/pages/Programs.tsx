@@ -8,21 +8,21 @@ const approaches = [
     icon: Target,
     title: "Strategic Clarity",
     whoFor: "For business owners who feel stuck despite working hard",
-    problem: "You're taking action but not seeing proportional results",
-    outcome: "Understand exactly what's blocking growth and what to prioritize",
+    problem: "You are taking action but not seeing proportional results",
+    outcome: "Understand exactly what is blocking growth and what to prioritize",
   },
   {
     icon: Zap,
     title: "Operational Systems",
     whoFor: "For entrepreneurs drowning in day-to-day operations",
-    problem: "Your business can't run without your constant attention",
-    outcome: "Build systems that operate consistently—with or without you",
+    problem: "Your business cannot run without your constant attention",
+    outcome: "Build systems that operate consistently, with or without you",
   },
   {
     icon: Building2,
     title: "Business Foundation",
     whoFor: "For service-based business owners ready to scale but lacking structure",
-    problem: "Your business isn't set up to access capital or partnerships",
+    problem: "Your business is not set up to access capital or partnerships",
     outcome: "Create a credible, fundable business structure that opens doors",
   },
   {
@@ -39,7 +39,7 @@ export default function Programs() {
     <Layout>
       <SEOHead
         title="How I Help | Dr. Romulus MBA"
-        description="Strategic guidance for entrepreneurs ready to build businesses that are structured, credible, and scalable. Discover if we're the right fit."
+        description="Strategic guidance for entrepreneurs ready to build businesses that are structured, credible, and scalable. Discover if we are the right fit."
         canonicalUrl="/programs"
         ogType="website"
       />
@@ -63,8 +63,8 @@ export default function Programs() {
               <span className="text-gradient-gold">Then Action</span>
             </h1>
             <p className="font-body text-lg md:text-xl text-cream/70 max-w-2xl mx-auto">
-              Most entrepreneurs don't have a motivation problem. They have a clarity problem. 
-              The right guidance starts with understanding what's actually broken.
+              Most entrepreneurs do not have a motivation problem. They have a clarity problem. 
+              The right guidance starts with understanding what is actually broken.
             </p>
           </div>
         </div>
@@ -79,8 +79,8 @@ export default function Programs() {
               <span className="text-gradient-gold">Solve</span>
             </h2>
             <p className="font-body text-lg text-muted-foreground">
-              Each engagement starts with diagnosis. You'll never be asked to choose 
-              a package—only to understand your situation more clearly.
+              Each engagement starts with diagnosis. You will never be asked to choose 
+              a package, only to understand your situation more clearly.
             </p>
           </div>
 
@@ -135,7 +135,7 @@ export default function Programs() {
               How We Work Together
             </h2>
             <p className="font-body text-lg text-muted-foreground">
-              Every engagement begins the same way—with clarity about what's actually happening.
+              Every engagement begins the same way, with clarity about what is actually happening.
             </p>
           </div>
 
@@ -145,17 +145,17 @@ export default function Programs() {
                 {
                   step: "1",
                   title: "Diagnostic First",
-                  description: "We start with the Income Clarity Diagnostic to identify exactly what's causing your challenges.",
+                  description: "We start with the Income Clarity Diagnostic to identify exactly what is causing your challenges.",
                 },
                 {
                   step: "2",
                   title: "Tailored Path",
-                  description: "Based on what we discover, I'll recommend a path forward—coaching, systems work, or foundational changes.",
+                  description: "Based on what we discover, I will recommend a path forward: coaching, systems work, or foundational changes.",
                 },
                 {
                   step: "3",
                   title: "Guided Implementation",
-                  description: "You'll never be left with a plan and no support. Every recommendation comes with the guidance to execute.",
+                  description: "You will never be left with a plan and no support. Every recommendation comes with the guidance to execute.",
                 },
               ].map((step) => (
                 <div key={step.step} className="text-center">
@@ -182,7 +182,7 @@ export default function Programs() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-                  Why I Don't List{" "}
+                  Why I Do Not List{" "}
                   <span className="text-gradient-gold">Packages</span>
                 </h2>
                 <p className="font-body text-muted-foreground mb-4 leading-relaxed">
@@ -190,20 +190,20 @@ export default function Programs() {
                   is unique, and so is the gap holding it back.
                 </p>
                 <p className="font-body text-muted-foreground mb-4 leading-relaxed">
-                  I don't believe in selling you hours or deliverables. I believe in 
-                  solving the actual problem—and that requires understanding it first.
+                  I do not believe in selling you hours or deliverables. I believe in 
+                  solving the actual problem, and that requires understanding it first.
                 </p>
                 <p className="font-body text-foreground leading-relaxed">
-                  That's why every client relationship starts with the same thing: clarity.
+                  That is why every client relationship starts with the same thing: clarity.
                 </p>
               </div>
               
               <div className="bg-muted/50 rounded-2xl p-8 border border-border">
                 <blockquote className="font-display text-xl text-foreground italic mb-4">
-                  "When people understand the system, they can navigate it—and win—on their own terms."
+                  "When people understand the system, they can navigate it, and win, on their own terms."
                 </blockquote>
                 <cite className="font-body text-sm text-gold not-italic">
-                  — Dr. Deanna Romulus
+                  Dr. Deanna Romulus
                 </cite>
               </div>
             </div>
@@ -215,7 +215,7 @@ export default function Programs() {
       <ChecklistCTA
         variant="dark"
         heading="Not Sure Where to Start?"
-        description="The Fundability & Systems Checklist will reveal exactly what's missing in your business—and whether working together is the right next step."
+        description="The Fundability & Systems Checklist will reveal exactly what is missing in your business, and whether working together is the right next step."
         buttonText="Take the Fundability & Systems Checklist"
       />
     </Layout>

@@ -30,7 +30,7 @@ export const ClosingCTA = () => {
               letterSpacing: "-0.005em",
             }}
           >
-            If your business feels harder than it should, it's not you. It's the structure<span style={{ color: "#1A1A2E" }}>.</span>
+            If your business feels harder than it should, it is not you. It is the structure<span style={{ color: "#1A1A2E" }}>.</span>
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button

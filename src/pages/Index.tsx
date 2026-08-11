@@ -15,15 +15,15 @@ const homepageFAQs = [
   },
   {
     q: "What is the DDS Framework?",
-    a: "The DDS Framework is Dr. Romulus's three-phase methodology — Diagnose, Design, Scale — used to convert inconsistent revenue into a structural, repeatable income system before scaling marketing or team.",
+    a: "The DDS Framework is Dr. Romulus's three-phase methodology, Diagnose, Design, Scale, used to convert inconsistent revenue into a structural, repeatable income system before scaling marketing or team.",
   },
   {
     q: "Who does Dr. Romulus work with?",
-    a: "She works with established service-based business owners and founders who need to systematize operations, stabilize cash flow, and build a fundable, automation-ready business.",
+    a: "She works with established service-based business owners who need to systematize operations, stabilize cash flow, and build a fundable, automation-ready business.",
   },
   {
     q: "What does Systems Before Scale mean?",
-    a: "Systems Before Scale means installing the structural systems — offer architecture, delivery, cash flow, and automation — that allow a service business to grow predictably instead of relying on personal effort.",
+    a: "Systems Before Scale means installing the structural systems, offer architecture, delivery, cash flow, and automation, that allow a service business to grow predictably instead of relying on personal effort.",
   },
 ];
 

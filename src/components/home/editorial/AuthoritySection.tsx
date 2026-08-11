@@ -17,12 +17,12 @@ export const AuthoritySection = () => {
               className="text-primary font-normal leading-[1.15] mb-10"
               style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.005em" }}
             >
-              Most businesses don't have an effort problem. They have a structure problem<span className="text-accent">.</span>
+              Most businesses do not have an effort problem. They have a structure problem<span className="text-accent">.</span>
             </h2>
             <div className="space-y-6 text-primary/80 text-lg leading-relaxed" style={{ maxWidth: "58ch" }}>
               <p>
                 Inconsistent revenue is rarely a marketing failure or a discipline failure.
-                It's a structural failure — the absence of a system designed to produce a
+                It is a structural failure: the absence of a system designed to produce a
                 predictable result.
               </p>
               <p>
@@ -31,7 +31,7 @@ export const AuthoritySection = () => {
                 The business begins to operate independently of motivation.
               </p>
               <p>
-                That structure has a name: the DDS Framework — Diagnose, Design, Scale.
+                That structure has a name: the DDS Framework: Diagnose, Design, Scale.
                 Every engagement begins there.
               </p>
             </div>

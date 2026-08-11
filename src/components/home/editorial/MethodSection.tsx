@@ -13,7 +13,7 @@ const steps = [
     name: "Design",
     letter: "D",
     description:
-      "Build the system that resolves the constraint — offers, pricing, delivery, and operations engineered to work together.",
+      "Build the system that resolves the constraint: offers, pricing, delivery, and operations engineered to work together.",
   },
   {
     number: "03",
