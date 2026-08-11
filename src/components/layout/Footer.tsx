@@ -53,8 +53,8 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-cream/70 font-body text-sm leading-relaxed mb-6">
-              Strategic guidance for entrepreneurs ready to understand what's 
-              actually blocking their growth—and fix it.
+              Strategic guidance for entrepreneurs ready to understand what is 
+              actually blocking their growth, and fix it.
             </p>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
@@ -138,7 +138,7 @@ export function Footer() {
             <p className="text-cream/70 font-body text-sm mb-4">
               Get insights on building consistent, sustainable income.
             </p>
-            <NewsletterForm variant="footer" source="Website – Footer – Weekly Insights" />
+            <NewsletterForm variant="footer" source="Website - Footer - Weekly Insights" />
           </div>
         </div>
 
@@ -164,7 +164,7 @@ export function Footer() {
           >
             <img
               src={aiConsultantBadge.url}
-              alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
+              alt="Certified AI Consultant, International Association of Artificial Intelligence Consultants"
               className="h-24 w-auto opacity-90"
               loading="lazy"
             />

@@ -149,14 +149,14 @@ const Preorder = () => {
               </h2>
               <div className="space-y-4" style={{ fontFamily: "Georgia, serif", color: "#1A1A2E" }}>
                 <p className="leading-relaxed">
-                  Most founders try to automate chaos. Systems Before Scale teaches you to install
-                  the underlying structure first — so that every automation, every hire, and every
+                  Most business owners try to automate chaos. Systems Before Scale teaches you to install
+                  the underlying structure first, so that every automation, every hire, and every
                   revenue stream builds on solid ground.
                 </p>
                 <p className="leading-relaxed">
                   Inside, you will find the complete DDS Framework in plain language, with
                   decision trees, diagnostic checkpoints, and build sequences you can apply
-                  immediately — whether you are at $100K or $1M+ in annual revenue.
+                  immediately, whether you are at $100K or $1M+ in annual revenue.
                 </p>
               </div>
               <div className="mt-8 pt-8 border-t" style={{ borderColor: "rgba(26,26,46,0.12)" }}>

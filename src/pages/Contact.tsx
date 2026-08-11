@@ -26,11 +26,11 @@ export default function Contact() {
               Get in Touch
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Let's Start a <span className="text-gradient-gold">Conversation</span>
+              Let Us Start a <span className="text-gradient-gold">Conversation</span>
             </h1>
             <p className="font-body text-lg text-muted-foreground">
               Have questions? Not sure if the diagnostic is right for you? 
-              We're here to help.
+              We are here to help.
             </p>
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function Contact() {
                   Not Sure Where to Start?
                 </h3>
                 <p className="font-body text-muted-foreground text-sm mb-4">
-                  The Fundability & Systems Checklist reveals what's actually blocking your growth.
+                  The Fundability & Systems Checklist reveals what is actually blocking your growth.
                 </p>
                 <Button variant="default" asChild>
                   <a href="https://checklist.drromulusmba.com/" target="_blank" rel="noopener noreferrer">

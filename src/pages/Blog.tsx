@@ -45,7 +45,7 @@ const posts = [
   {
     slug: "entity-structure-mistakes",
     title: "The 3 Entity Structure Mistakes Costing You Thousands",
-    excerpt: "Most entrepreneurs set up their business structure wrong. Here's how to fix it.",
+    excerpt: "Most entrepreneurs set up their business structure wrong. Here is how to fix it.",
     category: "Business Structure",
     readTime: "9 min read",
     author: "Dr. Romulus",
@@ -186,7 +186,7 @@ export default function Blog() {
             <p className="font-body text-muted-foreground mb-8">
               Join 5,000+ entrepreneurs receiving actionable strategies every Tuesday.
             </p>
-            <NewsletterForm variant="inline" source="Website – Blog – Weekly Insights" />
+            <NewsletterForm variant="inline" source="Website - Blog - Weekly Insights" />
           </div>
         </div>
       </section>

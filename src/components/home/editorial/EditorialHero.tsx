@@ -37,7 +37,7 @@ export const EditorialHero = () => {
           >
             Dr<span className="text-accent">.</span> Romulus
             <span className="block text-primary/80 mt-4" style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.75rem)", letterSpacing: "0.01em" }}>
-              Business Systems Strategist for Service-Based Founders
+              Business Systems Strategist for Service-Based Business Owners
             </span>
           </h1>
           <div className="h-px bg-accent w-3/5 mb-8" aria-hidden="true" />
@@ -50,7 +50,7 @@ export const EditorialHero = () => {
           <p className="speakable-summary text-primary/80 text-lg lg:text-xl leading-relaxed mb-12 max-w-xl">
             Dr. Deanna Romulus, Ed.D., MBA, helps service-based business owners build
             structural businesses that generate consistent, predictable revenue through
-            the DDS Framework — Diagnose, Design, Scale.
+            the DDS Framework: Diagnose, Design, Scale.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button

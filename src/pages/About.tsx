@@ -67,7 +67,7 @@ const approach = [
   {
     icon: Target,
     title: "Pattern Recognition",
-    description: "Seeing the connections others miss—understanding why your business behaves the way it does.",
+    description: "Seeing the connections others miss: understanding why your business behaves the way it does.",
   },
   {
     icon: Lightbulb,
@@ -95,7 +95,7 @@ const values = [
   {
     icon: Users,
     title: "Trust-First Education",
-    description: "Teaching entrepreneurs how to understand systems—so they can navigate them and win on their own terms.",
+    description: "Teaching entrepreneurs how to understand systems, so they can navigate them and win on their own terms.",
   },
 ];
 
@@ -129,7 +129,7 @@ export default function About() {
                 Dr. Deanna Romulus,{" "}
                 <span className="text-gradient-gold">Ed.D., MBA</span>
                 <span className="block text-2xl md:text-3xl font-normal text-foreground/80 mt-3">
-                  Business Strategist & Educator for Service-Based Founders
+                  Business Strategist & Educator for Service-Based Business Owners
                 </span>
               </h1>
               
@@ -138,15 +138,15 @@ export default function About() {
               </p>
               
               <p className="font-body text-lg text-muted-foreground mb-6 leading-relaxed">
-                Dr. Romulus helps entrepreneurs see what's actually happening in their 
-                businesses—not just what they think is happening. That clarity is the 
+                Dr. Romulus helps entrepreneurs see what is actually happening in their 
+                businesses, not just what they think is happening. That clarity is the 
                 foundation for every meaningful change.
               </p>
               
               <p className="font-body text-muted-foreground mb-8 leading-relaxed">
                 With a background spanning marketing, finance, education, and operations, 
                 she brings a rare ability to recognize patterns and identify the real 
-                bottleneck—the one fix that unlocks everything else.
+                bottleneck: the one fix that unlocks everything else.
               </p>
 
               <Button variant="gold" size="lg" asChild>
@@ -213,7 +213,7 @@ export default function About() {
                 </h2>
                 <p className="font-body text-muted-foreground leading-relaxed mb-6">
                   Most entrepreneurs are working hard on the wrong things. Not because 
-                  they're lazy or uninformed—but because they haven't been shown how to 
+                  they are lazy or uninformed, but because they have not been shown how to 
                   see their business as a system.
                 </p>
                 <p className="font-body text-muted-foreground leading-relaxed mb-6">
@@ -228,10 +228,10 @@ export default function About() {
               
               <div className="bg-muted/50 rounded-2xl p-8 border border-border">
                 <blockquote className="font-display text-xl text-foreground italic mb-4">
-                  "When people understand the system, they can navigate it—and win—on their own terms."
+                  "When people understand the system, they can navigate it, and win, on their own terms."
                 </blockquote>
                 <cite className="font-body text-sm text-gold not-italic">
-                  — Dr. Deanna Romulus
+                  Dr. Deanna Romulus
                 </cite>
               </div>
             </div>
@@ -248,7 +248,7 @@ export default function About() {
               <span className="text-gradient-gold">Approach</span>
             </h2>
             <p className="font-body text-lg text-muted-foreground">
-              Three principles guide every engagement—regardless of scope or duration.
+              Three principles guide every engagement, regardless of scope or duration.
             </p>
           </div>
 
@@ -311,8 +311,8 @@ export default function About() {
       {/* CTA Section */}
       <ChecklistCTA
         variant="dark"
-        heading="Ready to See What's Actually Happening?"
-        description="The Fundability & Systems Checklist reveals the specific gaps in your business—so you can finally fix the right thing."
+        heading="Ready to See What Is Actually Happening?"
+        description="The Fundability & Systems Checklist reveals the specific gaps in your business, so you can finally fix the right thing."
         buttonText="Get the Checklist"
       />
     </Layout>
