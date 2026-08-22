@@ -882,6 +882,21 @@ const RevenueArchitectureSession = () => {
           >
             $3,500 credits in full toward Systems Installation Intensive if you move into it within 60 days.
           </p>
+          <p
+            className="mt-3"
+            style={{
+              color: "rgba(26,26,46,0.6)",
+              fontFamily: "Georgia, serif",
+              fontSize: "0.85rem",
+            }}
+          >
+            <a
+              href="/session-policy"
+              style={{ color: "#1A1A2E", textDecoration: "underline" }}
+            >
+              Scheduling, payment, and guarantee terms
+            </a>
+          </p>
         </div>
       </section>
 

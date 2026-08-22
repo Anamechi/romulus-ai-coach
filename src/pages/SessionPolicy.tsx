@@ -81,6 +81,14 @@ export default function SessionPolicy() {
               body: "Your $3,500 is non-refundable, but it is never lost. If your plans change, it converts to a credit good for 90 days toward a rescheduled session or toward the Systems Installation Intensive. If you cancel within 24 hours of booking and at least 48 hours before your session, I will refund it in full, less any processing fee.",
             },
             {
+              title: "A second session if it is needed",
+              body: "The session runs 90 minutes. If I need more information to complete your diagnosis, a second session is included at no additional cost. I would rather take the time and get it right than hand you a diagnosis I am not confident in.",
+            },
+            {
+              title: "Your written Blueprint, and my deadline",
+              body: "Your written Blueprint is delivered within 5 business days of your session. It names the constraint, ranks the leaks, and sequences the build order, and it is yours to act on with or without me. If it is not delivered within 5 business days, you may request a full refund. That deadline binds me, not you.",
+            },
+            {
               title: "Your credit toward the build",
               body: "If you move into the Systems Installation Intensive within 60 days of your session, the full $3,500 applies toward it.",
             },
@@ -117,7 +125,7 @@ export default function SessionPolicy() {
               My Guarantee To You
             </div>
             <p style={{ color: "#1A1A2E", margin: 0 }}>
-              Complete your prep form and show up on time, and if by the end of our 90 minutes you do not have your dominant revenue leak named and a written build order in hand, I will refund your session in full. I can promise that because it is exactly what the session is built to deliver.
+              Complete your prep form and show up on time, and if by the end of our 90 minutes your dominant revenue leak is not named and your build order is not established, I will refund your session in full. I can promise that because it is exactly what the session is built to deliver. Your written Blueprint then follows within 5 business days.
             </p>
           </section>
 
