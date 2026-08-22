@@ -189,7 +189,7 @@ const RevenueArchitectureSession = () => {
     <>
       <SEOHead
         title="Revenue Architecture Blueprint Session | Dr. Deanna Romulus, MBA"
-        description="A 90-minute working diagnostic with Dr. Deanna Romulus, MBA. Receive a written Revenue Architecture Blueprint within 5 business days. $3,500, credits in full toward Phase 2 build."
+        description="A 90-minute working diagnostic with Dr. Deanna Romulus, MBA. Receive a written Revenue Architecture Blueprint within 5 business days. $3,500, credits in full toward Phase 2 build if you move within 60 days."
         canonicalUrl="/revenue-architecture-session"
         ogType="website"
       />
@@ -242,7 +242,7 @@ const RevenueArchitectureSession = () => {
               >
                 For service-based business owners earning six figures who are ready to stabilize, scale,
                 and systemize income on infrastructure that holds. A 90-minute working diagnostic with
-                Dr. Deanna Romulus, MBA — followed by a written Blueprint delivered within 5 business
+                Dr. Deanna Romulus, MBA, followed by a written Blueprint delivered within 5 business
                 days.
               </p>
               <Button
@@ -258,7 +258,7 @@ const RevenueArchitectureSession = () => {
                 className="mt-6 text-sm italic"
                 style={{ color: "rgba(245,245,240,0.6)", fontFamily: "Georgia, serif" }}
               >
-                Dr. Deanna Romulus, MBA — Revenue Architect · Business Strategist
+                Dr. Deanna Romulus, MBA · Revenue Architect · Business Strategist
                 <br />
                 Author, Systems Before Scale™, available now
               </p>
@@ -271,7 +271,7 @@ const RevenueArchitectureSession = () => {
               >
                 <img
                   src={`${aiConsultantBadge.url}?v=20260714-2`}
-                  alt="Certified AI Consultant — International Association of Artificial Intelligence Consultants"
+                  alt="Certified AI Consultant, International Association of Artificial Intelligence Consultants"
                   className="h-24 w-auto object-contain"
                   loading="lazy"
                 />
@@ -298,7 +298,7 @@ const RevenueArchitectureSession = () => {
                 letterSpacing: "-0.005em",
               }}
             >
-              Your revenue shouldn't depend on you showing up every day.
+              Your revenue should not depend on you showing up every day.
             </h2>
             <ul className="space-y-3 mb-12" style={{ fontFamily: "Georgia, serif" }}>
               {[
@@ -506,7 +506,7 @@ const RevenueArchitectureSession = () => {
               {
                 num: "Deliverable 01",
                 title: "Live Working Diagnostic (90 Minutes)",
-                body: "Together we walk through your current operations, your team structure, your sector expansion plans, and the gaps between where you are and where you're heading. No slide deck. No prepared talk. A working session.",
+                body: "Together we walk through your current operations, your team structure, your sector expansion plans, and the gaps between where you are and where you are heading. No slide deck. No prepared talk. A working session.",
               },
               {
                 num: "Deliverable 02",
@@ -516,12 +516,12 @@ const RevenueArchitectureSession = () => {
               {
                 num: "Deliverable 03",
                 title: "Phase 2 Scope of Work",
-                body: "If you choose to install the systems we diagnose, the Blueprint includes a written Phase 2 scope with deliverables, 12-week schedule, and Founder Access pricing. Decision is yours — no pressure, no upsell during the session.",
+                body: "If you choose to install the systems we diagnose, the Blueprint includes a written Phase 2 scope with deliverables, 12-week schedule, and Founder Access pricing. Decision is yours. No pressure, no upsell during the session.",
               },
               {
                 num: "Deliverable 04",
                 title: "Credit Toward Build",
-                body: "The full $3,500 Blueprint investment credits toward the Systems Installation Intensive if you choose to build. Your diagnostic is not a separate cost — it's a structured deposit on the build.",
+                body: "The full $3,500 Blueprint investment credits toward the Systems Installation Intensive if you move into it within 60 days of your session. Your diagnostic is not a separate cost. It is a structured deposit on the build.",
               },
             ].map((card) => (
               <article
@@ -592,7 +592,7 @@ const RevenueArchitectureSession = () => {
                 fontSize: "clamp(2rem, 4vw, 3rem)",
               }}
             >
-              $3,500 — anchored to strategist-grade pricing<span style={{ color: "#C9A84C" }}>.</span>
+              $3,500, anchored to strategist-grade pricing<span style={{ color: "#C9A84C" }}>.</span>
             </h2>
           </div>
 
@@ -652,7 +652,7 @@ const RevenueArchitectureSession = () => {
                   "Fixed price $3,500",
                   "90-minute working session + written Blueprint",
                   "5 business days to delivery",
-                  "Credits in full toward Phase 2 build if you proceed",
+                  "Credits in full toward Phase 2 build if you proceed within 60 days",
                 ].map((line) => (
                   <li key={line} className="flex gap-3 leading-relaxed">
                     <span style={{ color: "#C9A84C" }}>—</span>
@@ -672,7 +672,7 @@ const RevenueArchitectureSession = () => {
             }}
           >
             The Blueprint Session is priced at my AI consultant speaking base rate because the
-            diagnostic IS the IP. You receive a documented Revenue Architecture Blueprint — actionable
+            diagnostic IS the IP. You receive a documented Revenue Architecture Blueprint, actionable
             with or without me on retainer. If you choose to install the systems together, the full
             investment credits toward your Systems Installation Intensive.
           </p>
@@ -777,7 +777,7 @@ const RevenueArchitectureSession = () => {
               {
                 n: "04",
                 t: "Decide your next move",
-                b: "You decide whether to install the systems together (with the $3,500 crediting toward Phase 2), implement the Blueprint yourself, or hand it to another team. The diagnostic is yours either way.",
+                b: "You decide whether to install the systems together (with the $3,500 crediting toward Phase 2 if you move within 60 days), implement the Blueprint yourself, or hand it to another team. The diagnostic is yours either way.",
               },
             ].map((step, idx, arr) => (
               <li
@@ -880,7 +880,7 @@ const RevenueArchitectureSession = () => {
               fontSize: "0.95rem",
             }}
           >
-            $3,500 credits in full toward Systems Installation Intensive if you choose to build.
+            $3,500 credits in full toward Systems Installation Intensive if you move into it within 60 days.
           </p>
         </div>
       </section>
