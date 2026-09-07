@@ -285,6 +285,68 @@ const RevenueArchitectureSession = () => {
         </div>
       </section>
 
+      {/* VSL VIDEO */}
+      <section style={{ backgroundColor: "#1A1A2E" }} className="relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "linear-gradient(#C9A84C 1px, transparent 1px), linear-gradient(90deg, #C9A84C 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+          aria-hidden="true"
+        />
+        <div className="container mx-auto px-6 lg:px-12 py-16 lg:py-24 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <p
+              className="uppercase mb-6"
+              style={{
+                color: "#C9A84C",
+                fontFamily: "Georgia, serif",
+                letterSpacing: "0.3em",
+                fontSize: "0.75rem",
+              }}
+            >
+              Watch
+            </p>
+            <h2
+              className="font-normal leading-[1.15]"
+              style={{
+                color: "#F5F5F0",
+                fontFamily: "Georgia, serif",
+                fontSize: "clamp(2rem, 4vw, 3rem)",
+              }}
+            >
+              If your revenue swings and you cannot say why
+              <span style={{ color: "#C9A84C" }}>.</span>
+            </h2>
+          </div>
+          <div
+            className="mx-auto rounded-md overflow-hidden"
+            style={{
+              maxWidth: "900px",
+              border: "1px solid rgba(201,168,76,0.24)",
+              boxShadow: "0 40px 90px rgba(0,0,0,0.55)",
+            }}
+          >
+            <div
+              className="relative w-full"
+              style={{ paddingTop: "56.25%", backgroundColor: "#0a0a11" }}
+            >
+              <iframe
+                src="https://customer-rse9fp8037cctw8j.cloudflarestream.com/88bb89584246eaf7b4ff5d202f194ed5/iframe?poster=https%3A%2F%2Fdrromulusmba.com%2Fras-vsl-poster.jpg"
+                loading="lazy"
+                className="absolute inset-0 h-full w-full"
+                style={{ border: "none" }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                allowFullScreen
+                title="The Revenue Architecture Session, Dr. Deanna Romulus"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* THE STRUCTURAL PROBLEM */}
       <section style={{ backgroundColor: "#F5F5F0" }}>
         <div className="container mx-auto px-6 lg:px-12 py-20 lg:py-28">
