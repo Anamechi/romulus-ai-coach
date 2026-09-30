@@ -20,7 +20,7 @@ const UTM_KEYS = [
 const STORAGE_KEY = "drmba_utms";
 const PIXEL_ID = "2014599869476161";
 const CAPI_URL =
-  "https://xxdbmkllubljncwvxkrl.supabase.co/functions/v1/meta-capi";
+  "https://zrokjkfyetixkqhgpfyi.supabase.co/functions/v1/meta-capi";
 
 declare global {
   interface Window {

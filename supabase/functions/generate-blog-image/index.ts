@@ -12,9 +12,9 @@ serve(async (req) => {
   }
 
   try {
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    const LOVABLE_API_KEY = Deno.env.get("OPENAI_API_KEY");
     if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+      throw new Error("OPENAI_API_KEY is not configured");
     }
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -61,22 +61,18 @@ Style requirements:
 
     console.log("Using prompt:", imagePrompt.substring(0, 200) + "...");
 
-    // Generate image using Lovable AI with gemini-2.5-flash-image model
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    // Generate image using OpenAI gpt-image-1 (landscape ~16:9)
+    const response = await fetch("https://api.openai.com/v1/images/generations", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${LOVABLE_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash-image-preview",
-        messages: [
-          {
-            role: "user",
-            content: imagePrompt
-          }
-        ],
-        modalities: ["image", "text"]
+        model: "gpt-image-1",
+        prompt: imagePrompt,
+        size: "1536x1024",
+        n: 1
       }),
     });
 
@@ -101,22 +97,15 @@ Style requirements:
     const aiData = await response.json();
     console.log("AI response received");
 
-    // Extract the image from the response
-    const imageUrl = aiData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    // Extract the image from the OpenAI response (base64 PNG in data[0].b64_json)
+    const base64Data = aiData.data?.[0]?.b64_json;
 
-    if (!imageUrl) {
+    if (!base64Data) {
       console.error("No image in response:", JSON.stringify(aiData));
       throw new Error("No image generated");
     }
 
-    // The image is base64 encoded, extract the data
-    const base64Match = imageUrl.match(/^data:image\/(\w+);base64,(.+)$/);
-    if (!base64Match) {
-      throw new Error("Invalid image format");
-    }
-
-    const imageType = base64Match[1];
-    const base64Data = base64Match[2];
+    const imageType = "png";
 
     // Convert base64 to Uint8Array
     const binaryString = atob(base64Data);
