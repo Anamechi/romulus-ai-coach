@@ -48,7 +48,7 @@ export const EditorialHero = () => {
             Systems Before Scale<span className="text-accent">™</span>
           </p>
           <p className="speakable-summary text-primary/80 text-lg lg:text-xl leading-relaxed mb-12 max-w-xl">
-            Dr. Deanna Romulus, Ed.D., MBA, helps service-based business owners build
+            Dr. Deanna Romulus, Ed.D., MBA, works with service-based business owners to build
             structural businesses that generate consistent, predictable revenue through
             the DDS Framework: Diagnose, Design, Scale.
           </p>

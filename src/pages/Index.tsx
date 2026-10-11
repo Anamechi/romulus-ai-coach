@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet-async';
 const homepageFAQs = [
   {
     q: "Who is Dr. Deanna Romulus?",
-    a: "Dr. Deanna Romulus is an Ed.D. and MBA (Finance) business systems strategist who helps service-based business owners build fundable, automated revenue systems that produce consistent, predictable income.",
+    a: "Dr. Deanna Romulus is an Ed.D. and MBA (Finance) business systems strategist who works with service-based business owners to build fundable, automated revenue systems that produce consistent, predictable income.",
   },
   {
     q: "What is the DDS Framework?",
@@ -37,7 +37,7 @@ const homepageSchema = {
       "url": "https://drromulusmba.com",
       "jobTitle": "AI-Ready Business Systems Strategist",
       "image": "https://assets.cdn.filesafe.space/FbsFen3DXEum7iMgKC4B/media/69fcc5bffb9074ae035393df.png",
-      "description": "Dr. Deanna Romulus helps service-based business owners build fundable, automated revenue systems that generate predictable income.",
+      "description": "Dr. Deanna Romulus works with service-based business owners to build fundable, automated revenue systems that generate predictable income.",
       "hasCredential": [
         { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "Ed.D." },
         { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "MBA (Finance)" }
