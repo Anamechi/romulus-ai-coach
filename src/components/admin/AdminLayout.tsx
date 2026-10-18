@@ -90,19 +90,20 @@ const systemNavItems = [
 ];
 
 export function AdminLayout({ children }: AdminLayoutProps) {
-  const { user, loading, isAdmin, signOut } = useAuth();
+  const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (loading) return;
+    if (!user) {
       navigate('/auth');
-    } else if (!loading && user && !isAdmin) {
+    } else if (adminChecked && !isAdmin) {
       navigate('/');
     }
-  }, [user, loading, isAdmin, navigate]);
+  }, [user, loading, isAdmin, adminChecked, navigate]);
 
-  if (loading) {
+  if (loading || (user && !adminChecked)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-accent" />
@@ -315,9 +316,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
           <header className="h-14 border-b border-border bg-background/80 backdrop-blur-sm flex items-center px-4 sticky top-0 z-10">
             <SidebarTrigger className="mr-4" />
             <div className="flex-1" />
-            <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              View Site →
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link to="/portal/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Client View →
+              </Link>
+              <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                View Site →
+              </Link>
+            </div>
           </header>
           <main className="flex-1 p-6 overflow-auto">
             {children}

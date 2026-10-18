@@ -48,7 +48,7 @@ const portalNavItems = [
 ];
 
 export function PortalLayout({ children }: PortalLayoutProps) {
-  const { user, loading, signOut } = useAuth();
+  const { user, loading, isAdmin, signOut } = useAuth();
   const { data: portalClient, isLoading: clientLoading } = usePortalClient();
   const navigate = useNavigate();
   const location = useLocation();
@@ -170,9 +170,16 @@ export function PortalLayout({ children }: PortalLayoutProps) {
           <header className="h-14 border-b border-border bg-background/80 backdrop-blur-sm flex items-center px-4 sticky top-0 z-10">
             <SidebarTrigger className="mr-4" />
             <div className="flex-1" />
-            <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              View Website →
-            </Link>
+            <div className="flex items-center gap-4">
+              {isAdmin && (
+                <Link to="/admin" className="text-sm text-accent hover:text-accent/80 font-medium transition-colors">
+                  ← Admin
+                </Link>
+              )}
+              <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                View Website →
+              </Link>
+            </div>
           </header>
           <main className="flex-1 p-6 overflow-auto">
             {children}

@@ -19,7 +19,7 @@ export default function Auth() {
   const [signupPassword, setSignupPassword] = useState('');
   const [signupName, setSignupName] = useState('');
   
-  const { signIn, signUp, user, loading, isAdmin } = useAuth();
+  const { signIn, signUp, user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -30,8 +30,10 @@ export default function Auth() {
   }, [user, loading]);
 
   const routeAfterAuth = async (userId: string) => {
-    // Admins go to admin dashboard
-    if (isAdmin) {
+    // Check the admin role directly so routing does not race the async role check.
+    const { data: adminFlag } = await supabase
+      .rpc('has_role', { _user_id: userId, _role: 'admin' });
+    if (adminFlag) {
       navigate('/admin');
       return;
     }

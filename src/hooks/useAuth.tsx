@@ -7,6 +7,7 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
+  adminChecked: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
@@ -19,6 +20,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [adminChecked, setAdminChecked] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -29,11 +31,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         
         // Defer role check with setTimeout to avoid deadlock
         if (session?.user) {
+          setAdminChecked(false);
           setTimeout(() => {
             checkAdminRole(session.user.id);
           }, 0);
         } else {
           setIsAdmin(false);
+          setAdminChecked(true);
         }
       }
     );
@@ -44,6 +48,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(session?.user ?? null);
       if (session?.user) {
         checkAdminRole(session.user.id);
+      } else {
+        setAdminChecked(true);
       }
       setLoading(false);
     });
@@ -63,6 +69,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch {
       setIsAdmin(false);
+    } finally {
+      setAdminChecked(true);
     }
   };
 
@@ -90,10 +98,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = async () => {
     await supabase.auth.signOut();
     setIsAdmin(false);
+    setAdminChecked(true);
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, isAdmin, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isAdmin, adminChecked, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );
