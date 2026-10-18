@@ -44,6 +44,7 @@ import {
   Plug,
   ClipboardList,
   ExternalLink,
+  Video,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -65,6 +66,7 @@ const managementNavItems = [
   { title: 'Leads', url: '/admin/leads', icon: MessageSquare },
   { title: 'Applications', url: '/admin/applications', icon: FileText },
   { title: 'Chatbot', url: '/admin/chatbot-conversations', icon: Bot },
+  { title: 'Webinars', url: '/admin/webinars', icon: Video },
   { title: 'Checklist Leads', url: 'https://checklist.drromulusmba.com/admin/dashboard', icon: ClipboardList, external: true },
 ];
 

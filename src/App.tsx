@@ -66,6 +66,7 @@ const PortalClientsAdmin = lazy(() => import("./pages/admin/PortalClients"));
 const PortalResourcesAdmin = lazy(() => import("./pages/admin/PortalResources"));
 const PortalOffersAdmin = lazy(() => import("./pages/admin/PortalOffers"));
 const PortalIntegrationsAdmin = lazy(() => import("./pages/admin/PortalIntegrations"));
+const Webinars = lazy(() => import("./pages/admin/Webinars"));
 const DiagnosticKit = lazy(() => import("./pages/DiagnosticKit"));
 const DiagnosticKitThankYou = lazy(() => import("./pages/DiagnosticKitThankYou"));
 const IncomeClarityDiagnostic = lazy(() => import("./pages/IncomeClarityDiagnostic"));
@@ -164,6 +165,7 @@ const App = () => (
               <Route path="/admin/system-check" element={<SystemCheck />} />
               <Route path="/admin/audit-log" element={<AuditLog />} />
               <Route path="/admin/chatbot-conversations" element={<ChatbotConversations />} />
+              <Route path="/admin/webinars" element={<Webinars />} />
               <Route path="/admin/citation-health" element={<CitationHealth />} />
               <Route path="/admin/indexnow" element={<IndexNow />} />
               <Route path="/admin/content-cluster-generator" element={<ContentClusterGenerator />} />
