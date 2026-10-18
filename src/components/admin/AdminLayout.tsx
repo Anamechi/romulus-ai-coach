@@ -42,6 +42,8 @@ import {
   Package,
   DollarSign,
   Plug,
+  ClipboardList,
+  ExternalLink,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -63,6 +65,7 @@ const managementNavItems = [
   { title: 'Leads', url: '/admin/leads', icon: MessageSquare },
   { title: 'Applications', url: '/admin/applications', icon: FileText },
   { title: 'Chatbot', url: '/admin/chatbot-conversations', icon: Bot },
+  { title: 'Checklist Leads', url: 'https://checklist.drromulusmba.com/admin/dashboard', icon: ClipboardList, external: true },
 ];
 
 const portalAdminNavItems = [
@@ -169,10 +172,18 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                         asChild
                         isActive={location.pathname === item.url}
                       >
+                        {'external' in item && item.external ? (
+                          <a href={item.url} target="_blank" rel="noreferrer" className="flex items-center gap-3">
+                            <item.icon className="h-4 w-4" />
+                            <span>{item.title}</span>
+                            <ExternalLink className="h-3 w-3 ml-auto opacity-60" />
+                          </a>
+                        ) : (
                         <Link to={item.url} className="flex items-center gap-3">
                           <item.icon className="h-4 w-4" />
                           <span>{item.title}</span>
                         </Link>
+                        )}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
