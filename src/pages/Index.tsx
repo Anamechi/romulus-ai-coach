@@ -110,11 +110,11 @@ const Index = () => {
   return (
     <Layout>
       <SEOHead
-        title="Dr. Deanna Romulus | AI-Ready Business Systems Strategist"
-        description="Helping service-based business owners build fundable, automated revenue systems that generate consistent, predictable income."
+        title="Dr. Deanna Romulus | Predictable Revenue for Service Business Owners"
+        description="Steady revenue every month, not just good months. Revenue Architecture for service business owners whose revenue stopped matching what they are capable of."
         canonicalUrl="/"
         ogType="website"
-        ogImage="https://drromulusmba.com/og-dr-deanna-romulus.png"
+        ogImage="https://drromulusmba.com/og-dr-deanna-romulus-2026.png"
         ogImageAlt="Dr. Deanna Romulus - Systems Before Scale"
       />
       <Helmet>
